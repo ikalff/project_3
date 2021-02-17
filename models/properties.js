@@ -5,7 +5,7 @@
     location: String
     images {
       main
-      
+
     }
     isRoomOnly:
     isEntirePlace:
