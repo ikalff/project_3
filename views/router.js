@@ -21,6 +21,9 @@ router.route('/users/:usersId')
   .get(users.getSingleUser)
   .put(secureRoute, users.updateUser)
 
+router.route('/users')
+  .get(users.getUsers)
+
 
 //? Properties
 

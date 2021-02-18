@@ -43,6 +43,14 @@ async function login(req, res, next) {
     next(err)
   }
 }
+async function getUsers(req, res, next) {
+  try {
+    const userList = await  User.find()
+    res.status(200).send(userList)
+  } catch (err) {
+    next(err)
+  }
+}
 async function getSingleUser(req, res, next) {
   const id = req.params.id
   try {
@@ -79,5 +87,6 @@ export default {
   register,
   login,
   getSingleUser,
-  updateUser
+  updateUser,
+  getUsers
 }

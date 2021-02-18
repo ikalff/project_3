@@ -2,7 +2,7 @@ import Properties from '../models/properties.js'
 
 async function getProperties(_req, res, next) {
   try {
-    const propertyList = await Properties.find().populate('user').populate('comments.user').populate('bookings.user')
+    const propertyList = await Properties.find().populate('host').populate('comments.user').populate('bookings.user')
     res.send(propertyList)
   } catch (err) {
     next(err)
@@ -24,9 +24,7 @@ async function getSingleProperty(req, res, next) {
   const id = req.params.propertyId
   console.log('Req.params:', req.params)
   try {
-    const property = await Properties.findById(id) //.populate('user').populate('comments.user').populate('bookings.user')
-    console.log('id', id)
-    console.log('property', property)
+    const property = await Properties.findById(id).populate('host').populate('comments.user').populate('bookings.user')
     res.send(property)
   } catch (err) {
     next(err)
@@ -34,12 +32,12 @@ async function getSingleProperty(req, res, next) {
 }
 
 async function removeProperty(req, res, next) {
-  const id = req.params.id
+  const id = req.params.propertyId
   const currentUser = req.currentUser
 
   try {
 
-    const propertyToRemove = await Properties.findById(id).populate('user').populate('comments.user').populate('bookings.user')
+    const propertyToRemove = await Properties.findById(id).populate('host').populate('comments.user').populate('bookings.user')
 
     if (!currentUser.isAdmin && !currentUser._id.equals(propertyToRemove.user)) {
       return res.status(401).send({ message: 'Unauthorized' })
@@ -54,7 +52,7 @@ async function removeProperty(req, res, next) {
 }
 
 async function updateProperty(req, res, next) {
-  const id = req.params.id
+  const id = req.params.propertyId
   const currentUser = req.currentUser
   const body = req.body
 
