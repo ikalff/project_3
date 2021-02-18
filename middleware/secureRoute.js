@@ -22,7 +22,6 @@ export default async function secureRoute(req, res, next) {
       }
 
       const user = await User.findById(data.userId)
-
       if (!user) {
         return res.status(401).send({ message: 'Unauthorized3' })
       }
