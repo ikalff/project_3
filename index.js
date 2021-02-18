@@ -23,7 +23,7 @@ async function startServer() {
 
   app.use(errorHandler)
 
-  app.listen(port, () => console.log(`Up and running on port ${port}`))
+  app.listen(port, () => console.log(`🤖 Up and running on port ${port}`))
 
 }
 
