@@ -20,7 +20,7 @@ async function seedDatabase() {
 
     console.log(`🤖 ${users.length} users created!`)
 
-    const properties = await Properties.create(getPropertyData())
+    const properties = await Properties.create(getPropertyData(users))
 
     console.log(`🤖 ${properties.length} properties created!`)
 
