@@ -18,8 +18,8 @@ router.route('/login')
   .post(users.login)
 
 router.route('/users/:usersId')
-  .get(users.getSingleusers)
-  .put(secureRoute, users.updateusers)
+  .get(users.getSingleUser)
+  .put(secureRoute, users.updateUser)
 
 
 // Properties
@@ -43,7 +43,7 @@ router.route('/users/:userId')
 router.route('/bookings/:propertyId')
   .post(secureRoute, bookings.makeBooking)
 
-router.route('/bookings/:propertId/:bookingId')
+router.route('/bookings/:propertyId/:bookingId')
   .put(secureRoute, bookings.updateBooking)
   .delete(secureRoute, bookings.removeBooking)
 
