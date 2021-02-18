@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Home() {
-  return <section className='hero is-fullheight-with-navbar'>
+  return <section className='hero home is-fullheight-with-navbar'>
     <div className='hero-body columns is-centered'>
       <div className='box column is-half'>
         <p className='title'>Welcome to ArrivR</p>

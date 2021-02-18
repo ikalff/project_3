@@ -3,9 +3,11 @@ export default function getPropertyData(users) {
     {
       name: 'Lovely seaside cottage',
       location: 'Suffolk',
-      images: {
-        main: 'https://i.imgur.com/2XrkGA7.jpg'
-      },
+      images: [
+        'https://i.imgur.com/2XrkGA7.jpg',
+        'http://placehold.it/400x400',
+        'http://placehold.it/400x400'
+      ],
       isRoomOnly: false,
       isEntirePlace: true,
       pricePerNight: 100,
@@ -15,12 +17,28 @@ export default function getPropertyData(users) {
       numberOfBedrooms: 2,
       checkInTime: '15:00',
       checkOutTime: '12:00',
-      hasWifi: true,
-      hasWashingMachine: true,
-      isPetFriendly: true,
-      isWheelchairAccessible: true,
-      isNearPub: true,
-      isNearBeach: true,
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: true
+        }
+      ],
       host: users[0],
       comments: [],
       bookings: []
@@ -30,9 +48,7 @@ export default function getPropertyData(users) {
     {
       name: 'Luxury room in Bath',
       location: 'Bath',
-      images: {
-        main: 'https://i.imgur.com/dHjBMUV.jpg'
-      },
+      images: ['https://i.imgur.com/dHjBMUV.jpg'],
       isRoomOnly: true,
       isEntirePlace: false,
       pricePerNight: 80,
@@ -42,12 +58,28 @@ export default function getPropertyData(users) {
       checkOutTime: '10:00',
       houseRules: 'Strictly no smoking and no overnight guests',
       cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
-      hasWifi: true,
-      hasWashingMachine: false,
-      isPetFriendly: false,
-      isWheelchairAccessible: false,
-      isNearPub: true,
-      isNearBeach: false,
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: true
+        }
+      ],
       host: users[0],
       comments: [],
       bookings: []
@@ -56,9 +88,7 @@ export default function getPropertyData(users) {
     {
       name: 'Charming London Flat',
       location: 'Notting Hill',
-      images: {
-        main: 'https://i.imgur.com/vDKQudg.jpeg'
-      },
+      images: ['https://www.londonperfect.com/blog/wp-content/uploads/2019/03/Notting-Hills-Most-Colorful-Streets-by-London-Perfect.jpg'],
       isRoomOnly: false,
       isEntirePlace: true,
       pricePerNight: 160,
@@ -68,12 +98,28 @@ export default function getPropertyData(users) {
       checkOutTime: '11:00',
       houseRules: 'Strictly no smoking and no overnight guests. No parties.',
       cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
-      hasWifi: true,
-      hasWashingMachine: false,
-      isPetFriendly: false,
-      isWheelchairAccessible: false,
-      isNearPub: true,
-      isNearBeach: false,
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: true
+        }
+      ],
       host: users[3],
       comments: [],
       bookings: []
@@ -82,9 +128,7 @@ export default function getPropertyData(users) {
     {
       name: 'Double Room in New Town, Edinburgh',
       location: 'Edinburgh',
-      images: {
-        main: 'https://i.imgur.com/7h24bWB.jpeg'
-      },
+      images: ['https://i.imgur.com/7h24bWB.jpeg'],
       isRoomOnly: true,
       isEntirePlace: false,
       pricePerNight: 75,
@@ -94,12 +138,28 @@ export default function getPropertyData(users) {
       checkOutTime: '11:00',
       houseRules: 'Strictly no smoking. Please be mindful of noise if returning after 10pm.',
       cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
-      hasWifi: true,
-      hasWashingMachine: true,
-      isPetFriendly: false,
-      isWheelchairAccessible: false,
-      isNearPub: true,
-      isNearBeach: false,
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: true
+        }
+      ],
       host: users[3],
       comments: [],
       bookings: []

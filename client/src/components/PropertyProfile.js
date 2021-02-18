@@ -12,9 +12,10 @@ export default function Singleproperty({ match, history }) {
 
   useEffect(() => {
     async function fetchData() {
-      if (match.params.propertyid) {
+      console.log(match.params.propertyId)
+      if (match.params.propertyId) {
         try {
-          const { data } = await axios.get(`/api/properties/${match.params.propertyid}`)
+          const { data } = await axios.get(`/api/properties/${match.params.propertyId}`)
           updateproperties(data)
           console.log(data)
           if (!data) {
@@ -34,7 +35,7 @@ export default function Singleproperty({ match, history }) {
 
 
   async function handleDelete() {
-    await axios.delete(`/api/deleteproperty/${match.params.propertyid}`, {
+    await axios.delete(`/api/deleteproperty/${match.params.propertyId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     history.push('/')
@@ -42,7 +43,7 @@ export default function Singleproperty({ match, history }) {
 
 
   function handleComment() {
-    axios.post(`/api/comment/${match.params.propertyid}`, { text }, {
+    axios.post(`/api/comment/${match.params.propertyId}`, { text }, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
@@ -54,7 +55,7 @@ export default function Singleproperty({ match, history }) {
 
 
   function handleDeleteComment(commentId) {
-    axios.delete(`/api/comment/${match.params.propertyid}/delete/${commentId}`, {
+    axios.delete(`/api/comment/${match.params.propertyId}/delete/${commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
@@ -65,73 +66,106 @@ export default function Singleproperty({ match, history }) {
 
 
 
-  if (!property.user) {
+  if (!property.name) {
     return null
   }
 
 
 
-  return <div className='container'>
-    <h1> properties </h1>
-    <div className='properties'>
 
-      <div className={error ? 'error' : 'hide'}>{error}</div>
 
-      <div>
-        <Link to={'/properties/' + property._id}><img src={property.images.main ? property.images.main : 'http://placehold.it/400x400?text=no%20image%20available'} /></Link>
-        <h4 className='title is-4 mb-2'>{property.name}</h4>
-        <p>Location: {property.location}</p>
-        <p>Summary: {property.summary}</p>
-        <Link className='button is-primary mt-5' to={'/properties/' + property._id}>More details</Link>
+
+
+
+  return <>
+
+
+
+
+
+    <section className='hero has-background-grey-light is-primary is-fullheight-with-navbar'
+      style={{
+        backgroundImage: `url(${property.images[0] ? property.images[0] : 'http://placehold.it/400x400'})`
+      }}>
+      <div className='hero-body columns is-centered'>
+        <div className='box column is-half has-text-centered'>
+          <h4 className='title is-4 mb-2 has-text-black'>{property.name}</h4>
+          <p>Location: {property.location}</p>
+        </div>
+      </div>
+    </section>
+
+    <div className='container px-6 pt-6 pb-6'>
+
+
+
+
+      <div className='columns'>
+
+
+
+
+
+
+
+        <div className='column'>
+
+          <p>Summary: {property.summary}</p>
+
+          <p>Place type: {property.isEntirePlace ? 'Entire place' : 'Room only'} </p>
+          <p>Price per night: {property.pricePerNight}</p>
+          <p>Check in: {property.checkInTime}</p>
+          <p>Check out: {property.checkOutTime}</p>
+          <p>House rules: {property.houseRules}</p>
+          <p>Cancellation Policy: {property.cancellationPolicy}</p>
+
+          <h5 className='title is-5 mt-4 mb-2'>Amenities</h5>
+          {property.amenities.length > 0 &&
+            property.amenities.map((amenity, index) => {
+              return <p key={index}>
+                {amenity.amenityValue ? '✅ ' : '❌ '}
+                {amenity.amenityName}
+              </p>
+            })
+          }
+
+
+          <h5 className='title is-5 mt-4 mb-2'>Gallery</h5>
+          {property.images.length > 1 &&
+            property.images.map((image, index) => {
+              return <img key={index} src={image} width='150' />
+            })
+          }
+
+
+
+          {property.comments.length > 0 && <h5 className='title is-5 mt-4 mb-2'>Comments</h5>}
+          {property.comments.length > 0 &&
+            property.comments.map((comment, index) => {
+              return <li key={index}>{comment.text}</li>
+            })
+          }
+
+
+          <p>
+            <Link className='button is-primary mt-5' to={'/properties/' + property._id}>Book now</Link>
+          </p>
+
+
+
+
+        </div>
+
+
+
+
+
+
       </div>
 
 
-      {property.user && <p>Posted by: {property.user.username}</p>}
-
-
-
-      {isOwner(property.user._id) &&
-        <>
-          <Link className='button' to={`/updateproperty/${property._id}`}>Edit</Link>
-          <button onClick={handleDelete}>Delete</button>
-        </>
-      }
-
-      <p>Add a Comment:</p>
-
-
-      <input type='text'
-        onChange={event => setText(event.target.value)}
-        placeholder="Make a comment.."
-        value={text}
-      >
-      </input>
-      <button
-        onClick={handleComment}>Submit</button>
-
-
-      <p>Comments:</p>
-
-      {property.comments && property.comments.map((comment, index) => {
-        return <div className='comment' key={index}>
-          <p>{comment.text}</p>
-          <p>By: {comment.user.username}</p>
-
-          {isOwner(comment.user._id) &&
-
-            <button onClick={() => handleDeleteComment(comment._id)}>delete</button>
-
-          }
-
-        </div>
-      })
-      }
-
-
     </div>
-
-
-  </div>
+  </>
 }
 
 
