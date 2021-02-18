@@ -21,6 +21,7 @@ export default function getPropertyData() {
       isWheelchairAccessible: true,
       isNearPub: true,
       isNearBeach: true,
+      host: [0],
       comments: [],
       bookings: []
     },
@@ -47,6 +48,7 @@ export default function getPropertyData() {
       isWheelchairAccessible: false,
       isNearPub: true,
       isNearBeach: false,
+      host: [0],
       comments: [],
       bookings: []
     },
@@ -72,6 +74,7 @@ export default function getPropertyData() {
       isWheelchairAccessible: false,
       isNearPub: true,
       isNearBeach: false,
+      host: [3],
       comments: [],
       bookings: []
     },
@@ -97,6 +100,7 @@ export default function getPropertyData() {
       isWheelchairAccessible: false,
       isNearPub: true,
       isNearBeach: false,
+      host: [3],
       comments: [],
       bookings: []
     }
