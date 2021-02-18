@@ -1,4 +1,4 @@
-import PropertyData from '../models/PropertyData.js'
+import Properties from '../models/properties.js'
 // ! NEED TO AD ADMINS
 async function makeComment(req, res, next) {
 
@@ -7,7 +7,7 @@ async function makeComment(req, res, next) {
   commentData.user = req.currentUser
 
   try {
-    const property = await PropertyData.findById(propertyId).populate('comments.user').populate('user')
+    const property = await Properties.findById(propertyId).populate('comments.user').populate('user')
 
     if (!property) {
       return res.status(404).send({ message: 'Not found' })
@@ -31,7 +31,7 @@ async function updateComment(req, res, next) {
   const { commentId, propertyId } = req.params
 
   try {
-    const property = await PropertyData.findById(propertyId).populate('user').populate('comments.user')
+    const property = await Properties.findById(propertyId).populate('user').populate('comments.user')
 
     if (!property) {
       return res.status(404).send({ message: 'Not found' })
@@ -60,7 +60,7 @@ async function removeComment(req, res, next) {
   const { commentId, propertyId } = req.params
 
   try {
-    const property = await PropertyData.findById(propertyId).populate('user').populate('comments.user')
+    const property = await Properties.findById(propertyId).populate('user').populate('comments.user')
 
     if (!property) {
       return res.status(404).send({ message: 'Not found' })
