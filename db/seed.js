@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 import connectToDb from '../lib/connectToDb.js'
 //! update below 2 lines when those files are made
-import Properties from '../models/properties/.js'
-import User from '../models/users/.js'
+import Properties from '../models/properties.js'
+import User from '../models/users.js'
 import getPropertyData from './data/propertyData.js'
 import getUserData from './data/userData.js'
 
@@ -20,9 +20,9 @@ async function seedDatabase() {
 
     console.log(`🤖 ${users.length} users created!`)
 
-    const books = await Properties.create(getPropertyData())
+    const properties = await Properties.create(getPropertyData())
 
-    console.log(`🤖 ${books.length} books created!`)
+    console.log(`🤖 ${properties.length} properties created!`)
 
     await mongoose.connection.close()
     console.log('🤖 Goodbye!')
