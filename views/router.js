@@ -36,9 +36,9 @@ router.route('/properties/:propertyId')
 
 // Bookings
 
-router.route('/usersss/:userssId')
-  .get(users.getSingleuserss)
-  .put(secureRoute, users.updateUsers)
+router.route('/users/:userId')
+  .get(users.getSingleUser)
+  .put(secureRoute, users.updateUser)
 
 router.route('/bookings/:propertyId')
   .post(secureRoute, bookings.makeBooking)
