@@ -52,7 +52,7 @@ async function getUsers(req, res, next) {
   }
 }
 async function getSingleUser(req, res, next) {
-  const id = req.params.usersId
+  const id = req.params.userId
   try {
     const user = await User.findById(id)
     res.send(user)
@@ -61,16 +61,19 @@ async function getSingleUser(req, res, next) {
   }
 }
 async function updateUser(req, res, next) {
-  const id = req.params.usersId
+  const id = req.params.userId
   const currentUser = req.currentUser
   const body = req.body
 
   try {
     const userToUpdate = await User.findById(id)
+    console.log('id', id)
+    console.log(userToUpdate)
+    console.log(currentUser)
     if (!userToUpdate) {
       return res.send({ message: 'Oops, we didn\'t find any users to update. Please try again' })
     }
-    if (!userToUpdate.user.equals(currentUser._id)) {
+    if (!userToUpdate._id.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
     
