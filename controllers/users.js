@@ -52,7 +52,7 @@ async function getUsers(req, res, next) {
   }
 }
 async function getSingleUser(req, res, next) {
-  const id = req.params.id
+  const id = req.params.usersId
   try {
     const user = await User.findById(id)
     res.send(user)
@@ -61,7 +61,7 @@ async function getSingleUser(req, res, next) {
   }
 }
 async function updateUser(req, res, next) {
-  const id = req.params.id
+  const id = req.params.usersId
   const currentUser = req.currentUser
   const body = req.body
 
