@@ -37,6 +37,7 @@ const propertiesSchema = new mongoose.Schema({
   isWheelchairAccessible: { type: Boolean, required: true, unique: false },
   isNearPub: { type: Boolean, required: true, unique: false },
   isNearBeach: { type: Boolean, required: true, unique: false },
+  host: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
   comments: [ commentSchema ],
   bookings: [ bookingSchema ]
 
