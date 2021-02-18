@@ -12,6 +12,8 @@ const schema = new mongoose.Schema({
   isAdmin: { type: Boolean }
 })
 
-schema.pre('save', function(next) {
-  if ()
-})
+schema
+  .virtual('passwordConfirmation')
+  .set(function setPasswordConfirmation(passwordConfirmation) {
+    
+  })
