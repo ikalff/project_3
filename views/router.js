@@ -17,7 +17,7 @@ router.route('/register')
 router.route('/login')
   .post(users.login)
 
-router.route('/users/:usersId')
+router.route('/users/:userId')
   .get(users.getSingleUser)
   .put(secureRoute, users.updateUser)
 
@@ -38,10 +38,6 @@ router.route('/properties/:propertyId')
 
 
 //? Bookings
-
-router.route('/users/:userId')
-  .get(users.getSingleUser)
-  .put(secureRoute, users.updateUser)
 
 
 router.route('/bookings/:propertyId')
