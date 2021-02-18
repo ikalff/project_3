@@ -61,7 +61,7 @@ async function updateProperty(req, res, next) {
     if (!propertyToUpdate) {
       return res.send({ message: 'Oops, we didn\'t find any properties to update. Please try again' })
     }
-    if (!propertyToUpdate.user.equals(currentUser._id)) {
+    if (!propertyToUpdate._id.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
     
