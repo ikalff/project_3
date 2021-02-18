@@ -21,9 +21,12 @@ async function makeProperty(req, res, next) {
 }
 
 async function getSingleProperty(req, res, next) {
-  const id = req.params.id
+  const id = req.params.propertyId
+  console.log('Req.params:', req.params)
   try {
-    const property = await Properties.findById(id).populate('user').populate('comments.user').populate('bookings.user')
+    const property = await Properties.findById(id) //.populate('user').populate('comments.user').populate('bookings.user')
+    console.log('id', id)
+    console.log('property', property)
     res.send(property)
   } catch (err) {
     next(err)
