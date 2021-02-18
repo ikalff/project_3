@@ -44,7 +44,43 @@ async function login(req, res, next) {
   }
 }
 
+async function getSingleUser(req, res, next) {
+  const id = req.params.id
+  try {
+    const user = await User.findById(id)
+    res.send(user)
+  } catch (err) {
+    next(err)
+  }
+}
+
+async function updateUser(req, res, next) {
+  const id = req.params.id
+  const currentUser = req.currentUser
+  const body = req.body
+
+  try {
+    const userToUpdate = await User.findById(id)
+    if (!userToUpdate) {
+      return res.send({ message: 'Oops, we didn\'t find any users to update. Please try again' })
+    }
+    if (!userToUpdate.user.equals(currentUser._id)) {
+      return res.status(401).send({ message: 'Unauthorized' })
+    }
+    
+    userToUpdate.set(body)
+    userToUpdate.save()
+
+    res.send(userToUpdate)
+
+  } catch (err) {
+    next()
+  }
+}
+
 export default {
   register,
-  login
+  login,
+  getSingleUser,
+  updateUser
 }

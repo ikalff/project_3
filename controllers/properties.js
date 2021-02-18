@@ -2,7 +2,7 @@ import Properties from '../models/properties.js'
 
 async function getProperties(_req, res, next) {
   try {
-    const propertyList = await Properties.find().populate('user').populate('comments.user')
+    const propertyList = await Properties.find().populate('user').populate('comments.user').populate('bookings.user')
     res.send(propertyList)
   } catch (err) {
     next(err)
@@ -23,7 +23,7 @@ async function makeProperty(req, res, next) {
 async function getSingleProperty(req, res, next) {
   const id = req.params.id
   try {
-    const property = await Properties.findById(id).populate('user').populate('comments.user')
+    const property = await Properties.findById(id).populate('user').populate('comments.user').populate('bookings.user')
     res.send(property)
   } catch (err) {
     next(err)
@@ -36,7 +36,7 @@ async function removeProperty(req, res, next) {
 
   try {
 
-    const propertyToRemove = await Properties.findById(id).populate('user').populate('comments.user')
+    const propertyToRemove = await Properties.findById(id).populate('user').populate('comments.user').populate('bookings.user')
 
     if (!currentUser.isAdmin && !currentUser._id.equals(propertyToRemove.user)) {
       return res.status(401).send({ message: 'Unauthorized' })
