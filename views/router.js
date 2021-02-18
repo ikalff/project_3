@@ -8,14 +8,8 @@ import comments from '../controllers/comments.js'
 
 const router = express.Router()
 
-router.route('/properties')
-  .get(properties.getProperties)
-  .post(secureRoute, properties.createProperty)
 
-router.route('/properties/:propertyId')
-  .get(properties.getSingleProperty)
-  .put(secureRoute, properties.updateProperty)
-  .delete(secureRoute, properties.removeProperty)
+// Users
 
 router.route('/register')
   .post(users.register)
@@ -23,19 +17,41 @@ router.route('/register')
 router.route('/login')
   .post(users.login)
 
+router.route('/users/:usersId')
+  .get(users.getSingleusers)
+  .put(secureRoute, users.updateusers)
+
+
+// Properties
+
+router.route('/properties')
+  .get(properties.getProperties)
+  .post(secureRoute, properties.makeProperty)
+
+router.route('/properties/:propertyId')
+  .get(properties.getSingleProperty)
+  .put(secureRoute, properties.updateProperty)
+  .delete(secureRoute, properties.removeProperty)
+
+
+// Bookings
+
 router.route('/usersss/:userssId')
   .get(users.getSingleuserss)
   .put(secureRoute, users.updateUsers)
 
-router.route('/booking/:propertyId')
-  .post(secureRoute, bookings.createBooking)
+router.route('/bookings/:propertyId')
+  .post(secureRoute, bookings.makeBooking)
 
-router.route('/booking/:propertId/:bookingId')
+router.route('/bookings/:propertId/:bookingId')
   .put(secureRoute, bookings.updateBooking)
   .delete(secureRoute, bookings.removeBooking)
 
+
+// Comments
+
 router.route('/properties/:propertyId/comment')
-  .post(secureRoute, comments.createComment)
+  .post(secureRoute, comments.makeComment)
 
 router.route('/properties/:propertyId/comment/:commentId')
   .put(secureRoute, comments.updateComment)
