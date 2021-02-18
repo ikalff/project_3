@@ -1,20 +1,18 @@
 //! DO WE NEED A BOOKING MODEL??
-
-async function getBookings(_req, res, next) {
+import Properties from '../models/properties.js'
+// ! NEED TO AD ADMINS
 
 async function getSingleBooking(req, res, next) {
   const id = req.params.id
 
   try {
-    const booking = await bookings.findById(id).populate('user')
+    const booking = await booking.findById(id).populate('user')
     res.send(booking)
   } catch (err) {
     next(err)
   }
 }
 
-import Properties from '../models/properties.js'
-// ! NEED TO AD ADMINS
 async function makeBooking(req, res, next) {
 
   const bookingData = req.body
@@ -99,8 +97,8 @@ async function removeBooking(req, res, next) {
 
 
 export default {
-  makeBooking,
   getSingleBooking,
-  removeBooking,
-  updateBooking
+  makeBooking,
+  updateBooking,
+  removeBooking
 }

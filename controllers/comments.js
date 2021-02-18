@@ -13,7 +13,6 @@ async function makeComment(req, res, next) {
       return res.status(404).send({ message: 'Not found' })
     }
 
-
     property.comments.push(commentData)
 
     const savedProperty = await property.save()
@@ -36,7 +35,6 @@ async function updateComment(req, res, next) {
     if (!property) {
       return res.status(404).send({ message: 'Not found' })
     }
-
 
     const comment = property.comments.id(commentId)
 
