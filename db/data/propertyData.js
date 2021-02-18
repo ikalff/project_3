@@ -49,6 +49,56 @@ export default function getPropertyData() {
       isNearBeach: false,
       comments: [],
       bookings: []
+    },
+
+    {
+      name: 'Charming London Flat',
+      location: 'Notting Hill',
+      images: {
+        main: 'https://i.imgur.com/vDKQudg.jpeg'
+      },
+      isRoomOnly: false,
+      isEntirePlace: true,
+      pricePerNight: 160,
+      summary: 'Charming Victorian flat on a quiet mews street only steps away from Notting Hill High Street',
+      numberOfBedrooms: 2,
+      checkInTime: '16:00',
+      checkOutTime: '11:00',
+      houseRules: 'Strictly no smoking and no overnight guests. No parties.',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      hasWifi: true,
+      hasWashingMachine: false,
+      isPetFriendly: false,
+      isWheelchairAccessible: false,
+      isNearPub: true,
+      isNearBeach: false,
+      comments: [],
+      bookings: []
+    },
+
+    {
+      name: 'Double Room in New Town, Edinburgh',
+      location: 'Edinburgh',
+      images: {
+        main: 'https://i.imgur.com/7h24bWB.jpeg'
+      },
+      isRoomOnly: true,
+      isEntirePlace: false,
+      pricePerNight: 75,
+      summary: 'Perfect for the Fringe, this double bed has easy access to all the historic sites of Edinburgh',
+      numberOfBedrooms: 2,
+      checkInTime: '16:30',
+      checkOutTime: '11:00',
+      houseRules: 'Strictly no smoking. Please be mindful of noise if returning after 10pm.',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      hasWifi: true,
+      hasWashingMachine: true,
+      isPetFriendly: false,
+      isWheelchairAccessible: false,
+      isNearPub: true,
+      isNearBeach: false,
+      comments: [],
+      bookings: []
     }
   ]
 
