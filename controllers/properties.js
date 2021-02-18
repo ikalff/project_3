@@ -39,7 +39,7 @@ async function removeProperty(req, res, next) {
 
     const propertyToRemove = await Properties.findById(id).populate('host').populate('comments.user').populate('bookings.user')
 
-    if (!currentUser.isAdmin && !currentUser._id.equals(propertyToRemove._id)) {
+    if (!currentUser.isAdmin && !currentUser._id.equals(propertyToRemove.host._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
 
@@ -57,11 +57,11 @@ async function updateProperty(req, res, next) {
   const body = req.body
 
   try {
-    const propertyToUpdate = await Properties.findById(id)
+    const propertyToUpdate = await Properties.findById(id).populate('host')
     if (!propertyToUpdate) {
       return res.send({ message: 'Oops, we didn\'t find any properties to update. Please try again' })
     }
-    if (!propertyToUpdate._id.equals(currentUser._id)) {
+    if (!propertyToUpdate.host._id.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
     
