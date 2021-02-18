@@ -1,24 +1,6 @@
 //! DO WE NEED A BOOKING MODEL??
 
 async function getBookings(_req, res, next) {
-  try {
-    const bookingList = await bookings.find().populate('user')
-    res.send(bookingList)
-  } catch (err) {
-    next(err)
-  }
-}
-
-async function makeBooking(req, res, next) {
-  const body = req.body
-  body.user = req.currentUser
-  try {
-    const newbooking = await bookings.create(body)
-    res.status(201).send(newbooking)
-  } catch (err) {
-    next(err)
-  }
-}
 
 async function getSingleBooking(req, res, next) {
   const id = req.params.id
@@ -31,52 +13,92 @@ async function getSingleBooking(req, res, next) {
   }
 }
 
-async function removeBooking(req, res, next) {
-  const id = req.params.id
-  const currentUser = req.currentUser
+import Properties from '../models/properties.js'
+// ! NEED TO AD ADMINS
+async function makeBooking(req, res, next) {
+
+  const bookingData = req.body
+  const propertyId = req.params.propertyId
+  bookingData.user = req.currentUser
 
   try {
+    const property = await Properties.findById(propertyId).populate('bookings.user').populate('user')
 
-    const bookingToRemove = await bookings.findById(id).populate('user')
-
-    if (!currentUser.isAdmin && !currentUser._id.equals(bookingToRemove.user)) {
-      return res.status(401).send({ message: 'Unauthorized' })
+    if (!property) {
+      return res.status(404).send({ message: 'Not found' })
     }
 
-    await bookingToRemove.deleteOne()
 
-    res.send(bookingToRemove)
+    property.bookings.push(bookingData)
+
+    const savedProperty = await property.save()
+
+    res.send(savedProperty)
+
   } catch (err) {
     next(err)
   }
 }
 
 async function updateBooking(req, res, next) {
-  const id = req.params.id
+  const bookingData = req.body
   const currentUser = req.currentUser
-  const body = req.body
+  const { bookingId, propertyId } = req.params
 
   try {
-    const bookingToUpdate = await bookings.findById(id)
-    if (!bookingToUpdate) {
-      return res.send({ message: 'Oops, we didn\'t find any bookings to update. Please try again' })
+    const property = await Properties.findById(propertyId).populate('user').populate('bookings.user')
+
+    if (!property) {
+      return res.status(404).send({ message: 'Not found' })
     }
-    if (!bookingToUpdate.user.equals(currentUser._id)) {
+
+
+    const booking = property.bookings.id(bookingId)
+
+    if (!booking.user.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
-    
-    bookingToUpdate.set(body)
-    bookingToUpdate.save()
 
-    res.send(bookingToUpdate)
+    booking.set(bookingData)
+
+    const savedProperty = await property.save()
+
+    res.send(savedProperty)
 
   } catch (err) {
-    next()
+    next(err)
   }
 }
 
+async function removeBooking(req, res, next) {
+  const currentUser = req.currentUser
+  const { bookingId, propertyId } = req.params
+
+  try {
+    const property = await Properties.findById(propertyId).populate('user').populate('bookings.user')
+
+    if (!property) {
+      return res.status(404).send({ message: 'Not found' })
+    }
+
+    const booking = property.bookings.id(bookingId)
+
+    if (!booking.user.equals(currentUser._id)) {
+      return res.status(401).send({ message: 'Unauthorized' })
+    }
+
+    booking.remove()
+
+    const savedProperty = await property.save()
+    res.send(savedProperty)
+
+  } catch (err) {
+    next(err)
+  }
+}
+
+
 export default {
-  getBookings,
   makeBooking,
   getSingleBooking,
   removeBooking,
