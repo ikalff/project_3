@@ -39,7 +39,7 @@ async function removeProperty(req, res, next) {
 
     const propertyToRemove = await Properties.findById(id).populate('host').populate('comments.user').populate('bookings.user')
 
-    if (!currentUser.isAdmin && !currentUser._id.equals(propertyToRemove.user)) {
+    if (!currentUser.isAdmin && !currentUser._id.equals(propertyToRemove._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
 
