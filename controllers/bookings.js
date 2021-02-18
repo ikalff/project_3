@@ -53,7 +53,7 @@ async function updateBooking(req, res, next) {
 
     const booking = property.bookings.id(bookingId)
 
-    if (!booking.user.equals(currentUser._id)) {
+    if (!booking._id.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
 
@@ -81,7 +81,7 @@ async function removeBooking(req, res, next) {
 
     const booking = property.bookings.id(bookingId)
 
-    if (!booking.user.equals(currentUser._id)) {
+    if (!booking._id.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
 
