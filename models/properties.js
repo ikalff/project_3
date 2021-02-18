@@ -3,36 +3,40 @@
     id:
     name: String
     location: String
-    images {
+    images: {
       main
-
     }
     isRoomOnly:
     isEntirePlace:
-    price: Number
-    description {
+    pricePerNight: Number
+    description: {
       summary:
-      numberOfBedrooms:
-      checkInOutTimes: String
-      houseRules: String
+      houseRules: String,
       cancellationPolicy: String
-    }
+    },
+    numberOfBedrooms:
+    checkInTime: String
+    checkOutTIme: String
     hasWifi:
     hasWashingMachine:
     isPetFriendly:
     isWheelchairAccessible:
     isNearPub:
     isNearBeach:
-    Comments: [{
+    comments: [{
       id:
-      user.id
-      dateCreated
-      dateUpdated
-    }]
-    Bookings:[
+      text:
+      user: {
+        user.firstName
+        user.id
+      },
+      createdAt:
+      updatedAt:
+    }],
+    bookings:[
       {
         id:
-        user.id
+        user.id:
         checkInDate:
         checkOutDate:
         numberOfGuests:
