@@ -26,6 +26,7 @@
     comments: [{
       id:
       text:
+      ratingDropdown: //some kind of form
       user: {
         user.firstName
         user.id
