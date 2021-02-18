@@ -1,4 +1,4 @@
-export default function getPropertyData() {
+export default function getPropertyData(users) {
   return [
     {
       name: 'Lovely seaside cottage',
@@ -21,7 +21,7 @@ export default function getPropertyData() {
       isWheelchairAccessible: true,
       isNearPub: true,
       isNearBeach: true,
-      host: [0],
+      host: users[0],
       comments: [],
       bookings: []
     },
@@ -48,7 +48,7 @@ export default function getPropertyData() {
       isWheelchairAccessible: false,
       isNearPub: true,
       isNearBeach: false,
-      host: [0],
+      host: users[0],
       comments: [],
       bookings: []
     },
@@ -74,7 +74,7 @@ export default function getPropertyData() {
       isWheelchairAccessible: false,
       isNearPub: true,
       isNearBeach: false,
-      host: [3],
+      host: users[3],
       comments: [],
       bookings: []
     },
@@ -100,7 +100,7 @@ export default function getPropertyData() {
       isWheelchairAccessible: false,
       isNearPub: true,
       isNearBeach: false,
-      host: [3],
+      host: users[3],
       comments: [],
       bookings: []
     }
