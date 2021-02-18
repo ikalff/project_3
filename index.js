@@ -3,6 +3,10 @@ import router from './views/router.js'
 import logger from './middleware/logger.js'
 import connectToDb from './lib/connectToDb.js'
 import errorHandler from './middleware/errorHandler.js'
+import { port } from './config/environment.js'
+
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express()
 
@@ -19,8 +23,10 @@ async function startServer() {
 
   app.use(errorHandler)
 
-  app.listen(8000, () => console.log('Up and running'))
+  app.listen(port, () => console.log(`Up and running on port ${port}`))
 
 }
 
 startServer()
+
+export default app
