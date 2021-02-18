@@ -9,7 +9,7 @@ import comments from '../controllers/comments.js'
 const router = express.Router()
 
 
-// Users
+//? Users
 
 router.route('/register')
   .post(users.register)
@@ -22,7 +22,7 @@ router.route('/users/:usersId')
   .put(secureRoute, users.updateusers)
 
 
-// Properties
+//? Properties
 
 router.route('/properties')
   .get(properties.getProperties)
@@ -34,11 +34,12 @@ router.route('/properties/:propertyId')
   .delete(secureRoute, properties.removeProperty)
 
 
-// Bookings
+//? Bookings
 
 router.route('/users/:userId')
   .get(users.getSingleUser)
   .put(secureRoute, users.updateUser)
+
 
 router.route('/bookings/:propertyId')
   .post(secureRoute, bookings.makeBooking)
@@ -48,7 +49,7 @@ router.route('/bookings/:propertId/:bookingId')
   .delete(secureRoute, bookings.removeBooking)
 
 
-// Comments
+//? Comments
 
 router.route('/properties/:propertyId/comment')
   .post(secureRoute, comments.makeComment)
