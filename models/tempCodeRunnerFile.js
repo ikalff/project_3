@@ -1,0 +1,1 @@
+  images: { type: Array, required: true, unique: false },

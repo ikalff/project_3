@@ -46,7 +46,7 @@ export default function App() {
       {properties.slice((pageNum - 1) * resultsPerPage, ((pageNum - 1) * resultsPerPage) + resultsPerPage).map((property, index) => {
         return <div key={index} className='box columns'>
           <div className='column'>
-            <Link to={'/properties/' + property._id}><img src={property.images.main ? property.images.main : 'http://placehold.it/400x400?text=no%20image%20available'} /></Link>
+            <Link to={'/properties/' + property._id}><img src={property.images[0] ? property.images[0] : 'http://placehold.it/400x400?text=no%20image%20available'} /></Link>
           </div>
           <div className='column'>
             <h4 className='title is-4 mb-2'>{property.name}</h4>
