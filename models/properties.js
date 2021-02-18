@@ -4,8 +4,7 @@ import uniqueValidator from 'mongoose-unique-validator'
 const commentSchema = new mongoose.Schema({
   text: { type: String, required: true },
   user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }, 
-
-  userFirstName: { type: mongoose.Schema.first_name, ref: 'User', required: true }
+  userFirstName: { type: String, ref: 'User', required: true }
 },
 { timestamps: true }
 )
