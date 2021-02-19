@@ -26,35 +26,33 @@ export default function Login({ history }) {
     }
   }
 
-  return <div className="section">
-    <div className="container">
-      <form onSubmit={handleSubmit}>
-        <div className="field">
-          <label className="label">Email</label>
-          <div className="control">
-            <input
-              className="input"
-              type="text"
-              value={formData.email}
-              onChange={handleChange}
-              name={'email'}
-            />
-          </div>
+  return <div className='container px-6 pt-6 pb-6'>
+    <form onSubmit={handleSubmit}>
+      <div className="field">
+        <label className="label">Email</label>
+        <div className="control">
+          <input
+            className="input"
+            type="text"
+            value={formData.email}
+            onChange={handleChange}
+            name={'email'}
+          />
         </div>
-        <div className="field">
-          <label className="label">Password</label>
-          <div className="control">
-            <input
-              className="input"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              name={'password'}
-            />
-          </div>
+      </div>
+      <div className="field">
+        <label className="label">Password</label>
+        <div className="control">
+          <input
+            className="input"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            name={'password'}
+          />
         </div>
-        <button className="button is-primary">Submit</button>
-      </form>
-    </div>
+      </div>
+      <button className="button is-primary">Submit</button>
+    </form>
   </div>
 }
