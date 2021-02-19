@@ -4,13 +4,20 @@ async function makeComment(req, res, next) {
 
   const commentData = req.body
   const propertyId = req.params.propertyId
-  commentData.user = req.currentUser
+  const currentUser = req.currentUser
+
 
   try {
-    const property = await Properties.findById(propertyId).populate('comments.user').populate('user')
+    const property = await Properties.findById(propertyId).populate('comments.user').populate('host')
 
     if (!property) {
       return res.status(404).send({ message: 'Not found' })
+    }
+
+    if(!currentUser._id.equals(property.host._id)) {
+      property.bookings.map(booking => {
+        if(!currentUser._id.equals(booking.user._id)) return res.status(401).send({ message: 'Only the host and users that have booked can make a comment' })
+      })
     }
 
     property.comments.push(commentData)
