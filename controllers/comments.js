@@ -38,7 +38,7 @@ async function updateComment(req, res, next) {
 
     const comment = property.comments.id(commentId)
 
-    if (!comment._id.equals(currentUser._id)) {
+    if (!comment.user._id.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
 
@@ -66,7 +66,7 @@ async function removeComment(req, res, next) {
 
     const comment = property.comments.id(commentId)
 
-    if (!comment._id.equals(currentUser._id)) {
+    if (!comment.user._id.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
 
