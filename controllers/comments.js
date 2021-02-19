@@ -17,7 +17,6 @@ async function makeComment(req, res, next) {
     if(!currentUser._id.equals(property.host._id)) {
       if(property.bookings.length < 1) return res.status(401).send({ message: 'Only the host and users that have booked can make a comment' })
       property.bookings.map(booking => {
-        console.log('checking booking')
         if(!currentUser._id.equals(booking.user._id)) return res.status(401).send({ message: 'Only the host and users that have booked can make a comment' })
       })
     }
