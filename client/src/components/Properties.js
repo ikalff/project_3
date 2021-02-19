@@ -3,18 +3,19 @@ import axios from 'axios'
 import Paginate from './Paginate'
 import { Link } from 'react-router-dom'
 
-export default function App() {
+export default function App({ history }) {
 
   const resultsPerPage = 3
   const [properties, updateProperties] = useState([])
   const [pageNum, updatePageNum] = useState(1)
   const [loading, updateLoading] = useState(true)
+  const [location, updateLocation] = useState('')
+
   const amenities = ['Wifi', 'Pet friendly', 'Wheelchair Accessible', 'Washing machine', 'Near a beach']
 
 
-  const [formData, updateFormData] = useState({
-    location: '',
-    Wifi: false,
+  const [checkboxData, updateCheckboxData] = useState({
+    'Wifi': false,
     'Pet friendly': false,
     'Wheelchair Accessible': false,
     'Washing machine': false,
@@ -39,20 +40,33 @@ export default function App() {
     updatePageNum(newValue)
   }
 
+  function handleLocationBox(event) {
+    updateLocation(event.target.value)
+    console.log(location)
+  }
 
-  function handleChange(event) {
-    const newFormData = formData
-    if (event.target.type === 'text') {
-      newFormData['location'] = event.target.value
-    } else if (event.target.type === 'checkbox') {
-      newFormData[event.target.name] = event.target.checked
-    }
-    console.log(newFormData)
-    updateFormData(newFormData)
+
+  function handleCheckBox(event) {
+    const newcheckboxData = { ...checkboxData }
+    newcheckboxData[event.target.name] = event.target.checked
+    console.log(newcheckboxData)
+    updateCheckboxData(newcheckboxData)
   }
 
 
 
+  function clearFilters() {
+    updateLocation('')
+    updateCheckboxData({
+      'Wifi': false,
+      'Pet friendly': false,
+      'Wheelchair Accessible': false,
+      'Washing machine': false,
+      'Near a beach': false
+    })
+    console.log(location)
+    console.log(checkboxData)
+  }
 
   function filter(event) {
     event.preventDefault()
@@ -60,55 +74,27 @@ export default function App() {
     try {
       axios.get('api/properties')
         .then(({ data }) => {
-          //console.log(data)
           let newProperties = []
 
-          //console.log('Initial load')
-          //console.log(newProperties)
-
           newProperties = data.filter(property => {
-            return property.location.toLowerCase().includes(formData.location.toLowerCase())
+            return property.location.toLowerCase().includes(location.toLowerCase())
           })
-
-
-          //console.log('after location')
-          //console.log(newProperties)
-
           amenities.forEach(amenityName => {
 
-            if (formData[amenityName] === true) {
+            if (checkboxData[amenityName] === true) {
               console.log(amenityName)
               newProperties = newProperties.filter(property => {
                 return property.amenities.find(amenity => amenity.amenityName === amenityName).amenityValue === true
               })
             }
-
-
           })
-
-
-
-
-
-          //console.log('after wifi')
-          //console.log(newProperties)
-
           updateProperties(newProperties)
-
-
         })
     } catch (err) {
       console.log(err)
     }
 
-
-
   }
-
-
-
-
-
 
 
   if (loading) {
@@ -116,12 +102,11 @@ export default function App() {
       <img src='https://i.ibb.co/xDS2vQc/loading.gif' />
     </div>
   }
-
+  
 
   return <div className='container px-6 pt-6 pb-6'>
     <div className='columns'>
-      <div className='column'>
-
+      <div className='column is-narrow'>
         <form onSubmit={filter}>
 
           <div className="field">
@@ -131,35 +116,33 @@ export default function App() {
                 className="input"
                 type="text"
                 name="location"
-                onChange={handleChange}
-                value={formData.location}
+                onChange={handleLocationBox}
+                value={location}
               />
             </div>
           </div>
           {
             amenities.map((amenity, index) => {
               return <div key={index} className="field">
-                <label className="label">{amenity}</label>
-                <div className="control">
+                <label className="checkbox">
+
                   <input
                     type="checkbox"
                     name={amenity}
-                    onChange={handleChange}
-                    value={formData[amenity]}
+                    onChange={handleCheckBox}
+                    checked={checkboxData[amenity]}
                   />
-                </div>
+                  {amenity} 
+                </label>
               </div>
-
             })
-
           }
+          <div className='buttons'>
+            <button className='button is-primary'>Apply Filters</button>
 
-
-
-
-          <button>Filter</button>
+            <button className='button' onClick={clearFilters}>Clear</button>
+          </div>
         </form>
-
 
       </div>
       <div className='column'>
@@ -197,7 +180,6 @@ export default function App() {
 
               </div>
             </div>
-
           })}
         </div>
       </div>
