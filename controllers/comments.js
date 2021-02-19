@@ -5,7 +5,7 @@ async function makeComment(req, res, next) {
   const commentData = req.body
   const propertyId = req.params.propertyId
   const currentUser = req.currentUser
-
+  commentData.user = currentUser
 
   try {
     const property = await Properties.findById(propertyId).populate('comments.user').populate('host')
@@ -14,11 +14,11 @@ async function makeComment(req, res, next) {
       return res.status(404).send({ message: 'Not found' })
     }
 
-    if(!currentUser._id.equals(property.host._id)) {
-      if(property.bookings.length < 1) return res.status(401).send({ message: 'Only the host and users that have booked can make a comment' })
+    if (!currentUser._id.equals(property.host._id)) {
+      if (property.bookings.length < 1) return res.status(401).send({ message: 'Only the host and users that have booked can make a comment' })
       property.bookings.map(booking => {
-        console.log('checking booking')
-        if(!currentUser._id.equals(booking.user._id)) return res.status(401).send({ message: 'Only the host and users that have booked can make a comment' })
+
+        if (!currentUser._id.equals(booking.user._id)) return res.status(401).send({ message: 'Only the host and users that have booked can make a comment' })
       })
     }
 
@@ -29,6 +29,7 @@ async function makeComment(req, res, next) {
     res.send(savedProperty)
 
   } catch (err) {
+    console.log(err)
     next(err)
   }
 }
@@ -36,6 +37,7 @@ async function makeComment(req, res, next) {
 async function updateComment(req, res, next) {
   const commentData = req.body
   const currentUser = req.currentUser
+  commentData.user = currentUser
   const { commentId, propertyId } = req.params
 
   try {
@@ -64,6 +66,7 @@ async function updateComment(req, res, next) {
 
 async function removeComment(req, res, next) {
   const currentUser = req.currentUser
+
   const { commentId, propertyId } = req.params
 
   try {
