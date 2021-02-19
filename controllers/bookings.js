@@ -17,14 +17,22 @@ async function makeBooking(req, res, next) {
 
   const bookingData = req.body
   const propertyId = req.params.propertyId
+  
+
+  const numberOfGuests = req.body.numberOfGuests 
+
   bookingData.user = req.currentUser
 
   try {
     const property = await Properties.findById(propertyId)
-    console.log('booking:', propertyId)
-    console.log(property)
+
     if (!property) {
       return res.status(404).send({ message: 'Not found' })
+    }
+
+    if (numberOfGuests > property.maxNumberOfGuests) {
+      
+      return res.status(400).send({ message: 'Too many guests for this booking' })
     }
 
 
