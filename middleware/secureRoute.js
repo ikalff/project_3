@@ -23,11 +23,6 @@ export default async function secureRoute(req, res, next) {
       }
 
       const user = await User.findById(data.userId)
-     
-      console.log('Hello I am your User.findById', User.findById(data.userId))
-      console.log('Hello I am your user variable', user)
-      console.log('Hello I am your userId', data.userId)
-      console.log('Hello I am your req params', req.params)
 
       if (!user) {
         return res.status(401).send({ message: 'Unauthorized3' })
