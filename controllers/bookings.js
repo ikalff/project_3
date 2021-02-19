@@ -20,8 +20,9 @@ async function makeBooking(req, res, next) {
   bookingData.user = req.currentUser
 
   try {
-    const property = await Properties.findById(propertyId).populate('bookings.user').populate('user')
-
+    const property = await Properties.findById(propertyId)
+    console.log('booking:', propertyId)
+    console.log(property)
     if (!property) {
       return res.status(404).send({ message: 'Not found' })
     }
@@ -53,7 +54,7 @@ async function updateBooking(req, res, next) {
 
     const booking = property.bookings.id(bookingId)
 
-    if (!booking._id.equals(currentUser._id)) {
+    if (!booking.user._id.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
 
@@ -81,7 +82,7 @@ async function removeBooking(req, res, next) {
 
     const booking = property.bookings.id(bookingId)
 
-    if (!booking._id.equals(currentUser._id)) {
+    if (!booking.user._id.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
 
