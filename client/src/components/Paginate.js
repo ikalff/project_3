@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Paginate({ onChange, pageNum, totalResults, resultsPerPage }) {
 
-  function handleChange(value) {
+  function handlePageChange(value) {
     onChange(value)
   }
 
@@ -21,7 +21,7 @@ export default function Paginate({ onChange, pageNum, totalResults, resultsPerPa
       <div className='column has-text-right'>
 
         {pagesArray.map((num, index) => {
-          return <button index={index} onClick={() => handleChange(index + 1)} key={index} href='' className={pageNum === (index + 1) ? 'current' : ''}> {num} </button>
+          return <button index={index} onClick={() => handlePageChange(index + 1)} key={index} href='' className={pageNum === (index + 1) ? 'current' : ''}> {num} </button>
         })}
       </div>
     </div>

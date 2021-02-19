@@ -24,7 +24,7 @@ export default function getPropertyData(users) {
         },
         {
           amenityName: 'Pet friendly',
-          amenityValue: true
+          amenityValue: false
         },
         {
           amenityName: 'Wheelchair Accessible',
@@ -32,11 +32,11 @@ export default function getPropertyData(users) {
         },
         {
           amenityName: 'Washing machine',
-          amenityValue: true
+          amenityValue: false
         },
         {
           amenityName: 'Near a beach',
-          amenityValue: true
+          amenityValue: false
         }
       ],
       host: users[0],
@@ -65,7 +65,7 @@ export default function getPropertyData(users) {
         },
         {
           amenityName: 'Pet friendly',
-          amenityValue: true
+          amenityValue: false
         },
         {
           amenityName: 'Wheelchair Accessible',
@@ -101,7 +101,7 @@ export default function getPropertyData(users) {
       amenities: [
         {
           amenityName: 'Wifi',
-          amenityValue: true
+          amenityValue: false
         },
         {
           amenityName: 'Pet friendly',
@@ -109,11 +109,11 @@ export default function getPropertyData(users) {
         },
         {
           amenityName: 'Wheelchair Accessible',
-          amenityValue: true
+          amenityValue: false
         },
         {
           amenityName: 'Washing machine',
-          amenityValue: true
+          amenityValue: false
         },
         {
           amenityName: 'Near a beach',
@@ -141,7 +141,7 @@ export default function getPropertyData(users) {
       amenities: [
         {
           amenityName: 'Wifi',
-          amenityValue: true
+          amenityValue: false
         },
         {
           amenityName: 'Pet friendly',
@@ -149,7 +149,7 @@ export default function getPropertyData(users) {
         },
         {
           amenityName: 'Wheelchair Accessible',
-          amenityValue: true
+          amenityValue: false
         },
         {
           amenityName: 'Washing machine',
@@ -157,7 +157,7 @@ export default function getPropertyData(users) {
         },
         {
           amenityName: 'Near a beach',
-          amenityValue: true
+          amenityValue: false
         }
       ],
       host: users[3],
