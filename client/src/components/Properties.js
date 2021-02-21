@@ -24,50 +24,33 @@ export default function App() {
 
 
   useEffect(() => {
-
-
     async function fetchProperties() {
-
       if (searchState.state) {
         updateLocationData(searchState.state.locationData.locationData)
         updateCheckboxData(searchState.state.checkboxData.checkboxData)
-        //filter(data)
       }
-
       try {
         const { data } = await axios.get('api/properties')
         updateProperties(data)
         updateLoading(false)
-
-
         if (searchState.state) {
           filter(data, searchState.state.locationData.locationData, searchState.state.checkboxData.checkboxData)
         }
-
-
-
       } catch (err) {
         console.log(err)
       }
     }
-
     fetchProperties()
-
   }, [])
 
 
 
   function filter(data, locationData, checkboxData) {
-    console.log(data)
-    console.log(locationData)
     let newProperties = []
-
     newProperties = data.filter(property => {
       return property.location.toLowerCase().includes(locationData.toLowerCase())
     })
-
     amenities.forEach(amenityName => {
-
       if (checkboxData[amenityName] === true) {
         console.log(amenityName)
         newProperties = newProperties.filter(property => {
@@ -75,12 +58,21 @@ export default function App() {
         })
       }
     })
-
-    console.log('New: ')
-    console.log(newProperties)
     updateProperties(newProperties)
   }
 
+  async function fetchandfilter(newLocationValue, newCheckboxValue) {
+    try {
+      const { data } = await axios.get('api/properties')
+      updateProperties(data)
+      updateLoading(false)
+      if (searchState.state) {
+        filter(data, newLocationValue, newCheckboxValue)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
 
 
@@ -88,15 +80,11 @@ export default function App() {
     updatePageNum(newValue)
   }
 
-
   function handleFieldsChange(newLocationValue, newCheckboxValue) {
     updateLocationData(newLocationValue)
     updateCheckboxData(newCheckboxValue)
+    fetchandfilter(newLocationValue, newCheckboxValue)
   }
-
-
-
-
 
   if (loading) {
     return <div className='loading'>
@@ -134,7 +122,7 @@ export default function App() {
               </div>
               <div className='column'>
                 <h4 className='title is-4 mb-2'>{property.name}</h4>
-                <p>locationData: {property.locationData}</p>
+                <p>Location: {property.location}</p>
                 <p>Summary: {property.summary}</p>
                 <h5 className='title is-5 mt-4 mb-2'>Amenities</h5>
                 {property.amenities.length > 0 &&

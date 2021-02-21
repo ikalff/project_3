@@ -26,7 +26,11 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
   }, [])
 
 
-  function handleFieldsChange(locationData, checkboxData) {
+  function handleFieldsChange(event) {
+    event.preventDefault()
+    console.log('Inside handlefieldschage')
+    console.log(locationData)
+    console.log(checkboxData)
     onChange(locationData, checkboxData)
   }
 
@@ -44,7 +48,8 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
     updateCheckboxData(newcheckboxData)
   }
 
-  function clearFilters() {
+  function clearFilters(event) {
+    event.preventDefault()
     updateLocationData('')
     updateCheckboxData({
       'Wifi': false,
@@ -55,7 +60,7 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
     })
   }
 
- 
+
 
   return <form>
 
@@ -92,11 +97,10 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
 
     {formLocation === 'listings' && <div className='buttons'>
 
+
  
 
-      <button className='button is-primary' onClick={() => {
-        handleFieldsChange(locationData, checkboxData)
-      }}>Apply</button>
+      <button className='button is-primary' onClick={handleFieldsChange}>Apply</button>
 
 
       <button className='button' onClick={clearFilters}>Clear</button>
