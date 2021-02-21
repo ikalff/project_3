@@ -16,7 +16,7 @@ function NavBar({ location, history }) {
         try {
           const { data } = await axios.get(`/api/users/${LoggedInUserId}`)
           if (data) {
-            console.log(data)
+            //console.log(data)
             updateUsername(data.first_name)
           }
         } catch (err) {
