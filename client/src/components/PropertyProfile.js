@@ -59,6 +59,16 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
+  function handleCommentUpdate(commentId) {
+    axios.put(`/api/properties/${match.params.propertyId}/comment/${commentId}`, { text }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(resp => {
+        setText('')
+        updateproperties(resp.data)
+      })
+  }
+
   function handleDeleteComment(commentId) {
     axios.delete(`/api/properties/${match.params.propertyId}/comment/${commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -133,6 +143,12 @@ export default function Singleproperty({ match, history }) {
                   <button
                     className="delete"
                     onClick={() => handleDeleteComment(comment._id)}>
+                  </button>
+                </div>}
+                {isCreator(comment.user._id) && <div className="media-right">
+                  <button
+                    className="update"
+                    onClick={() => handleCommentUpdate(comment._id)}>Edit
                   </button>
                 </div>}
               </article>
