@@ -1,15 +1,4 @@
-/*
-redirect here after log in? or login takes you to the page you were on when you logged in?
-
-display host properties with POST, PUT, GET and DEL options
-- do a get request for every single property id in user.properties array?
-
-pass userId as props after login?
-
-do we want property info in the user schema attached to hosts? -> This would work with route /users/:userID
-
-route is: /users/:userID
-*/
+//!redirect here after log in? or login takes you to the page you were on when you logged in?
 
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
