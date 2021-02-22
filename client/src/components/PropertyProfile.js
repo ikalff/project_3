@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { isOwner } from '../lib/auth.js'
+import { isCreator } from '../lib/auth.js'
 import properties from '../../../models/properties.js'
 import { getLoggedInUserId } from '../lib/auth.js'
 import BookingForm from './BookingForm.js'
@@ -121,7 +121,20 @@ export default function Singleproperty({ match, history }) {
           {property.comments.length > 0 && <h5 className='title is-5 mt-4 mb-2'>Comments</h5>}
           {property.comments.length > 0 &&
             property.comments.map((comment, index) => {
-              return <li key={index}>{comment.text}</li>
+              return <article key={index} className="media">
+                <div className="media-content">
+                  <div className="content">
+                    <h6>{comment.user.first_name} says:</h6>
+                    <p>{comment.text}</p>
+                  </div>
+                </div>
+                {isCreator(comment.user._id) || isCreator(comment.host._id) && <div className="media-right">
+                  <button
+                    className="delete"
+                    onClick={() => handleDeleteComment(comment._id)}>
+                  </button>
+                </div>}
+              </article>
             })
           }
 
@@ -131,28 +144,6 @@ export default function Singleproperty({ match, history }) {
 
 
           <h4>Review:</h4>
-          {properties.comments && properties.comments.map(comment => {
-            return <article key={comment._id} className="media">
-              <div className="media-content">
-                <div className="content">
-                  <p className="subtitle">
-                    {comment.user.first_name}
-                  </p>
-                  <p>{comment.text}</p>
-                </div>
-              </div>
-              {
-
-              }
-              {currentUser(comment.user._id) || currentUser(comment.host._id) && <div className="media-right">
-                <button
-                  className="delete"
-                  onClick={() => handleDeleteComment(comment._id)}>
-                </button>
-              </div>}
-            </article>
-          })}
-
 
           <article className="media">
             <div className="media-content">
