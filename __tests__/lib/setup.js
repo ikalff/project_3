@@ -20,8 +20,27 @@ export default async function setup(done) {
       passwordConfirmation: 'passwords1',
       isHost: false,
       isAdmin: false 
+    },
+    {
+      first_name: 'India',
+      last_name: 'Kalff',
+      email: 'india@india.com',
+      password: 'passwords3',
+      passwordConfirmation: 'passwords3',
+      isHost: true,
+      isAdmin: false
+    },
+    {
+      first_name: 'Emily',
+      last_name: 'Kulesa',
+      email: 'emily@emily.com',
+      password: 'passwords4',
+      passwordConfirmation: 'passwords4',
+      isHost: false,
+      isAdmin: false
     }
   ])
+
   await Properties.create([
     {
       name: 'Lovely seaside cottage',
@@ -108,7 +127,91 @@ export default async function setup(done) {
       host: users[0],
       comments: [],
       bookings: []
+    },
+
+    {
+      name: 'Charming London Flat',
+      location: 'Notting Hill',
+      images: ['https://www.londonperfect.com/blog/wp-content/uploads/2019/03/Notting-Hills-Most-Colorful-Streets-by-London-Perfect.jpg'],
+      isRoomOnly: false,
+      isEntirePlace: true,
+      pricePerNight: 160,
+      summary: 'Charming Victorian flat on a quiet mews street only steps away from Notting Hill High Street',
+      numberOfBedrooms: 2,
+      maxNumberOfGuests: 4,
+      checkInTime: '16:00',
+      checkOutTime: '11:00',
+      houseRules: 'Strictly no smoking and no overnight guests. No parties.',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: true
+        }
+      ],
+      host: users[3],
+      comments: [],
+      bookings: []
+    },
+
+    {
+      name: 'Double Room in New Town, Edinburgh',
+      location: 'Edinburgh',
+      images: ['https://i.imgur.com/7h24bWB.jpeg'],
+      isRoomOnly: true,
+      isEntirePlace: false,
+      pricePerNight: 75,
+      summary: 'Perfect for the Fringe, this double bed has easy access to all the historic sites of Edinburgh',
+      numberOfBedrooms: 2,
+      maxNumberOfGuests: 3,
+      checkInTime: '16:30',
+      checkOutTime: '11:00',
+      houseRules: 'Strictly no smoking. Please be mindful of noise if returning after 10pm.',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: false
+        }
+      ],
+      host: users[3],
+      comments: [],
+      bookings: []
     }
   ])
+
   done()
+
 }
