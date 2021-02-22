@@ -4,25 +4,46 @@ import PropertyForm from './PropertyForm'
 
 export default function UpdatePokemon({ history, match }) {
 
-  const pokemonId = match.params.pokemonId
-
+  const propertyId = match.params.propertyId
   const [formData, updateFormData] = useState({
+    images: [],
     name: '',
-    weight: '',
-    image: '',
-    types: []
+    location: '',
+    isRoomOnly: false,
+    isEntirePlace: false,
+    pricePerNight: '',
+    summary: '',
+    numberOfBedrooms: '',
+    maxNumberOfGuests: '',
+    checkInTime: '',
+    checkOutTime: '',
+    houseRules: '',
+    cancellationPolicy: '',
+    amenities: []
   })
 
+
   useEffect(() => {
-    axios.get(`/api/pokemon/${pokemonId}`)
+    axios.get(`/api/properties/${propertyId}`)
       .then(({ data }) => {
-        const mappedFormData = {
-          ...data,
-          types: data.types.map(type => {
-            return { value: type, label: type[0].toUpperCase() + type.slice(1) }
-          })
+        const newFormData = {
+          images: data['images'],
+          name: data['name'],
+          location: data['location'],
+          isRoomOnly: data['isRoomOnly'],
+          isEntirePlace: data['isEntirePlace:'],
+          pricePerNight: data['pricePerNight'],
+          summary: data['summary'],
+          numberOfBedrooms: data['numberOfBedrooms'],
+          maxNumberOfGuests: data['maxNumberOfGuests'],
+          checkInTime: data['checkInTime'],
+          checkOutTime: data['checkOutTime'],
+          houseRules: data['houseRules'],
+          cancellationPolicy: data['cancellationPolicy'],
+          amenities: data['amenities']
         }
-        updateFormData(mappedFormData)
+        updateFormData(newFormData)
+        console.log(newFormData)
       })
   }, [])
 
@@ -36,15 +57,27 @@ export default function UpdatePokemon({ history, match }) {
     const token = localStorage.getItem('token')
 
     const newFormData = {
-      ...formData,
-      types: formData.types.map(type => type.value)
+      images: formData['images'],
+      name: formData['name'],
+      location: formData['location'],
+      isRoomOnly: true,
+      isEntirePlace: true,
+      pricePerNight: formData['pricePerNight'],
+      summary: formData['summary'],
+      numberOfBedrooms: formData['numberOfBedrooms'],
+      maxNumberOfGuests: formData['maxNumberOfGuests'],
+      checkInTime: formData['checkInTime'],
+      checkOutTime: formData['checkOutTime'],
+      houseRules: formData['houseRules'],
+      cancellationPolicy: formData['cancellationPolicy'],
+      amenities: formData['amenities']
     }
     try {
-      const { data } = await axios.put(`/api/pokemon/${pokemonId}`, newFormData, {
+      const { data } = await axios.put(`/api/properties/${propertyId}`, newFormData, {
         headers: { Authorization: `Bearer ${token}` }
       })
       console.log(data._id)
-      history.push(`/pokemon/${data._id}`)
+      history.push(`/properties/${data._id}`)
     } catch (err) {
       console.log(err.response.data)
     }

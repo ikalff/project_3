@@ -5,9 +5,8 @@ import { getLoggedInUserId } from '../lib/auth.js'
 
 
 export default function MakeProperty({ history }) {
-
-const LoggedInUserId = getLoggedInUserId()
-
+  
+  const LoggedInUserId = getLoggedInUserId()
   const [formData, updateFormData] = useState({
     images: [],
     name: '',
@@ -33,8 +32,6 @@ const LoggedInUserId = getLoggedInUserId()
   async function handleSubmit(event) {
     event.preventDefault()
     const token = localStorage.getItem('token')
-
-
     const newFormData = {
       images: formData['images'],
       name: formData['name'],
@@ -63,7 +60,7 @@ const LoggedInUserId = getLoggedInUserId()
       console.log(err.response.data)
     }
   }
-  
+
   return <div>
     <h5 className='title is-5 mt-4 mb-2'>List your property</h5>
     <PropertyForm

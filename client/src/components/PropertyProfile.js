@@ -138,14 +138,17 @@ export default function Singleproperty({ match, history }) {
             })
           }
 
-          <BookingForm
-            propertyId={match.params.propertyId}
-            maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
+
+          {isCreator(property.host._id) ?
+            <Link to={`/updateproperty/${property._id}`} className='button is-primary'>Edit property</Link>
+            :
+            <BookingForm
+              propertyId={match.params.propertyId}
+              maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
+          }
 
 
           <h4>Review:</h4>
-<<<<<<< HEAD
-=======
           {properties.comments && properties.comments.map(comment => {
             return <article key={comment._id} className="media">
               <div className="media-content">
@@ -168,7 +171,6 @@ export default function Singleproperty({ match, history }) {
             </article>
           })}
 
->>>>>>> india
 
           <article className="media">
             <div className="media-content">
