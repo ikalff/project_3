@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Paginate from './Paginate'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import SearchForm from './SearchForm.js'
 
 export default function App() {
 
+  const searchState = useLocation()
   const resultsPerPage = 3
   const [properties, updateProperties] = useState([])
   const [pageNum, updatePageNum] = useState(1)
   const [loading, updateLoading] = useState(true)
+  const [locationData, updateLocationData] = useState('')
   const amenities = ['Wifi', 'Pet friendly', 'Wheelchair Accessible', 'Washing machine', 'Near a beach']
-
-
-  const [formData, updateFormData] = useState({
-    location: '',
-    Wifi: false,
+  const [checkboxData, updateCheckboxData] = useState({
+    'Wifi': false,
     'Pet friendly': false,
     'Wheelchair Accessible': false,
     'Washing machine': false,
@@ -22,94 +22,69 @@ export default function App() {
   })
 
 
+
   useEffect(() => {
-    try {
-      axios.get('api/properties')
-        .then(({ data }) => {
-          updateProperties(data)
-          console.log(data)
-          updateLoading(false)
+    async function fetchProperties() {
+      if (searchState.state) {
+        updateLocationData(searchState.state.locationData.locationData)
+        updateCheckboxData(searchState.state.checkboxData.checkboxData)
+      }
+      try {
+        const { data } = await axios.get('api/properties')
+        updateProperties(data)
+        updateLoading(false)
+        if (searchState.state) {
+          filter(data, searchState.state.locationData.locationData, searchState.state.checkboxData.checkboxData)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fetchProperties()
+  }, [])
+
+
+
+  function filter(data, locationData, checkboxData) {
+    let newProperties = []
+    newProperties = data.filter(property => {
+      return property.location.toLowerCase().includes(locationData.toLowerCase())
+    })
+    amenities.forEach(amenityName => {
+      if (checkboxData[amenityName] === true) {
+        console.log(amenityName)
+        newProperties = newProperties.filter(property => {
+          return property.amenities.find(amenity => amenity.amenityName === amenityName).amenityValue === true
         })
+      }
+    })
+    updateProperties(newProperties)
+  }
+
+  async function fetchandfilter(newLocationValue, newCheckboxValue) {
+    try {
+      const { data } = await axios.get('api/properties')
+      updateProperties(data)
+      updateLoading(false)
+      if (searchState.state) {
+        filter(data, newLocationValue, newCheckboxValue)
+      }
     } catch (err) {
       console.log(err)
     }
-  }, [])
+  }
+
+
 
   function handlePageChange(newValue) {
     updatePageNum(newValue)
   }
 
-
-  function handleChange(event) {
-    const newFormData = formData
-    if (event.target.type === 'text') {
-      newFormData['location'] = event.target.value
-    } else if (event.target.type === 'checkbox') {
-      newFormData[event.target.name] = event.target.checked
-    }
-    console.log(newFormData)
-    updateFormData(newFormData)
+  function handleFieldsChange(newLocationValue, newCheckboxValue) {
+    updateLocationData(newLocationValue)
+    updateCheckboxData(newCheckboxValue)
+    fetchandfilter(newLocationValue, newCheckboxValue)
   }
-
-
-
-
-  function filter(event) {
-    event.preventDefault()
-
-    try {
-      axios.get('api/properties')
-        .then(({ data }) => {
-          //console.log(data)
-          let newProperties = []
-
-          //console.log('Initial load')
-          //console.log(newProperties)
-
-          newProperties = data.filter(property => {
-            return property.location.toLowerCase().includes(formData.location.toLowerCase())
-          })
-
-
-          //console.log('after location')
-          //console.log(newProperties)
-
-          amenities.forEach(amenityName => {
-
-            if (formData[amenityName] === true) {
-              console.log(amenityName)
-              newProperties = newProperties.filter(property => {
-                return property.amenities.find(amenity => amenity.amenityName === amenityName).amenityValue === true
-              })
-            }
-
-
-          })
-
-
-
-
-
-          //console.log('after wifi')
-          //console.log(newProperties)
-
-          updateProperties(newProperties)
-
-
-        })
-    } catch (err) {
-      console.log(err)
-    }
-
-
-
-  }
-
-
-
-
-
-
 
   if (loading) {
     return <div className='loading'>
@@ -120,58 +95,24 @@ export default function App() {
 
   return <div className='container px-6 pt-6 pb-6'>
     <div className='columns'>
-      <div className='column'>
+      <div className='column is-narrow'>
 
-        <form onSubmit={filter}>
-
-          <div className="field">
-            <label className="label">Location</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                name="location"
-                onChange={handleChange}
-                value={formData.location}
-              />
-            </div>
-          </div>
-          {
-            amenities.map((amenity, index) => {
-              return <div key={index} className="field">
-                <label className="label">{amenity}</label>
-                <div className="control">
-                  <input
-                    type="checkbox"
-                    name={amenity}
-                    onChange={handleChange}
-                    value={formData[amenity]}
-                  />
-                </div>
-              </div>
-
-            })
-
-          }
-
-
-
-
-          <button>Filter</button>
-        </form>
-
+        <SearchForm
+          formLocation='listings'
+          onChange={handleFieldsChange}
+          locationDataProp={locationData}
+          checkboxDataProp={checkboxData}
+        ></SearchForm>
 
       </div>
       <div className='column'>
         <h2 className='title is-2 mb-2'>Properties</h2>
-
         <Paginate
           onChange={handlePageChange}
           pageNum={pageNum}
           totalResults={properties.length}
           resultsPerPage={resultsPerPage}
         />
-
         <div className='properties'>
           {properties.slice((pageNum - 1) * resultsPerPage, ((pageNum - 1) * resultsPerPage) + resultsPerPage).map((property, index) => {
 
@@ -197,7 +138,6 @@ export default function App() {
 
               </div>
             </div>
-
           })}
         </div>
       </div>
