@@ -83,8 +83,7 @@ export default function HostProfileComponent(props) {
         resultsPerPage={resultsPerPage}
       />
     </div>
-    
-
+  
     <div>
 
       {userProperties.map((item, index) => {
@@ -112,74 +111,4 @@ export default function HostProfileComponent(props) {
 
 
 
-  // * properties info
-
-/*
-  useEffect(() => {
-    try {
-    //! get user object as props from login?
-    axios.all([
-      user.properties.map(item => {
-        axios.get(`api/properties/${item.propertyId}`)
-      })
-        .then(responseArr => {
-          console.log('responseArr:', responseArr)
-          updatePropertiesArray(responseArr)
-          updatePropertiesArrayLoading(false)
-        })
-    ])
-
-  } catch (err) {
-    console.log('Error:', err)
-  }
-  }, [])
-  */
-
-
-
-
-/*
-return <main>
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-
-        </div>
-      </form>
-    </div>
-
-
-    <div>
-      {propertiesArray.map((item, index) => {
-        return <div key={index}>
-          <Link><h2>{item.name}</h2></Link>
-        </div>
-      })}
-    </div>
-  </main>
-
-*/
-
-
-
-/*
-  function handleChange(event) {
-    const {name, value} = event.target
-    updateUserData({...userData, [name]: value })
-  }
-
-  async function handleSubmit(event) {
-      event.preventDefault()
-    const token = localStorage.getItem('token')
-    try {
-      const {data} = await axios.post('/users/:userId', userData, {
-      headers: {Authorization: `Bearer ${token}` }
-      })
-      console.log(data._id)
-      history.push('/users/:userId')
-    } catch (err) {
-
-      console.log(err.response.data)
-    }
-  }
-  */
+ 
