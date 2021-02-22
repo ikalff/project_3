@@ -138,10 +138,15 @@ export default function Singleproperty({ match, history }) {
               </article>
             })
           }
+          {isCreator(property.host._id) ?
+            <Link className='button is-primary' to={`/updateproperty/${property._id}`}>Edit</Link>
+            :
 
-          <BookingForm
-            propertyId={match.params.propertyId}
-            maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
+            <BookingForm
+              propertyId={match.params.propertyId}
+              maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
+          }
+
 
 
           <h4>Review:</h4>

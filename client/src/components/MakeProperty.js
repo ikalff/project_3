@@ -61,7 +61,7 @@ export default function MakeProperty({ history }) {
     }
   }
 
-  return <div>
+  return <div className='container px-6 pt-6 pb-6'>
     <h5 className='title is-5 mt-4 mb-2'>List your property</h5>
     <PropertyForm
       handleChange={handleChange}

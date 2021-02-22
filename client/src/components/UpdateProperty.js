@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import PropertyForm from './PropertyForm'
+import { isCreator } from '../lib/auth.js'
 
 export default function UpdatePokemon({ history, match }) {
-
+  const [checkboxData, updateCheckboxData] = useState({
+    'Wifi': false,
+    'Pet friendly': false,
+    'Wheelchair Accessible': false,
+    'Washing machine': false,
+    'Near a beach': false
+  })
   const propertyId = match.params.propertyId
+  const [ownerId, updateOwnerId] = useState('')
   const [formData, updateFormData] = useState({
     images: [],
     name: '',
@@ -19,13 +27,16 @@ export default function UpdatePokemon({ history, match }) {
     checkOutTime: '',
     houseRules: '',
     cancellationPolicy: '',
-    amenities: []
+    amenities: checkboxData
   })
+
+  console.log(formData)
 
 
   useEffect(() => {
     axios.get(`/api/properties/${propertyId}`)
       .then(({ data }) => {
+        updateOwnerId(data.host._id)
         const newFormData = {
           images: data['images'],
           name: data['name'],
@@ -51,6 +62,17 @@ export default function UpdatePokemon({ history, match }) {
     const { name, value } = event.target
     updateFormData({ ...formData, [name]: value })
   }
+
+
+  function handleCheckBox(event) {
+    const newcheckboxData = { ...checkboxData }
+    newcheckboxData[event.target.name] = event.target.checked
+    console.log('CLICK')
+    console.log(newcheckboxData)
+    updateCheckboxData(newcheckboxData)
+    updateFormData({ ...formData, ['amenities']: newcheckboxData })
+  }
+
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -83,10 +105,23 @@ export default function UpdatePokemon({ history, match }) {
     }
   }
 
-  return <PropertyForm
-    handleChange={handleChange}
-    handleTypeChange={(types) => updateFormData({ ...formData, types })}
-    handleSubmit={handleSubmit}
-    formData={formData}
-  />
+
+
+
+  return <div className='container px-6 pt-6 pb-6'>
+
+    {isCreator(ownerId) ?
+      <PropertyForm
+        handleChange={handleChange}
+        handleCheckBox={handleCheckBox}
+        handleSubmit={handleSubmit}
+        formData={formData}
+
+      />
+      :
+
+      <div className='box has-background-danger has-text-white'>Sorry - you can not edit this.</div>
+    }
+
+  </div>
 }
