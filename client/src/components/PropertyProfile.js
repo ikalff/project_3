@@ -15,6 +15,7 @@ export default function Singleproperty({ match, history }) {
   const [text, setText] = useState('')
   const token = localStorage.getItem('token')
   const LoggedInUserId = getLoggedInUserId()
+  const commentId = match.params.commentId
 
   useEffect(() => {
     async function fetchData() {
@@ -41,7 +42,7 @@ export default function Singleproperty({ match, history }) {
 
 
   async function handleDelete() {
-    await axios.delete(`/api/deleteproperty/${match.params.propertyId}`, {
+    await axios.delete(`/api/properties/${match.params.propertyId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     history.push('/')
@@ -59,7 +60,7 @@ export default function Singleproperty({ match, history }) {
   }
 
   function handleDeleteComment(commentId) {
-    axios.delete(`/api/properties/${match.params.propertyId}/comment/${match.params.commentId}`, {
+    axios.delete(`/api/properties/${match.params.propertyId}/comment/${commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
@@ -128,7 +129,7 @@ export default function Singleproperty({ match, history }) {
                     <p>{comment.text}</p>
                   </div>
                 </div>
-                {isCreator(comment.user._id) || isCreator(comment.host._id) && <div className="media-right">
+                {isCreator(comment.user._id) && <div className="media-right">
                   <button
                     className="delete"
                     onClick={() => handleDeleteComment(comment._id)}>
@@ -138,39 +139,12 @@ export default function Singleproperty({ match, history }) {
             })
           }
 
-
-          {isCreator(property.host._id) ?
-            <Link to={`/updateproperty/${property._id}`} className='button is-primary'>Edit property</Link>
-            :
-            <BookingForm
-              propertyId={match.params.propertyId}
-              maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
-          }
+          <BookingForm
+            propertyId={match.params.propertyId}
+            maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
 
 
           <h4>Review:</h4>
-          {properties.comments && properties.comments.map(comment => {
-            return <article key={comment._id} className="media">
-              <div className="media-content">
-                <div className="content">
-                  <p className="subtitle">
-                    {comment.user.first_name}
-                  </p>
-                  <p>{comment.text}</p>
-                </div>
-              </div>
-              {
-
-              }
-              {currentUser(comment.user._id) || currentUser(comment.host._id) && <div className="media-right">
-                <button
-                  className="delete"
-                  onClick={() => handleDeleteComment(comment._id)}>
-                </button>
-              </div>}
-            </article>
-          })}
-
 
           <article className="media">
             <div className="media-content">
