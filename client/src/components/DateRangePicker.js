@@ -23,6 +23,7 @@ export default function DateRangePicker() {
       disablePast
       autoOk
     />
+    <div>{String(startDate)}</div>
     <DatePicker 
       label='Select end date'
       value={endDate} 
