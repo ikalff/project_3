@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import amenities from '../data/amenities.js'
 
 export default function SearchForm({ onChange, formLocation, checkboxDataProp, locationDataProp }) {
 
 
+  //const amenities = ['Wifi', 'Pet friendly', 'Wheelchair Accessible', 'Washing machine', 'Near a beach']
 
 
   const [locationData, updateLocationData] = useState('')
-  const amenities = ['Wifi', 'Pet friendly', 'Wheelchair Accessible', 'Washing machine', 'Near a beach']
+
+  
   const [checkboxData, updateCheckboxData] = useState({
     'Wifi': false,
     'Pet friendly': false,
