@@ -9,6 +9,8 @@ const schema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   isHost: { type: Boolean },
+  //!adding property id array
+  properties: { type: Array, required: false },
   isAdmin: { type: Boolean }
 })
 

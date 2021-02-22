@@ -55,6 +55,7 @@ async function getSingleUser(req, res, next) {
   const id = req.params.userId
   try {
     const user = await User.findById(id)
+    console.log('controllers users user:', user)
     res.send(user)
   } catch (err) {
     next(err)

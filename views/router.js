@@ -36,7 +36,6 @@ router.route('/properties/:propertyId')
   .put(secureRoute, properties.updateProperty)
   .delete(secureRoute, properties.removeProperty)
 
-
 //? Bookings
 
 
@@ -56,5 +55,9 @@ router.route('/properties/:propertyId/comment')
 router.route('/properties/:propertyId/comment/:commentId')
   .put(secureRoute, comments.updateComment)
   .delete(secureRoute, comments.removeComment)
+
+
+
+
 
 export default router
