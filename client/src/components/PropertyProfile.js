@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { isOwner } from '../lib/auth.js'
 import properties from '../../../models/properties.js'
+import { getLoggedInUserId } from '../lib/auth.js'
+import BookingForm from './BookingForm.js'
+
+
 
 
 export default function Singleproperty({ match, history }) {
@@ -10,6 +14,7 @@ export default function Singleproperty({ match, history }) {
   const [error, updateError] = useState('')
   const [text, setText] = useState('')
   const token = localStorage.getItem('token')
+  const LoggedInUserId = getLoggedInUserId()
 
   useEffect(() => {
     async function fetchData() {
@@ -18,7 +23,7 @@ export default function Singleproperty({ match, history }) {
         try {
           const { data } = await axios.get(`/api/properties/${match.params.propertyId}`)
           updateproperties(data)
-          console.log(data)
+          //console.log(data)
           if (!data) {
             updateError('Could not find a property with that ID')
           }
@@ -53,8 +58,6 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
-
-
   function handleDeleteComment(commentId) {
     axios.delete(`/api/properties/${match.params.propertyId}/comment/${match.params.commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -64,25 +67,11 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
-
-
-
   if (!property.name) {
     return null
   }
 
-
-
-
-
-
-
-
   return <>
-
-
-
-
 
     <section className='hero has-background-grey-light is-primary is-fullheight-with-navbar'
       style={{
@@ -97,18 +86,7 @@ export default function Singleproperty({ match, history }) {
     </section>
 
     <div className='container px-6 pt-6 pb-6'>
-
-
-
-
       <div className='columns'>
-
-
-
-
-
-
-
         <div className='column'>
 
           <p>Summary: {property.summary}</p>
@@ -147,11 +125,11 @@ export default function Singleproperty({ match, history }) {
             })
           }
 
+          <BookingForm
+            propertyId={match.params.propertyId}
+            maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
 
-          <p>
-            <Link className='button is-primary mt-5' to={'/properties/' + property._id}>Book now</Link>
-          </p>
-          <br />
+
           <h4>Review:</h4>
           {properties.comments && properties.comments.map(comment => {
             return <article key={comment._id} className="media">
@@ -203,14 +181,7 @@ export default function Singleproperty({ match, history }) {
             </div>
           </article>
 
-
-
         </div>
-
-
-
-
-
 
       </div>
 
