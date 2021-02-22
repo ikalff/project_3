@@ -28,9 +28,6 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
 
   function handleFieldsChange(event) {
     event.preventDefault()
-    console.log('Inside handlefieldschage')
-    console.log(locationData)
-    console.log(checkboxData)
     onChange(locationData, checkboxData)
   }
 
@@ -82,6 +79,7 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
           <label className="checkbox">
 
             <input
+              className='mr-1'
               type="checkbox"
               name={amenity}
               onChange={handleCheckBox}
@@ -100,7 +98,7 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
 
  
 
-      <button className='button is-primary' onClick={handleFieldsChange}>Apply</button>
+      <button className='button is-primary' onClick={handleFieldsChange}>Update search</button>
 
 
       <button className='button' onClick={clearFilters}>Clear</button>
