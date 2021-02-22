@@ -15,6 +15,7 @@ export default function Singleproperty({ match, history }) {
   const [text, setText] = useState('')
   const token = localStorage.getItem('token')
   const LoggedInUserId = getLoggedInUserId()
+  const commentId = match.params.commentId
 
   useEffect(() => {
     async function fetchData() {
@@ -41,7 +42,7 @@ export default function Singleproperty({ match, history }) {
 
 
   async function handleDelete() {
-    await axios.delete(`/api/deleteproperty/${match.params.propertyId}`, {
+    await axios.delete(`/api/properties/${match.params.propertyId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     history.push('/')
@@ -59,6 +60,7 @@ export default function Singleproperty({ match, history }) {
   }
 
   function handleDeleteComment(commentId) {
+    console.log(commentId)
     axios.delete(`/api/properties/${match.params.propertyId}/comment/${match.params.commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -128,7 +130,7 @@ export default function Singleproperty({ match, history }) {
                     <p>{comment.text}</p>
                   </div>
                 </div>
-                {isCreator(comment.user._id) || isCreator(comment.host._id) && <div className="media-right">
+                {isCreator(comment.user._id) && <div className="media-right">
                   <button
                     className="delete"
                     onClick={() => handleDeleteComment(comment._id)}>
