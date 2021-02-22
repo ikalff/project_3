@@ -27,7 +27,7 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
     }
     newFormData[name] = value
     updateFormData(newFormData)
-    console.log(newFormData)
+    //console.log(newFormData)
   }
 
 
@@ -60,7 +60,6 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
   for (let i = 1; i < maxNumberOfGuests + 1; i++) {
     maxNumberOfGuestsArray.push(i)
   }
-  console.log(maxNumberOfGuestsArray)
 
 
   if (!LoggedInUserId) {

@@ -144,6 +144,31 @@ export default function Singleproperty({ match, history }) {
 
 
           <h4>Review:</h4>
+<<<<<<< HEAD
+=======
+          {properties.comments && properties.comments.map(comment => {
+            return <article key={comment._id} className="media">
+              <div className="media-content">
+                <div className="content">
+                  <p className="subtitle">
+                    {comment.user.first_name}
+                  </p>
+                  <p>{comment.text}</p>
+                </div>
+              </div>
+              {
+
+              }
+              {currentUser(comment.user._id) || currentUser(comment.host._id) && <div className="media-right">
+                <button
+                  className="delete"
+                  onClick={() => handleDeleteComment(comment._id)}>
+                </button>
+              </div>}
+            </article>
+          })}
+
+>>>>>>> india
 
           <article className="media">
             <div className="media-content">
@@ -180,5 +205,4 @@ export default function Singleproperty({ match, history }) {
     </div>
   </>
 }
-
 
