@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { isOwner } from '../lib/auth.js'
+import { getLoggedInUserId } from '../lib/auth.js'
+import BookingForm from './BookingForm.js'
+
+
 
 
 export default function Singleproperty({ match, history }) {
@@ -9,6 +12,7 @@ export default function Singleproperty({ match, history }) {
   const [error, updateError] = useState('')
   const [text, setText] = useState('')
   const token = localStorage.getItem('token')
+  const LoggedInUserId = getLoggedInUserId()
 
   useEffect(() => {
     async function fetchData() {
@@ -17,7 +21,7 @@ export default function Singleproperty({ match, history }) {
         try {
           const { data } = await axios.get(`/api/properties/${match.params.propertyId}`)
           updateproperties(data)
-          console.log(data)
+          //console.log(data)
           if (!data) {
             updateError('Could not find a property with that ID')
           }
@@ -147,9 +151,14 @@ export default function Singleproperty({ match, history }) {
           }
 
 
-          <p>
-            <Link className='button is-primary mt-5' to={'/properties/' + property._id}>Book now</Link>
-          </p>
+
+
+
+
+
+          <BookingForm propertyId={match.params.propertyId}></BookingForm>
+
+
 
 
 
