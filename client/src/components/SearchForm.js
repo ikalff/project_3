@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import DateRangePicker from './dateRangePicker'
 
 export default function SearchForm({ onChange, formLocation, checkboxDataProp, locationDataProp }) {
 
@@ -91,7 +92,7 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
       })
     }
 
-
+    <DateRangePicker className='datePicker'/>
 
     {formLocation === 'listings' && <div className='buttons'>
 
