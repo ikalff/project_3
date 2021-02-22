@@ -60,8 +60,7 @@ export default function Singleproperty({ match, history }) {
   }
 
   function handleDeleteComment(commentId) {
-    console.log(commentId)
-    axios.delete(`/api/properties/${match.params.propertyId}/comment/${match.params.commentId}`, {
+    axios.delete(`/api/properties/${match.params.propertyId}/comment/${commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
