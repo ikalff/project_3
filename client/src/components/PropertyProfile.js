@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { isOwner } from '../lib/auth.js'
+import properties from '../../../models/properties.js'
 import { getLoggedInUserId } from '../lib/auth.js'
 import BookingForm from './BookingForm.js'
 
@@ -47,7 +49,7 @@ export default function Singleproperty({ match, history }) {
 
 
   function handleComment() {
-    axios.post(`/api/comment/${match.params.propertyId}`, { text }, {
+    axios.post(`/api/properties/${match.params.propertyId}/comment`, { text }, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
@@ -56,10 +58,8 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
-
-
   function handleDeleteComment(commentId) {
-    axios.delete(`/api/comment/${match.params.propertyId}/delete/${commentId}`, {
+    axios.delete(`/api/properties/${match.params.propertyId}/comment/${match.params.commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
@@ -67,25 +67,11 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
-
-
-
   if (!property.name) {
     return null
   }
 
-
-
-
-
-
-
-
   return <>
-
-
-
-
 
     <section className='hero has-background-grey-light is-primary is-fullheight-with-navbar'
       style={{
@@ -100,18 +86,7 @@ export default function Singleproperty({ match, history }) {
     </section>
 
     <div className='container px-6 pt-6 pb-6'>
-
-
-
-
       <div className='columns'>
-
-
-
-
-
-
-
         <div className='column'>
 
           <p>Summary: {property.summary}</p>
@@ -150,27 +125,63 @@ export default function Singleproperty({ match, history }) {
             })
           }
 
-
-
-
-
-
-
           <BookingForm
             propertyId={match.params.propertyId}
             maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
 
 
+          <h4>Review:</h4>
+          {properties.comments && properties.comments.map(comment => {
+            return <article key={comment._id} className="media">
+              <div className="media-content">
+                <div className="content">
+                  <p className="subtitle">
+                    {comment.user.first_name}
+                  </p>
+                  <p>{comment.text}</p>
+                </div>
+              </div>
+              {
+
+              }
+              {currentUser(comment.user._id) || currentUser(comment.host._id) && <div className="media-right">
+                <button
+                  className="delete"
+                  onClick={() => handleDeleteComment(comment._id)}>
+                </button>
+              </div>}
+            </article>
+          })}
 
 
-
+          <article className="media">
+            <div className="media-content">
+              <div className="field">
+                <p className="control">
+                  <textarea
+                    className="textarea"
+                    placeholder="Make a comment.."
+                    onChange={event => setText(event.target.value)}
+                    value={text}
+                  >
+                    {text}
+                  </textarea>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control">
+                  <button
+                    onClick={handleComment}
+                    className="button is-info"
+                  >
+                    Submit
+                  </button>
+                </p>
+              </div>
+            </div>
+          </article>
 
         </div>
-
-
-
-
-
 
       </div>
 
@@ -178,5 +189,4 @@ export default function Singleproperty({ match, history }) {
     </div>
   </>
 }
-
 
