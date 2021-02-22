@@ -152,6 +152,7 @@ export default function Singleproperty({ match, history }) {
             <Link className='button is-primary mt-5' to={'/properties/' + property._id}>Book now</Link>
           </p>
           <br />
+          <h4>Review:</h4>
           {properties.comments && properties.comments.map(comment => {
             return <article key={comment._id} className="media">
               <div className="media-content">
