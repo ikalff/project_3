@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { isOwner } from '../lib/auth.js'
+import properties from '../../../models/properties.js'
 
 
 export default function Singleproperty({ match, history }) {
@@ -43,7 +44,7 @@ export default function Singleproperty({ match, history }) {
 
 
   function handleComment() {
-    axios.post(`/api/comment/${match.params.propertyId}`, { text }, {
+    axios.post(`/api/properties/${match.params.propertyId}/comment`, { text }, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
@@ -55,7 +56,7 @@ export default function Singleproperty({ match, history }) {
 
 
   function handleDeleteComment(commentId) {
-    axios.delete(`/api/comment/${match.params.propertyId}/delete/${commentId}`, {
+    axios.delete(`/api/properties/${match.params.propertyId}/comment/${match.params.commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
@@ -150,7 +151,56 @@ export default function Singleproperty({ match, history }) {
           <p>
             <Link className='button is-primary mt-5' to={'/properties/' + property._id}>Book now</Link>
           </p>
+          <br />
+          {properties.comments && properties.comments.map(comment => {
+            return <article key={comment._id} className="media">
+              <div className="media-content">
+                <div className="content">
+                  <p className="subtitle">
+                    {comment.user.first_name}
+                  </p>
+                  <p>{comment.text}</p>
+                </div>
+              </div>
+              {
 
+              }
+              {currentUser(comment.user._id) || currentUser(comment.host._id) && <div className="media-right">
+                <button
+                  className="delete"
+                  onClick={() => handleDeleteComment(comment._id)}>
+                </button>
+              </div>}
+            </article>
+          })}
+
+
+          <article className="media">
+            <div className="media-content">
+              <div className="field">
+                <p className="control">
+                  <textarea
+                    className="textarea"
+                    placeholder="Make a comment.."
+                    onChange={event => setText(event.target.value)}
+                    value={text}
+                  >
+                    {text}
+                  </textarea>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control">
+                  <button
+                    onClick={handleComment}
+                    className="button is-info"
+                  >
+                    Submit
+                  </button>
+                </p>
+              </div>
+            </div>
+          </article>
 
 
 
