@@ -7,8 +7,6 @@ import { getLoggedInUserId } from '../lib/auth.js'
 import BookingForm from './BookingForm.js'
 
 
-
-
 export default function Singleproperty({ match, history }) {
   const [property, updateproperties] = useState([])
   const [error, updateError] = useState('')
@@ -118,16 +116,12 @@ export default function Singleproperty({ match, history }) {
               </p>
             })
           }
-
-
           <h5 className='title is-5 mt-4 mb-2'>Gallery</h5>
           {property.images.length > 1 &&
             property.images.map((image, index) => {
               return <img key={index} src={image} width='150' />
             })
           }
-
-
 
           {property.comments.length > 0 && <h5 className='title is-5 mt-4 mb-2'>Comments</h5>}
           {property.comments.length > 0 &&
@@ -188,12 +182,8 @@ export default function Singleproperty({ match, history }) {
               </div>
             </div>
           </article>
-
         </div>
-
       </div>
-
-
     </div>
   </>
 }
