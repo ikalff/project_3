@@ -27,7 +27,7 @@ const App = () => (
       <Route exact path='/properties' component={Properties}></Route>
       <Route exact path='/properties/:propertyId' component={PropertyProfile}></Route>
       <Route exact path='/makeproperty' component={MakeProperty}></Route>
-      <Route exact path='/updateproperty' component={UpdateProperty}></Route>
+      <Route exact path='/updateproperty/:propertyId' component={UpdateProperty}></Route>
     </Switch>
     <Footer></Footer>
   </BrowserRouter>
