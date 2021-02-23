@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { getLoggedInUserId } from '../lib/auth.js'
 import DateRangePicker from './dateRangePicker'
-import e from 'express'
 
 
 
@@ -35,7 +34,6 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
     }
     newFormData[name] = value
     updateFormData(newFormData)
-    console.log(newFormData)
   }
 
   const getDateRange = (startDate, endDate) => {
@@ -65,7 +63,6 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
         updateSuccess('Congratulations! Your booking is now confirmed')
       } catch (err) {
         updateError(err.response.data.message)
-        console.log(err)
         updateSuccess('')
       }
     }
@@ -124,7 +121,7 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
 
             </div>
           </div>
-          <p>{`Total days: `}</p>
+          <p>Total days:</p>
           <p>Total price:</p>
           <button className='button is-primary mt-4'>Book now</button>
         </form>
