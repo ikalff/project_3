@@ -167,7 +167,335 @@ export default function getPropertyData(users) {
       host: users[3],
       comments: [],
       bookings: []
+    },
+
+    {
+      name: 'Kittiwake Cottage',
+      location: 'Brighton',
+      images: ['https://i.imgur.com/VWk8m9v.jpeg'],
+      isRoomOnly: false,
+      isEntirePlace: true,
+      pricePerNight: 130,
+      summary: 'Within easy walking distance of several pristine beaches - the location is perfect for a seaside getaway that\'s not too far from the hustle and bustle of city life',
+      numberOfBedrooms: 2,
+      maxNumberOfGuests: 5,
+      checkInTime: '16:30',
+      checkOutTime: '11:00',
+      houseRules: 'Strictly no smoking. Well-behaved dogs are welcome.',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: true
+        }
+      ],
+      host: users[3],
+      comments: [],
+      bookings: []
+    },
+
+    {
+      name: 'Bright and cheerful terraced house',
+      location: 'Cotswolds',
+      images: ['https://i.imgur.com/GJ4tgtF.jpg'],
+      isRoomOnly: false,
+      isEntirePlace: true,
+      pricePerNight: 130,
+      summary: 'This gorgeous bright house won\'t fail to cheer you up - our visitors love coming back again and again',
+      numberOfBedrooms: 3,
+      maxNumberOfGuests: 5,
+      checkInTime: '12:00',
+      checkOutTime: '10:00',
+      houseRules: 'Strictly no smoking. No pets please.',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: false
+        }
+      ],
+      host: users[0],
+      comments: [],
+      bookings: []
+    },
+
+    {
+      name: 'Remote house in Cornwall',
+      location: 'Cornwall',
+      images: ['https://i.imgur.com/Isvlyqu.jpg'],
+      isRoomOnly: false,
+      isEntirePlace: true,
+      pricePerNight: 110,
+      summary: 'If you\'re looking to escape in nature, look no further - you\'ll love the enormous private garden and outdoor activities on offer nearby',
+      numberOfBedrooms: 3,
+      maxNumberOfGuests: 6,
+      checkInTime: '14:00',
+      checkOutTime: '10:00',
+      houseRules: 'Smoking is only permitted outside in the garden. No parties please and well-behaved pets are welcome.',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: true
+        }
+      ],
+      host: users[0],
+      comments: [],
+      bookings: []
+    },
+    {
+      name: 'Modern beach house in Devon',
+      location: 'Devon',
+      images: ['https://i.imgur.com/KKkJJYh.jpg'],
+      isRoomOnly: false,
+      isEntirePlace: true,
+      pricePerNight: 180,
+      summary: 'This house has been recently refurbished and we\'ve taken to make it as family-friendly as possible - there are plenty of beach toys for guests to help themselves to.',
+      numberOfBedrooms: 2,
+      maxNumberOfGuests: 4,
+      checkInTime: '14:00',
+      checkOutTime: '10:00',
+      houseRules: 'Smoking is only permitted outside in the garden. No parties or pets are allowed.',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: true
+        }
+      ],
+      host: users[3],
+      comments: [],
+      bookings: []
+    },
+
+    {
+      name: 'Refurbished Devon lighthouse',
+      location: 'Devon',
+      images: ['https://i.imgur.com/KshUfSq.jpg'],
+      isRoomOnly: false,
+      isEntirePlace: true,
+      pricePerNight: 180,
+      summary: 'Looking for something different? How about a stay in this beautiful lighthouse with unbeatable views on the coast of Devon?',
+      numberOfBedrooms: 2,
+      maxNumberOfGuests: 4,
+      checkInTime: '14:00',
+      checkOutTime: '10:00',
+      houseRules: 'Smoking is not permitted. Please respect our neighbours by keeping noise to a minimum after 10pm. ',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: true
+        }
+      ],
+      host: users[0],
+      comments: [],
+      bookings: []
+    },
+
+    {
+      name: 'Stone terraced house in Lancashire',
+      location: 'Lancashire',
+      images: ['https://i.imgur.com/F7RQeNH.jpg'],
+      isRoomOnly: false,
+      isEntirePlace: true,
+      pricePerNight: 180,
+      summary: 'You\'ll love the internet speed.',
+      numberOfBedrooms: 2,
+      maxNumberOfGuests: 4,
+      checkInTime: '14:00',
+      checkOutTime: '10:00',
+      houseRules: 'Smoking is not allowed. 2 pets maximum. ',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: false
+        }
+      ],
+      host: users[0],
+      comments: [],
+      bookings: []
+    },
+
+    {
+      name: 'Spare room in London family house',
+      location: 'London',
+      images: ['https://i.imgur.com/BOeLD1a.jpg'],
+      isRoomOnly: true,
+      isEntirePlace: false,
+      pricePerNight: 60,
+      summary: 'Just 5 minutes away from the Tube - ideal for short London trips.',
+      numberOfBedrooms: 1,
+      maxNumberOfGuests: 2,
+      checkInTime: '14:00',
+      checkOutTime: '10:00',
+      houseRules: 'Smoking is not allowed. No pets. ',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: false
+        }
+      ],
+      host: users[3],
+      comments: [],
+      bookings: []
+    },
+    {
+      name: 'Bright room in Manchester',
+      location: 'Manchester',
+      images: ['https://i.imgur.com/cuDHOWO.jpg'],
+      isRoomOnly: true,
+      isEntirePlace: false,
+      pricePerNight: 40,
+      summary: 'This is a bright, spacious room with a double bed - the house is quiet and a short bus ride away from the city centre.',
+      numberOfBedrooms: 1,
+      maxNumberOfGuests: 2,
+      checkInTime: '14:00',
+      checkOutTime: '10:00',
+      houseRules: 'This is a no smoking house and pets are not permitted.',
+      cancellationPolicy: '100% deposit refund up until 48 hours before check-in time',
+      amenities: [
+        {
+          amenityName: 'Wifi',
+          amenityValue: true
+        },
+        {
+          amenityName: 'Pet friendly',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Wheelchair Accessible',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Washing machine',
+          amenityValue: false
+        },
+        {
+          amenityName: 'Near a beach',
+          amenityValue: false
+        }
+      ],
+      host: users[0],
+      comments: [],
+      bookings: []
     }
+
+
   ]
 
 }
