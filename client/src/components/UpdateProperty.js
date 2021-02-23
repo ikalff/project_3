@@ -4,6 +4,7 @@ import PropertyForm from './PropertyForm'
 import { isCreator } from '../lib/auth.js'
 
 export default function UpdatePokemon({ history, match }) {
+  const [error, updateError] = useState('')
   const [checkboxData, updateCheckboxData] = useState([
     {
       amenityName: 'Wifi',
@@ -82,10 +83,11 @@ export default function UpdatePokemon({ history, match }) {
   function handleCheckBox(event) {
     const amenityIndex = checkboxData.findIndex(amenity => amenity.amenityName === event.target.name)
     const newCheckboxData = [...checkboxData]
-    newCheckboxData[amenityIndex] = { 
+    newCheckboxData[amenityIndex] = {
       'amenityName': event.target.name,
       'amenityValue': event.target.checked
     }
+    console.log(formData.amenities)
     updateCheckboxData(newCheckboxData)
     updateFormData({ ...formData, ['amenities']: newCheckboxData })
   }
@@ -111,6 +113,7 @@ export default function UpdatePokemon({ history, match }) {
       cancellationPolicy: formData['cancellationPolicy'],
       amenities: formData['amenities']
     }
+
     try {
       const { data } = await axios.put(`/api/properties/${propertyId}`, newFormData, {
         headers: { Authorization: `Bearer ${token}` }
@@ -118,7 +121,8 @@ export default function UpdatePokemon({ history, match }) {
       console.log(data._id)
       history.push(`/properties/${data._id}`)
     } catch (err) {
-      console.log(err.response.data)
+      updateError('Unable to update property. Please enter a unique property name and a value for all required fields.')
+      console.log(err)
     }
   }
 
@@ -127,18 +131,23 @@ export default function UpdatePokemon({ history, match }) {
 
   return <div className='container px-6 pt-6 pb-6'>
 
+
+    {error && <div className='box has-background-danger has-text-white'>{error}</div>}
     {isCreator(ownerId) ?
       <PropertyForm
         handleChange={handleChange}
         handleCheckBox={handleCheckBox}
         handleSubmit={handleSubmit}
         formData={formData}
+        location='updateProperty'
 
       />
       :
 
       <div className='box has-background-danger has-text-white'>Sorry - you can not edit this.</div>
     }
+
+    {error && <div className='box mt-4 has-background-danger has-text-white'>{error}</div>}
 
   </div>
 }
