@@ -3,6 +3,8 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import HostProfileComponent from './HostProfileComponent.js'
 
+import HostPropertyComponent from './hostPropertyComponent.js'
+
 
 export default function UserProfile({ history, match }) {
   const userId = match.params.userId
@@ -175,6 +177,7 @@ export default function UserProfile({ history, match }) {
       {userData.isHost ? <div className="column">
         <HostProfileComponent userId={userId} /> </div> : <button className="button is-primary">Become a host</button>
       }
+
     </div>
   </div>
 

@@ -60,6 +60,7 @@ async function getSingleUser(req, res, next) {
     next(err)
   }
 }
+
 async function updateUser(req, res, next) {
   const id = req.params.userId
   const currentUser = req.currentUser
@@ -77,17 +78,24 @@ async function updateUser(req, res, next) {
     if (body.password !== body.passwordConfirmation) {
       return res.status(406).send({ message: 'The password doesn\'t match the password confirmation. Please try again.' })
     }
-
     userToUpdate.set(body)
     userToUpdate.save()
-
     res.send(userToUpdate)
-
   } catch (err) {
     next()
   }
 }
+async function getHost(req, res, next) {
 
+  const id = req.params.userId
+  try {
+    const user = await User.findById(id)
+    res.send(user.first_name)
+  } catch (err) {
+    next(err)
+  }
+
+}
 async function deleteUser(req, res, next) {
   const id = req.params.userId
   const currentUser = req.currentUser
@@ -112,11 +120,14 @@ async function deleteUser(req, res, next) {
 
 }
 
+
+
 export default {
   register,
   login,
   getSingleUser,
   updateUser,
   getUsers,
-  deleteUser
+  deleteUser,
+  getHost
 }

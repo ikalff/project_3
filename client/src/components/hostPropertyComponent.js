@@ -1,17 +1,18 @@
-//!redirect here after log in? or login takes you to the page you were on when you logged in?
-
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import Paginate from './Paginate'
+import { Link } from 'react-router-dom'
 
-export default function HostProfileComponent(props) {
+export default function HostPropertyComponent(props) {
 
-  const userId = props.userId
+  //! need a way to get the id of the host in question from the link props
+  const userId = props.userId 
 
-  const [userProperties, updateUserProperties] = useState([])
+  const [hostProperties, updateHostProperties] = useState([])
+  const [hostName, updateHostName] = useState('')
 
   const [propertiesLoading, updatePropertiesLoading] = useState(true)
+  const [nameLoading, updateNameLoading] = useState(true)
 
   const resultsPerPage = 3
   const [pageNum, updatePageNum] = useState(1)
@@ -27,20 +28,35 @@ export default function HostProfileComponent(props) {
 
           const filteredProperties = allPropertiesData.filter(item => item.host._id === userId)
 
-          updateUserProperties(filteredProperties)
+          updateHostProperties(filteredProperties)
 
           updatePropertiesLoading(false)
 
         })
-
-
 
     } catch (err) {
       console.log('Error:', err)
     }
   }, [])
 
-  if (propertiesLoading) {
+  useEffect(() => {
+
+    try {
+
+      axios.get(`/api/host/${userId}`)
+        .then(({ data }) => {
+
+          updateHostName(data)
+          updateNameLoading(false)
+
+        })
+
+    } catch (err) {
+      console.log('Error:', err)
+    }
+  }, [])
+
+  if (propertiesLoading || nameLoading) {
     return <div className='loading'>
       <img src='https://i.ibb.co/xDS2vQc/loading.gif' />
     </div>
@@ -52,25 +68,30 @@ export default function HostProfileComponent(props) {
 
   return <div className="section">
     <div className='block mb-4'>
-      <h2 className='title is-4 mb-4'>Properties profile</h2>
+
+      <div className='title is-2 mb-2 mt-2'>Meet {hostName}!</div>
+
+      <div className='title is-4 mb-2 mt-2'>{hostName} lists these other properties too - take a look. </div>
+
+      {/* Add host bio to host users and place here */}
 
       <Paginate
         onChange={handlePageChange}
         pageNum={pageNum}
-        totalResults={userProperties.length}
+        totalResults={hostProperties.length}
         resultsPerPage={resultsPerPage}
       />
     </div>
-  
+
     <div>
 
-      {userProperties.map((item, index) => {
-        
+      {hostProperties.map((item, index) => {
+
         return <div className='box columns mt-4' key={index}>
+
           <div className="column">
             <h4 className='title is-4 mb-2 mt-2'>{item.name}</h4>
-            <button className="button is-primary is-light mb-2">Edit property</button>
-            <button className="button is-danger is-light mb-2">Delete property</button>
+            <button className="button is-primary is-light mb-2">View this property</button>
           </div>
           <div className="column">
             <img width="200" src={item.images[0] ? item.images[0] : 'http://placehold.it/400x400?text=no%20image%20available'} />
@@ -80,13 +101,6 @@ export default function HostProfileComponent(props) {
       })}
     </div>
 
-    <div>
-      <button className='button is-primary mt-5'>Add a property</button>
-    </div>
   </div>
 
 }
-
-
-
- 

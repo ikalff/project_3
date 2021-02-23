@@ -22,6 +22,9 @@ router.route('/users/:userId')
   .put(secureRoute, users.updateUser)
   .delete(secureRoute, users.deleteUser)
 
+router.route('/host/:userId')
+  .get(users.getHost)
+
 router.route('/users')
   .get(users.getUsers)
 
