@@ -7,8 +7,6 @@ import HostProfileComponent from './HostProfileComponent.js'
 export default function UserProfile({ history, match }) {
   const userId = match.params.userId
 
-  
-
   const [userData, updateUserData] = useState({
     first_name: '',
     last_name: '',
@@ -16,12 +14,16 @@ export default function UserProfile({ history, match }) {
     password: '',
     passwordConfirmation: '',
     isHost: '',
-    properties: [],
     isAdmin: ''
   })
+
+  console.log('user profile userData', userData)
+
   const [userDataLoading, updateUserDataLoading] = useState(true)
 
-  const inputFields = ['first_name', 'last_name', 'email', 'password', 'passwordConfirmation']
+  //! Check error useState - see register.js
+  const [error, updateError] = useState('')
+
 
   useEffect(() => {
 
@@ -42,15 +44,17 @@ export default function UserProfile({ history, match }) {
 
   async function handleSubmit(event) {
     event.preventDefault()
+    
     const token = localStorage.getItem('token')
+
     try {
-      const { data } = await axios.post('/users/:userId', userData, {
+      const { data } = await axios.put(`/api/users/${userId}`, userData, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      console.log(data._id)
-      history.push('/users/:userId')
+     
+      history.push(`/users/${userId}`)
     } catch (err) {
-
+      updateError(err.response.data.message)
       console.log(err.response.data)
     }
   }
@@ -63,39 +67,89 @@ export default function UserProfile({ history, match }) {
     </div>
   }
 
-//! line 70 - change password confirmation in schema to password_confirmation?
+
   return <div className="section">
+
+    <div className={error ? 'box has-background-danger has-text-white' : 'is-hidden'}>{error}</div>
+
     <div className="columns">
 
       <div className="column">
         <h2 className='title is-2 mb-4'>User profile</h2>
         <form onSubmit={handleSubmit}>
-          {inputFields.map(field => {
-            return <div key={field} className="field">
-              <label className="label">
-                {(field[0].toUpperCase() + field.slice(1)).replace('_', ' ')}
-              </label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  value={userData[field]}
-                  onChange={handleChange}
-                  name={field}
-                />
-              </div>
-            </div>
-          })}
 
-          <button className="button is-primary">Update my details</button>
+          <div className="field">
+            <label className="label">First name</label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                value={userData.first_name}
+                onChange={handleChange}
+                name={'first_name'}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Last name</label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                value={userData.last_name}
+                onChange={handleChange}
+                name={'last_name'}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Email</label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                value={userData.email}
+                onChange={handleChange}
+                name={'email'}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Password</label>
+            <div className="control">
+              <input
+                className="input"
+                type="password"
+                value={userData.password}
+                onChange={handleChange}
+                name={'password'}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Confirm Password</label>
+            <div className="control">
+              <input
+                className="input"
+                type="password"
+                value={userData.passwordConfirmation}
+                onChange={handleChange}
+                name={'passwordConfirmation'}
+              />
+            </div>
+
+
+            <button className="button is-primary mt-5">Update my details</button>
+          </div>
         </form>
       </div>
 
-      {userData.isHost && <div className="column">
-        <HostProfileComponent userId={userId} />
-      </div>}
-
+      {userData.isHost ? <div className="column">
+        <HostProfileComponent userId={userId} /> </div> : <button className="button is-primary">Become a host</button>
+      }
     </div>
   </div>
 
 }
+
+

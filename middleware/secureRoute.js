@@ -17,7 +17,11 @@ export default async function secureRoute(req, res, next) {
 
   
     jwt.verify(token, secret, async (err, data) => {
-      
+
+      console.log('secureRoute token', token)
+      console.log('secureRoute secret', secret)
+      console.log('secureRoute err', err)
+
       if (err) {
         return res.status(401).send({ message: 'Unauthorized2' })
       }
@@ -32,6 +36,7 @@ export default async function secureRoute(req, res, next) {
 
       next()
     })
+    
   } catch (err) {
     res.status(401).send({ message: 'Unauthorized4' })
   }

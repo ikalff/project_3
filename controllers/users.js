@@ -55,7 +55,6 @@ async function getSingleUser(req, res, next) {
   const id = req.params.userId
   try {
     const user = await User.findById(id)
-    console.log('controllers users user:', user)
     res.send(user)
   } catch (err) {
     next(err)
@@ -65,11 +64,12 @@ async function updateUser(req, res, next) {
   const id = req.params.userId
   const currentUser = req.currentUser
   const body = req.body
+  console.log('user controller updateUser')
 
   try {
     const userToUpdate = await User.findById(id)
     console.log('id', id)
-    console.log(userToUpdate)
+    console.log('user to update', userToUpdate)
     console.log(currentUser)
     if (!userToUpdate) {
       return res.send({ message: 'Oops, we didn\'t find any users to update. Please try again' })

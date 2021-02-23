@@ -7,12 +7,8 @@ import Paginate from './Paginate'
 
 export default function HostProfileComponent(props) {
 
-
-  console.log('Host props:', props.userId)
-
   const userId = props.userId
 
-  const [allProperties, updateAllProperties] = useState([])
   const [userProperties, updateUserProperties] = useState([])
 
   const [propertiesLoading, updatePropertiesLoading] = useState(true)
@@ -27,14 +23,10 @@ export default function HostProfileComponent(props) {
 
       axios.get('/api/properties')
         .then(({ data }) => {
-          console.log('host all properties', data)
-          updateAllProperties(data)
 
           const allPropertiesData = data
 
           const filteredProperties = allPropertiesData.filter(item => item.host._id === userId)
-
-          console.log('host filtered properties:', filteredProperties)
 
           updateUserProperties(filteredProperties)
 
@@ -59,10 +51,8 @@ export default function HostProfileComponent(props) {
     updatePageNum(newValue)
   }
 
-  console.log('updated user properties', userProperties)
-
   return <div className="section">
-    <div>
+    <div className='block mb-4'>
       <h2 className='title is-4 mb-4'>Properties profile</h2>
 
       <Paginate
@@ -76,10 +66,10 @@ export default function HostProfileComponent(props) {
     <div>
 
       {userProperties.map((item, index) => {
-        console.log('host userProperties map:', userProperties)
-        return <div className='box columns mb-4' key={index}>
+        
+        return <div className='box columns mt-4' key={index}>
           <div className="column">
-            <h4 className='title is-4 mb-2'>{item.name}</h4>
+            <h4 className='title is-4 mb-2 mt-2'>{item.name}</h4>
             <button className="button is-primary is-light mb-2">Edit property</button>
             <button className="button is-danger is-light mb-2">Delete property</button>
           </div>

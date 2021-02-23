@@ -18,7 +18,7 @@ router.route('/login')
   .post(users.login)
 
 router.route('/users/:userId')
-  .get(users.getSingleUser)
+  .get(secureRoute, users.getSingleUser)
   .put(secureRoute, users.updateUser)
 
 router.route('/users')

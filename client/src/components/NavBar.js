@@ -43,7 +43,9 @@ function NavBar({ location, history }) {
           <Link className='button is-primary' to='/properties'>All listings</Link>
 
           {username && <>
+            <Link className='button is-primary' to={ `/users/${LoggedInUserId}` }>User profile</Link>
          Logged in as {username}  |&nbsp; 
+         
         <a onClick={logOut} className='has-text-white'>Log out</a>
           </>
           }
