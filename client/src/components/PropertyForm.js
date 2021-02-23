@@ -1,7 +1,7 @@
 import React from 'react'
 import amenities from '../data/amenities.js'
 
-export default function PropertyForm({ formData, handleSubmit, handleChange, handleCheckBox }) {
+export default function PropertyForm({ formData, checkboxData, handleSubmit, handleChange, handleCheckBox }) {
 
 
 
@@ -227,6 +227,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
               type="checkbox"
               name={amenity}
               onChange={handleCheckBox}
+              checked={checkboxData[amenity]}
             />
             {amenity}
           </label>
