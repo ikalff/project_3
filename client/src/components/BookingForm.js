@@ -2,35 +2,51 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { getLoggedInUserId } from '../lib/auth.js'
+import DateRangePicker from './dateRangePicker'
+import e from 'express'
+
 
 
 function BookingForm({ propertyId, maxNumberOfGuests }) {
 
   const LoggedInUserId = getLoggedInUserId()
 
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
 
   const [error, updateError] = useState('')
   const [success, updateSuccess] = useState('')
   const [formData, updateFormData] = useState({
     checkInDate: '',
     checkOutDate: '',
-    numberOfGuests: ''
+    numberOfGuests: '',
+    datesBooked: []
   })
+  
 
   function handleChange(event) {
     const name = event.target.name
     const value = event.target.value
     const newFormData = {
-      checkInDate: formData.checkInDate,
-      checkOutDate: formData.checkOutDate,
-      numberOfGuests: formData.numberOfGuests
+      checkInDate: startDate,
+      checkOutDate: endDate,
+      numberOfGuests: formData.numberOfGuests,
+      datesBooked: getDateRange(startDate, endDate)
     }
     newFormData[name] = value
     updateFormData(newFormData)
-    //console.log(newFormData)
+    console.log(newFormData)
   }
 
-
+  const getDateRange = (startDate, endDate) => {
+    let dates = []
+    const theDate = new Date(startDate)
+    while (theDate < endDate + 1) {
+      dates = [...dates, new Date(theDate)]
+      theDate.setDate(theDate.getDate() + 1)
+    }
+    return dates
+  }
 
   async function handleSubmit(event) {
     const token = localStorage.getItem('token')
@@ -49,6 +65,7 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
         updateSuccess('Congratulations! Your booking is now confirmed')
       } catch (err) {
         updateError(err.response.data.message)
+        console.log(err)
         updateSuccess('')
       }
     }
@@ -78,23 +95,11 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
         <form onSubmit={handleSubmit}>
           <div className='columns'>
             <div className='column'>
-              <label className="label">Check in: </label>
-              <input
-                className="input"
-                type="text"
-                value={formData.checkInDate}
-                onChange={handleChange}
-                name={'checkInDate'}
-              />
-            </div>
-            <div className='column'>
-              <label className="label">Check out: </label>
-              <input
-                className="input"
-                type="text"
-                value={formData.checkOutDate}
-                onChange={handleChange}
-                name={'checkOutDate'}
+              <DateRangePicker
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
               />
             </div>
             <div className='column'>
@@ -119,7 +124,7 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
 
             </div>
           </div>
-          <p>Total days:</p>
+          <p>{`Total days: `}</p>
           <p>Total price:</p>
           <button className='button is-primary mt-4'>Book now</button>
         </form>

@@ -58,8 +58,8 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
-  console.log('text: ')
-  console.log(text)
+  // console.log('text: ')
+  // console.log(text)
 
   async function handleUpdateComment(commentId) {
     //console.log(text)
