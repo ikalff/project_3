@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useSelector } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { isCreator } from '../lib/auth.js'
-import properties from '../../../models/properties.js'
+import Properties from '../../../models/properties.js'
 import { getLoggedInUserId } from '../lib/auth.js'
 import BookingForm from './BookingForm.js'
-
-
-
+import { EditText, EditTextarea } from 'react-edit-text'
+import 'react-edit-text/dist/index.css'
 
 export default function Singleproperty({ match, history }) {
-  const [property, updateproperties] = useState([])
+  const [property, updateProperties] = useState([])
   const [error, updateError] = useState('')
   const [text, setText] = useState('')
   const token = localStorage.getItem('token')
@@ -23,7 +22,7 @@ export default function Singleproperty({ match, history }) {
       if (match.params.propertyId) {
         try {
           const { data } = await axios.get(`/api/properties/${match.params.propertyId}`)
-          updateproperties(data)
+          updateProperties(data)
           //console.log(data)
           if (!data) {
             updateError('Could not find a property with that ID')
@@ -55,16 +54,45 @@ export default function Singleproperty({ match, history }) {
     })
       .then(resp => {
         setText('')
-        updateproperties(resp.data)
+        updateProperties(resp.data)
       })
   }
+
+  console.log('text: ')
+  console.log(text)
+
+  async function handleUpdateComment(commentId) {
+    //console.log(text)
+    await axios.put(`/api/properties/${match.params.propertyId}/comment/${commentId}`, { text }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(resp => {
+        setText('')
+        console.log(resp)
+        updateProperties(resp.config.data)
+      })
+
+  }
+
+  // function editComment(commentId) {
+  //   return <div>
+  //     <textarea
+  //       className="textarea"
+  //       onChange={event => setText(event.target.value)}
+  //       value={text}
+  //     >
+  //       {text}
+  //     </textarea>
+  //     <button onClick={() => handleUpdateComment(commentId)}>Save</button>
+  //   </div>
+  // }
 
   function handleDeleteComment(commentId) {
     axios.delete(`/api/properties/${match.params.propertyId}/comment/${commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
-        updateproperties(resp.data)
+        updateProperties(resp.data)
       })
   }
 
@@ -108,8 +136,6 @@ export default function Singleproperty({ match, history }) {
               </p>
             })
           }
-
-
           <h5 className='title is-5 mt-4 mb-2'>Gallery</h5>
           {property.images.length > 1 &&
             property.images.map((image, index) => {
@@ -117,16 +143,22 @@ export default function Singleproperty({ match, history }) {
             })
           }
 
-
-
-          {property.comments.length > 0 && <h5 className='title is-5 mt-4 mb-2'>Comments</h5>}
+          {property.comments.length > 0 && <h5 className='title is-5 mt-4 mb-2'>Reviews</h5>}
           {property.comments.length > 0 &&
             property.comments.map((comment, index) => {
               return <article key={index} className="media">
                 <div className="media-content">
                   <div className="content">
                     <h6>{comment.user.first_name} says:</h6>
-                    <p>{comment.text}</p>
+
+                    <input
+                      className="input"
+                      type='text'
+                      name="textbox1"
+                      defaultValue={comment.text}
+                      onChange={event => setText(event.target.value)}
+                    />
+
                   </div>
                 </div>
                 {isCreator(comment.user._id) && <div className="media-right">
@@ -135,16 +167,27 @@ export default function Singleproperty({ match, history }) {
                     onClick={() => handleDeleteComment(comment._id)}>
                   </button>
                 </div>}
+                {isCreator(comment.user._id) && <div className="media-right">
+                  <button
+                    className="edit"
+                    onClick={() => handleUpdateComment(comment._id)}>Edit
+                  </button>
+                </div>}
               </article>
             })
           }
+          {isCreator(property.host._id) ?
+            <Link className='button is-primary' to={`/updateproperty/${property._id}`}>Edit</Link>
+            :
 
-          <BookingForm
-            propertyId={match.params.propertyId}
-            maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
+            <BookingForm
+              propertyId={match.params.propertyId}
+              maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
+          }
 
 
-          <h4>Review:</h4>
+
+          <h4>Review or Edit Review:</h4>
 
           <article className="media">
             <div className="media-content">
@@ -172,12 +215,8 @@ export default function Singleproperty({ match, history }) {
               </div>
             </div>
           </article>
-
         </div>
-
       </div>
-
-
     </div>
   </>
 }

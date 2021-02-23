@@ -41,7 +41,7 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
   function handleCheckBox(event) {
     const newcheckboxData = { ...checkboxData }
     newcheckboxData[event.target.name] = event.target.checked
-    //console.log(newcheckboxData)
+    console.log(newcheckboxData)
     updateCheckboxData(newcheckboxData)
   }
 
