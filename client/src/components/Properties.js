@@ -12,6 +12,8 @@ export default function App() {
   const [pageNum, updatePageNum] = useState(1)
   const [loading, updateLoading] = useState(true)
   const [locationData, updateLocationData] = useState('')
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
   const amenities = ['Wifi', 'Pet friendly', 'Wheelchair Accessible', 'Washing machine', 'Near a beach']
   const [checkboxData, updateCheckboxData] = useState({
     'Wifi': false,
@@ -20,8 +22,6 @@ export default function App() {
     'Washing machine': false,
     'Near a beach': false
   })
-
-
 
   useEffect(() => {
     async function fetchProperties() {
@@ -57,6 +57,7 @@ export default function App() {
           return property.amenities.find(amenity => amenity.amenityName === amenityName).amenityValue === true
         })
       }
+      
     })
     updateProperties(newProperties)
   }
@@ -102,7 +103,11 @@ export default function App() {
           onChange={handleFieldsChange}
           locationDataProp={locationData}
           checkboxDataProp={checkboxData}
-        ></SearchForm>
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+        />
 
       </div>
       <div className='column'>

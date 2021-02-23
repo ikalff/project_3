@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import NavBar from './components/NavBar.js'
@@ -16,22 +16,23 @@ import UpdateProperty from './components/UpdateProperty.js'
 import 'bulma'
 import './styles/style.scss'
 
-const App = () => (
-  <BrowserRouter>
+const App = () => {
+
+  return <BrowserRouter>
     <NavBar></NavBar>
     <Switch>
-      <Route exact path='/' component={Home}></Route>
-      <Route exact path='/register' component={Register}></Route>
-      <Route exact path='/login' component={Login}></Route>
-      <Route exact path='/users/:usersId' component={UserProfile}></Route>
-      <Route exact path='/properties' component={Properties}></Route>
-      <Route exact path='/properties/:propertyId' component={PropertyProfile}></Route>
-      <Route exact path='/makeproperty' component={MakeProperty}></Route>
-      <Route exact path='/updateproperty' component={UpdateProperty}></Route>
+      <Route exact path='/' component={Home} />
+      <Route exact path='/register' component={Register} />
+      <Route exact path='/login' component={Login} />
+      <Route exact path='/users/:usersId' component={UserProfile} />
+      <Route exact path='/properties' component={Properties} />
+      <Route exact path='/properties/:propertyId' component={PropertyProfile} />
+      <Route exact path='/makeproperty' component={MakeProperty} />
+      <Route exact path='/updateproperty' component={UpdateProperty} />
     </Switch>
-    <Footer></Footer>
+    <Footer />
   </BrowserRouter>
-)
+}
 
 
 
