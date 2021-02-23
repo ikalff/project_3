@@ -9,14 +9,18 @@ function NavBar({ location, history }) {
   const [username, updateUsername] = useState([])
   let LoggedInUserId = getLoggedInUserId()
 
+  const token = localStorage.getItem('token')
+
   useEffect(() => {
     async function fetchData() {
       LoggedInUserId = getLoggedInUserId()
       if (LoggedInUserId) {
         try {
-          const { data } = await axios.get(`/api/users/${LoggedInUserId}`)
+          const { data } = await axios.get(`/api/users/${LoggedInUserId}`,  {
+            headers: { Authorization: `Bearer ${token}` }
+          })
           if (data) {
-            //console.log(data)
+            console.log(data)
             updateUsername(data.first_name)
           }
         } catch (err) {

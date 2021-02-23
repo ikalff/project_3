@@ -17,25 +17,31 @@ export default function UserProfile({ history, match }) {
     isAdmin: ''
   })
 
-  console.log('user profile userData', userData)
-
   const [userDataLoading, updateUserDataLoading] = useState(true)
 
-  //! Check error useState - see register.js
   const [error, updateError] = useState('')
+  const [errorState, updateErrorState] = useState(false)
+  const [formSuccess, updateFormSuccess] = useState(false)
 
+  const token = localStorage.getItem('token')
 
-  useEffect(() => {
+  function getUser() {
 
-    axios.get(`/api/users/${userId}`)
+    axios.get(`/api/users/${userId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(({ data }) => {
-        console.log('data:', data)
 
         updateUserData(data)
         updateUserDataLoading(false)
-      })
 
+      })
+  }
+
+  useEffect(() => {
+    getUser()
   }, [])
+  
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -44,22 +50,39 @@ export default function UserProfile({ history, match }) {
 
   async function handleSubmit(event) {
     event.preventDefault()
-    
-    const token = localStorage.getItem('token')
 
     try {
       const { data } = await axios.put(`/api/users/${userId}`, userData, {
         headers: { Authorization: `Bearer ${token}` }
       })
-     
-      history.push(`/users/${userId}`)
+
+      getUser()
+      updateErrorState(false)
+      updateFormSuccess(true)
     } catch (err) {
+      updateErrorState(true)
       updateError(err.response.data.message)
-      console.log(err.response.data)
+      updateFormSuccess(false)
     }
   }
 
+  function handleDeleteUser(event) {
+    event.preventDefault()
 
+    try {
+      axios.delete(`/api/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(resp => {
+          history.push('/')
+        })
+     
+    } catch (err) {
+      updateErrorState(true)
+      updateError(err.response.data.message)
+      updateFormSuccess(false)
+    }
+  }
 
   if (userDataLoading) {
     return <div className='loading'>
@@ -70,7 +93,9 @@ export default function UserProfile({ history, match }) {
 
   return <div className="section">
 
-    <div className={error ? 'box has-background-danger has-text-white' : 'is-hidden'}>{error}</div>
+    {errorState ? <div className="notification is-danger">{error}</div> : <div className="notification is-hidden"></div>}
+
+    {formSuccess ? <div className="notification is-success is-light">Your changes have been saved.</div> : <div className="notification is-hidden"></div>}
 
     <div className="columns">
 
@@ -138,10 +163,13 @@ export default function UserProfile({ history, match }) {
               />
             </div>
 
-
             <button className="button is-primary mt-5">Update my details</button>
+
           </div>
         </form>
+
+        <button className="button is-danger mt-5" onClick={handleDeleteUser}>Delete my account</button>
+
       </div>
 
       {userData.isHost ? <div className="column">

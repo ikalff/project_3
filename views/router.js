@@ -20,6 +20,7 @@ router.route('/login')
 router.route('/users/:userId')
   .get(secureRoute, users.getSingleUser)
   .put(secureRoute, users.updateUser)
+  .delete(secureRoute, users.deleteUser)
 
 router.route('/users')
   .get(users.getUsers)

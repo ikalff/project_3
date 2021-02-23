@@ -33,7 +33,7 @@ export default function getUserData() {
       email: 'india@india.com',
       password: 'passwords3',
       passwordConfirmation: 'passwords3',
-      isHost: true
+      isHost: true,
       isAdmin: false
     },
     {
