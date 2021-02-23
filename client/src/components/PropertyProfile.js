@@ -15,6 +15,7 @@ export default function Singleproperty({ match, history }) {
   const token = localStorage.getItem('token')
   const LoggedInUserId = getLoggedInUserId()
   const commentId = match.params.commentId
+  const comment = match.params.comment
 
   useEffect(() => {
     async function fetchData() {
@@ -38,7 +39,9 @@ export default function Singleproperty({ match, history }) {
     fetchData()
   }, [])
 
-
+  if (!property.name) {
+    return null
+  }
 
   async function handleDelete() {
     await axios.delete(`/api/properties/${match.params.propertyId}`, {
@@ -58,14 +61,18 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
+  console.log('text: ')
+  console.log(text)
+
   async function handleUpdateComment(commentId) {
-    const { comment } = await axios.put(`/api/properties/${match.params.propertyId}/comment/${commentId}`, { text }, {
+    //console.log(text)
+    await axios.put(`/api/properties/${match.params.propertyId}/comment/${commentId}`, { text }, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
         setText('')
+        updateProperties(resp.comment.text)
         console.log(comment)
-        updateProperties(resp.text)
       })
   }
 
@@ -91,9 +98,7 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
-  if (!property.name) {
-    return null
-  }
+  event.preventDefault()
 
   return <>
 
@@ -139,18 +144,20 @@ export default function Singleproperty({ match, history }) {
             property.comments.map((comment, index) => {
               return <article key={index} className="media">
                 <div className="media-content">
-                  <div className="content">
+                  {isCreator(comment.user._id) && <div className="content">
                     <h6>{comment.user.first_name} says:</h6>
-                    <React.Fragment>
-                      <EditText
-                        className="textbox"
-                        defaultValue={comment.text}
-                        onChange={event => setText(event.target.value)}
-                      />
-                      
-                      <p>{comment.text}</p>
-                    </React.Fragment>
-                  </div>
+                    <input
+                      className="input"
+                      type='text'
+                      name="textbox1"
+                      defaultValue={comment.text}
+                      onChange={event => setText(event.target.value)}
+                    />
+                  </div>}
+                  {!isCreator(comment.user._id) && <div className="content">
+                    <h6>{comment.user.first_name} says:</h6>
+                    <p>{comment.text}</p>
+                  </div>}
                 </div>
                 {isCreator(comment.user._id) && <div className="media-right">
                   <button
@@ -162,6 +169,7 @@ export default function Singleproperty({ match, history }) {
                   <button
                     className="edit"
                     onClick={() => handleUpdateComment(comment._id)}>Edit
+
                   </button>
                 </div>}
               </article>
@@ -171,41 +179,38 @@ export default function Singleproperty({ match, history }) {
             <Link className='button is-primary' to={`/updateproperty/${property._id}`}>Edit</Link>
             :
             <BookingForm
-              propertyId={match.params.propertyId}
-              maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
-          }
-
-
-          <h4>Review or Edit Review:</h4>
-
-          <article className="media">
-            <div className="media-content">
-              <div className="field">
-                <p className="control">
-                  <textarea
-                    className="textarea"
-                    placeholder="Make a comment.."
-                    onChange={event => setText(event.target.value)}
-                    value={text}
-                  >
-                    {text}
-                  </textarea>
-                </p>
-              </div>
-              <div className="field">
-                <p className="control">
-                  <button
-                    onClick={handleComment}
-                    className="button is-info"
-                  >
-                    Submit
-                  </button>
-                </p>
-              </div>
-            </div>
-          </article>
+            propertyId={match.params.propertyId}
+            maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>}
         </div>
       </div>
+      <br />
+      <article className="media">
+        <div className="media-content">
+          <h3>Review:</h3>
+          <div className="field">
+            <p className="control">
+              <textarea
+                className="textarea"
+                placeholder="Make a comment.."
+                onChange={event => setText(event.target.value)}
+                value={text}
+              >
+                {text}
+              </textarea>
+            </p>
+          </div>
+          <div className="field">
+            <p className="control">
+              <button
+                onClick={handleComment}
+                className="button is-info"
+              >
+                Submit
+                  </button>
+            </p>
+          </div>
+        </div>
+      </article>
     </div>
   </>
 }
