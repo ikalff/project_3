@@ -46,6 +46,16 @@ export default function App() {
 
 
   function filter(data, locationData, checkboxData) {
+    const getDateRange = (startDate, endDate) => {
+      let dates = []
+      const theDate = new Date(startDate)
+      while (theDate < endDate) {
+        dates = [...dates, new Date(theDate)]
+        theDate.setDate(theDate.getDate() + 1)
+      }
+      dates = [...dates, endDate]
+      return dates
+    }
     let newProperties = []
     newProperties = data.filter(property => {
       return property.location.toLowerCase().includes(locationData.toLowerCase())
@@ -57,7 +67,6 @@ export default function App() {
           return property.amenities.find(amenity => amenity.amenityName === amenityName).amenityValue === true
         })
       }
-      
     })
     updateProperties(newProperties)
   }

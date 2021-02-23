@@ -13,7 +13,7 @@ export default function DateRangePicker({ startDate, setStartDate, endDate, setE
 
   return <MuiPickersUtilsProvider utils ={MomentUtils}>
     <DatePicker
-      label='Select start date'
+      label='Check in'
       value={startDate} 
       onChange={handleStartDateChange} 
       variant='inline'
@@ -24,7 +24,7 @@ export default function DateRangePicker({ startDate, setStartDate, endDate, setE
 
     />
     <DatePicker 
-      label='Select end date'
+      label='Check out'
       value={endDate} 
       onChange={handleEndDateChange} 
       variant='inline'

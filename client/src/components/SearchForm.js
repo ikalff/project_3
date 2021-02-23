@@ -4,12 +4,7 @@ import DateRangePicker from './dateRangePicker'
 import amenities from '../data/amenities.js'
 
 export default function SearchForm({ onChange, formLocation, checkboxDataProp, locationDataProp, startDate, setStartDate, endDate, setEndDate }) {
-// export default function SearchForm({ onChange, formLocation, checkboxDataProp, locationDataProp }) {
   //const amenities = ['Wifi', 'Pet friendly', 'Wheelchair Accessible', 'Washing machine', 'Near a beach']
-
-  // const [startDate, setStartDate] = useState(new Date())
-  // const [endDate, setEndDate] = useState(new Date())
-  console.log("hi", startDate, endDate);
   const [locationData, updateLocationData] = useState('')
 
   
@@ -102,7 +97,7 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
       endDate={endDate}
       setEndDate={setEndDate}
     />
-    <div>{String(startDate)}</div>
+    {/* <div>{String(startDate)}</div> */}
     {formLocation === 'listings' && <div className='buttons'>
 
 
