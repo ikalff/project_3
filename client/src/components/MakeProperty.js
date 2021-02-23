@@ -7,6 +7,29 @@ import { getLoggedInUserId } from '../lib/auth.js'
 export default function MakeProperty({ history }) {
   
   const LoggedInUserId = getLoggedInUserId()
+  const [checkboxData, updateCheckboxData] = useState([
+    {
+      amenityName: 'Wifi',
+      amenityValue: false
+    },
+    {
+      amenityName: 'Pet friendly',
+      amenityValue: false
+    },
+    {
+      amenityName: 'Wheelchair Accessible',
+      amenityValue: false
+    },
+    {
+      amenityName: 'Washing machine',
+      amenityValue: false
+    },
+    {
+      amenityName: 'Near a beach',
+      amenityValue: false
+    }
+  ])
+
   const [formData, updateFormData] = useState({
     images: [],
     name: '',
@@ -21,7 +44,7 @@ export default function MakeProperty({ history }) {
     checkOutTime: '',
     houseRules: '',
     cancellationPolicy: '',
-    amenities: []
+    amenities: checkboxData
   })
 
 
@@ -67,6 +90,6 @@ export default function MakeProperty({ history }) {
       handleChange={handleChange}
       handleTypeChange={(types) => updateFormData({ ...formData, types })}
       handleSubmit={handleSubmit}
-      formData={formData}
+      checkboxData={checkboxData}
     /></div>
 }

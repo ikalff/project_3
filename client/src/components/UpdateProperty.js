@@ -4,13 +4,28 @@ import PropertyForm from './PropertyForm'
 import { isCreator } from '../lib/auth.js'
 
 export default function UpdatePokemon({ history, match }) {
-  const [checkboxData, updateCheckboxData] = useState({
-    'Wifi': false,
-    'Pet friendly': false,
-    'Wheelchair Accessible': false,
-    'Washing machine': false,
-    'Near a beach': false
-  })
+  const [checkboxData, updateCheckboxData] = useState([
+    {
+      amenityName: 'Wifi',
+      amenityValue: false
+    },
+    {
+      amenityName: 'Pet friendly',
+      amenityValue: false
+    },
+    {
+      amenityName: 'Wheelchair Accessible',
+      amenityValue: false
+    },
+    {
+      amenityName: 'Washing machine',
+      amenityValue: false
+    },
+    {
+      amenityName: 'Near a beach',
+      amenityValue: false
+    }
+  ])
   const propertyId = match.params.propertyId
   const [ownerId, updateOwnerId] = useState('')
   const [formData, updateFormData] = useState({
@@ -65,12 +80,14 @@ export default function UpdatePokemon({ history, match }) {
 
 
   function handleCheckBox(event) {
-    const newcheckboxData = { ...checkboxData }
-    newcheckboxData[event.target.name] = event.target.checked
-    console.log('CLICK')
-    console.log(newcheckboxData)
-    updateCheckboxData(newcheckboxData)
-    updateFormData({ ...formData, ['amenities']: newcheckboxData })
+    const amenityIndex = checkboxData.findIndex(amenity => amenity.amenityName === event.target.name)
+    const newCheckboxData = [...checkboxData]
+    newCheckboxData[amenityIndex] = { 
+      'amenityName': event.target.name,
+      'amenityValue': event.target.checked
+    }
+    updateCheckboxData(newCheckboxData)
+    updateFormData({ ...formData, ['amenities']: newCheckboxData })
   }
 
 
