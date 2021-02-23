@@ -15,6 +15,7 @@ export default function Singleproperty({ match, history }) {
   const token = localStorage.getItem('token')
   const LoggedInUserId = getLoggedInUserId()
   const commentId = match.params.commentId
+  const comment = match.params.comment
 
   useEffect(() => {
     async function fetchData() {
@@ -38,7 +39,9 @@ export default function Singleproperty({ match, history }) {
     fetchData()
   }, [])
 
-
+  if (!property.name) {
+    return null
+  }
 
   async function handleDelete() {
     await axios.delete(`/api/properties/${match.params.propertyId}`, {
@@ -68,10 +71,9 @@ export default function Singleproperty({ match, history }) {
     })
       .then(resp => {
         setText('')
-        console.log(resp)
-        updateProperties(resp.config.data)
+        updateProperties(resp.comment.text)
+        console.log(comment)
       })
-
   }
 
   // function editComment(commentId) {
@@ -96,9 +98,7 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
-  if (!property.name) {
-    return null
-  }
+  event.preventDefault()
 
   return <>
 
@@ -117,16 +117,13 @@ export default function Singleproperty({ match, history }) {
     <div className='container px-6 pt-6 pb-6'>
       <div className='columns'>
         <div className='column'>
-
           <p>Summary: {property.summary}</p>
-
           <p>Place type: {property.isEntirePlace ? 'Entire place' : 'Room only'} </p>
           <p>Price per night: {property.pricePerNight}</p>
           <p>Check in: {property.checkInTime}</p>
           <p>Check out: {property.checkOutTime}</p>
           <p>House rules: {property.houseRules}</p>
           <p>Cancellation Policy: {property.cancellationPolicy}</p>
-
           <h5 className='title is-5 mt-4 mb-2'>Amenities</h5>
           {property.amenities.length > 0 &&
             property.amenities.map((amenity, index) => {
@@ -142,15 +139,13 @@ export default function Singleproperty({ match, history }) {
               return <img key={index} src={image} width='150' />
             })
           }
-
           {property.comments.length > 0 && <h5 className='title is-5 mt-4 mb-2'>Reviews</h5>}
           {property.comments.length > 0 &&
             property.comments.map((comment, index) => {
               return <article key={index} className="media">
                 <div className="media-content">
-                  <div className="content">
+                  {isCreator(comment.user._id) && <div className="content">
                     <h6>{comment.user.first_name} says:</h6>
-
                     <input
                       className="input"
                       type='text'
@@ -158,8 +153,11 @@ export default function Singleproperty({ match, history }) {
                       defaultValue={comment.text}
                       onChange={event => setText(event.target.value)}
                     />
-
-                  </div>
+                  </div>}
+                  {!isCreator(comment.user._id) && <div className="content">
+                    <h6>{comment.user.first_name} says:</h6>
+                    <p>{comment.text}</p>
+                  </div>}
                 </div>
                 {isCreator(comment.user._id) && <div className="media-right">
                   <button
@@ -171,6 +169,7 @@ export default function Singleproperty({ match, history }) {
                   <button
                     className="edit"
                     onClick={() => handleUpdateComment(comment._id)}>Edit
+
                   </button>
                 </div>}
               </article>
@@ -179,44 +178,39 @@ export default function Singleproperty({ match, history }) {
           {isCreator(property.host._id) ?
             <Link className='button is-primary' to={`/updateproperty/${property._id}`}>Edit</Link>
             :
-
             <BookingForm
-              propertyId={match.params.propertyId}
-              maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
-          }
-
-
-
-          <h4>Review or Edit Review:</h4>
-
-          <article className="media">
-            <div className="media-content">
-              <div className="field">
-                <p className="control">
-                  <textarea
-                    className="textarea"
-                    placeholder="Make a comment.."
-                    onChange={event => setText(event.target.value)}
-                    value={text}
-                  >
-                    {text}
-                  </textarea>
-                </p>
-              </div>
-              <div className="field">
-                <p className="control">
-                  <button
-                    onClick={handleComment}
-                    className="button is-info"
-                  >
-                    Submit
-                  </button>
-                </p>
-              </div>
-            </div>
-          </article>
+            propertyId={match.params.propertyId}
+            maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>}
         </div>
       </div>
+      <br />
+      <article className="media">
+        <div className="media-content">
+          <h3>Review:</h3>
+          <div className="field">
+            <p className="control">
+              <textarea
+                className="textarea"
+                placeholder="Make a comment.."
+                onChange={event => setText(event.target.value)}
+                value={text}
+              >
+                {text}
+              </textarea>
+            </p>
+          </div>
+          <div className="field">
+            <p className="control">
+              <button
+                onClick={handleComment}
+                className="button is-info"
+              >
+                Submit
+                  </button>
+            </p>
+          </div>
+        </div>
+      </article>
     </div>
   </>
 }
