@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useSelector } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { isCreator } from '../lib/auth.js'
 import Properties from '../../../models/properties.js'
 import { getLoggedInUserId } from '../lib/auth.js'
 import BookingForm from './BookingForm.js'
-import { EditText, EditTextarea } from 'react-edit-text'
 import 'react-edit-text/dist/index.css'
 
 export default function Singleproperty({ match, history }) {
@@ -14,8 +13,7 @@ export default function Singleproperty({ match, history }) {
   const [text, setText] = useState('')
   const token = localStorage.getItem('token')
   const LoggedInUserId = getLoggedInUserId()
-  const commentId = match.params.commentId
-  const comment = match.params.comment
+
 
   useEffect(() => {
     async function fetchData() {
@@ -72,7 +70,6 @@ export default function Singleproperty({ match, history }) {
       .then(resp => {
         setText('')
         updateProperties(resp.comment.text)
-        console.log(comment)
       })
   }
 
@@ -179,38 +176,38 @@ export default function Singleproperty({ match, history }) {
             <Link className='button is-primary' to={`/updateproperty/${property._id}`}>Edit</Link>
             :
             <BookingForm
-            propertyId={match.params.propertyId}
-            maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>}
+              propertyId={match.params.propertyId}
+              maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>}
+          <br />
+          <article className="media">
+            <div className="media-content">
+              <h3>Review:</h3>
+              <div className="field">
+                <p className="control">
+                  <textarea
+                    className="textarea"
+                    placeholder="Make a comment.."
+                    onChange={event => setText(event.target.value)}
+                    value={text}
+                  >
+                    {text}
+                  </textarea>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control">
+                  <button
+                    onClick={handleComment}
+                    className="button is-info"
+                  >
+                    Submit
+                  </button>
+                </p>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
-      <br />
-      <article className="media">
-        <div className="media-content">
-          <h3>Review:</h3>
-          <div className="field">
-            <p className="control">
-              <textarea
-                className="textarea"
-                placeholder="Make a comment.."
-                onChange={event => setText(event.target.value)}
-                value={text}
-              >
-                {text}
-              </textarea>
-            </p>
-          </div>
-          <div className="field">
-            <p className="control">
-              <button
-                onClick={handleComment}
-                className="button is-info"
-              >
-                Submit
-                  </button>
-            </p>
-          </div>
-        </div>
-      </article>
     </div>
   </>
 }
