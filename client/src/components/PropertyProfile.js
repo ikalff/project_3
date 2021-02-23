@@ -58,8 +58,12 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
+  console.log('text: ')
+  console.log(text)
+
   async function handleUpdateComment(commentId) {
-    const { comment } = await axios.put(`/api/properties/${match.params.propertyId}/comment/${commentId}`, { text }, {
+    //console.log(text)
+    await axios.put(`/api/properties/${match.params.propertyId}/comment/${commentId}`, { text }, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
@@ -67,6 +71,7 @@ export default function Singleproperty({ match, history }) {
         console.log(resp)
         updateProperties(resp.config.data)
       })
+
   }
 
   // function editComment(commentId) {
@@ -145,15 +150,15 @@ export default function Singleproperty({ match, history }) {
                 <div className="media-content">
                   <div className="content">
                     <h6>{comment.user.first_name} says:</h6>
-                    <React.Fragment>
-                      <EditText
-                        name="textbox1"
-                        defaultValue={comment.text}
-                        onChange={event => setText(event.target.value)}
-                      />
-                      
-                      <p>{comment.text}</p>
-                    </React.Fragment>
+
+                    <input
+                      className="input"
+                      type='text'
+                      name="textbox1"
+                      defaultValue={comment.text}
+                      onChange={event => setText(event.target.value)}
+                    />
+
                   </div>
                 </div>
                 {isCreator(comment.user._id) && <div className="media-right">

@@ -77,7 +77,7 @@ export default function MakeProperty({ history }) {
       const { data } = await axios.post('/api/properties', newFormData, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      console.log(data._id)
+      //console.log(data._id)
       history.push(`/properties/${data._id}`)
     } catch (err) {
       console.log(err.response.data)
@@ -91,5 +91,6 @@ export default function MakeProperty({ history }) {
       handleTypeChange={(types) => updateFormData({ ...formData, types })}
       handleSubmit={handleSubmit}
       checkboxData={checkboxData}
+      formData={formData}
     /></div>
 }

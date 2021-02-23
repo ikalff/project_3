@@ -45,7 +45,7 @@ export default function UpdatePokemon({ history, match }) {
     amenities: checkboxData
   })
 
-  console.log(formData)
+  //console.log(formData)
 
 
   useEffect(() => {

@@ -4,7 +4,8 @@ import amenities from '../data/amenities.js'
 export default function PropertyForm({ formData, checkboxData, handleSubmit, handleChange, handleCheckBox }) {
 
 
-
+  console.log(formData.amenities)
+  
   return <form onSubmit={handleSubmit}>
 
 
@@ -218,18 +219,22 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
       </select>
     </div>
 
+
     {
-      amenities.map((amenity, index) => {
+      formData.amenities.map((amenity, index) => {
+
+
+
         return <div key={index} className="field">
           <label className="checkbox">
             <input
               className='mr-1'
               type="checkbox"
-              name={amenity}
+              name={amenity.amenityName}
               onChange={handleCheckBox}
-              checked={checkboxData[amenity]}
+              checked={amenity.amenityValue}
             />
-            {amenity}
+            {amenity.amenityName}
           </label>
         </div>
       })
