@@ -7,30 +7,30 @@ import { getLoggedInUserId } from '../lib/auth.js'
 import BookingForm from './BookingForm.js'
 import { EditText, EditTextarea } from 'react-edit-text'
 import 'react-edit-text/dist/index.css'
+import { get } from 'mongoose'
 
 export default function Singleproperty({ match, history }) {
   const [property, updateProperties] = useState([])
   const [error, updateError] = useState('')
   const [text, setText] = useState('')
+  const [unavailableDates, setUnavailableDates] = useState([])
   const token = localStorage.getItem('token')
   const LoggedInUserId = getLoggedInUserId()
   const commentId = match.params.commentId
 
   useEffect(() => {
     async function fetchData() {
-      console.log(match.params.propertyId)
       if (match.params.propertyId) {
         try {
           const { data } = await axios.get(`/api/properties/${match.params.propertyId}`)
-          updateProperties(data)
-          //console.log(data)
+            updateProperties(data)
           if (!data) {
-            updateError('Could not find a property with that ID')
+           updateError('Could not find a property with that ID')
           }
         } catch (err) {
           console.log(err)
           updateError('Unable to fetch data')
-        }
+        } 
       } else {
         //history.push('/')
       }
@@ -38,7 +38,24 @@ export default function Singleproperty({ match, history }) {
     fetchData()
   }, [])
 
+  useEffect(() => {
+    if (property.bookings) {
+      console.log('hi');
+      getUnavailableDates()
+    }
+  },[property])
+    
 
+  function getUnavailableDates() {
+    let dates = []
+    property.bookings.map(booking => {
+      booking.datesBooked.map((date, index) => {
+        dates.push(date)
+        console.log(index, String(date));
+      })
+    })
+    setUnavailableDates(dates)
+  }
 
   async function handleDelete() {
     await axios.delete(`/api/properties/${match.params.propertyId}`, {
@@ -57,9 +74,6 @@ export default function Singleproperty({ match, history }) {
         updateProperties(resp.data)
       })
   }
-
-  // console.log('text: ')
-  // console.log(text)
 
   async function handleUpdateComment(commentId) {
     //console.log(text)
@@ -182,7 +196,9 @@ export default function Singleproperty({ match, history }) {
 
             <BookingForm
               propertyId={match.params.propertyId}
-              maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>
+              maxNumberOfGuests={property.maxNumberOfGuests}
+              unavailableDates={unavailableDates}
+            />
           }
 
 

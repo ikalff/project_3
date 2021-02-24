@@ -4,14 +4,13 @@ import axios from 'axios'
 import { getLoggedInUserId } from '../lib/auth.js'
 import DateRangePicker from './dateRangePicker'
 
-
-
-function BookingForm({ propertyId, maxNumberOfGuests }) {
+function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates }) {
 
   const LoggedInUserId = getLoggedInUserId()
 
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
+  const [numOfDays, setNumOfDays] = useState(1)
 
   const [error, updateError] = useState('')
   const [success, updateSuccess] = useState('')
@@ -68,6 +67,7 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
     }
   }
 
+  
 
 
   const maxNumberOfGuestsArray = ['Please select']
@@ -78,6 +78,10 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
 
   if (!LoggedInUserId) {
     return null
+  }
+
+  function disableWeekends(date) {
+    return date.getDay() === 0 || date.getDay() === 6;
   }
 
   return <div className='box mt-6'>
@@ -97,6 +101,7 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
                 setStartDate={setStartDate}
                 endDate={endDate}
                 setEndDate={setEndDate}
+                unavailableDates={unavailableDates}
               />
             </div>
             <div className='column'>
@@ -121,7 +126,7 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
 
             </div>
           </div>
-          <p>Total days:</p>
+          <p>{`Total days: ${numOfDays}`}</p>
           <p>Total price:</p>
           <button className='button is-primary mt-4'>Book now</button>
         </form>

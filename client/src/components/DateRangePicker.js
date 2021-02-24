@@ -2,12 +2,18 @@ import React, { useState } from 'react'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment'
 
-export default function DateRangePicker({ startDate, setStartDate, endDate, setEndDate }) {
+export default function DateRangePicker({ startDate, setStartDate, endDate, setEndDate, unavailableDates }) {
   const handleStartDateChange = (date) => {
     setStartDate(date)
   }
   const handleEndDateChange = (date) => {
     setEndDate(date)
+  }
+
+  function disableUnavailable() {
+    unavailableDates.map(date => {
+      date === date
+    })
   }
 
 
@@ -21,6 +27,7 @@ export default function DateRangePicker({ startDate, setStartDate, endDate, setE
       animateYearScrolling
       disablePast
       autoOk
+      // shouldDisableDate={disableUnavailable}
 
     />
     <DatePicker 
@@ -32,6 +39,7 @@ export default function DateRangePicker({ startDate, setStartDate, endDate, setE
       animateYearScrolling
       disablePast
       autoOk
+      // shouldDisableDate={disableUnavailable}
     />
   </MuiPickersUtilsProvider>
 }
