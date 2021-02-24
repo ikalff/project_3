@@ -70,7 +70,7 @@ export default function UpdatePokemon({ history, match }) {
           amenities: data['amenities']
         }
         updateFormData(newFormData)
-        console.log(newFormData)
+        //console.log(newFormData)
       })
   }, [])
 
@@ -80,6 +80,11 @@ export default function UpdatePokemon({ history, match }) {
   }
 
 
+  function handleImages(imageArray) {
+    //console.log(imageArray)
+    updateFormData({ ...formData, images: imageArray })
+  }
+
   function handleCheckBox(event) {
     const amenityIndex = checkboxData.findIndex(amenity => amenity.amenityName === event.target.name)
     const newCheckboxData = [...checkboxData]
@@ -87,7 +92,7 @@ export default function UpdatePokemon({ history, match }) {
       'amenityName': event.target.name,
       'amenityValue': event.target.checked
     }
-    console.log(formData.amenities)
+    //console.log(formData.amenities)
     updateCheckboxData(newCheckboxData)
     updateFormData({ ...formData, ['amenities']: newCheckboxData })
   }
@@ -118,15 +123,13 @@ export default function UpdatePokemon({ history, match }) {
       const { data } = await axios.put(`/api/properties/${propertyId}`, newFormData, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      console.log(data._id)
+      //console.log(data._id)
       history.push(`/properties/${data._id}`)
     } catch (err) {
       updateError('Unable to update property. Please enter a unique property name and a value for all required fields.')
       console.log(err)
     }
   }
-
-
 
 
   return <div className='container px-6 pt-6 pb-6'>
@@ -138,6 +141,7 @@ export default function UpdatePokemon({ history, match }) {
         handleChange={handleChange}
         handleCheckBox={handleCheckBox}
         handleSubmit={handleSubmit}
+        handleImages={handleImages}
         formData={formData}
         location='updateProperty'
 

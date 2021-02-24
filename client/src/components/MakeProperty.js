@@ -110,6 +110,7 @@ export default function MakeProperty({ history }) {
       handleTypeChange={(types) => updateFormData({ ...formData, types })}
       handleSubmit={handleSubmit}
       handleCheckBox={handleCheckBox}
+      handleImages={handleImages}
       formData={formData}
       location='makeProperty'
     />

@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 export default function PropertyForm({ formData, handleSubmit, handleChange, handleImages, handleCheckBox, location }) {
 
-  const [images, updateImages] = useState([
-    'http://placehold.it/600x400',
-    'http://placehold.it/600x400/ffcc00/ffffff',
-    'http://placehold.it/600x400',
-    'http://placehold.it/600x400/ffcc00/ffffff',
-    'http://placehold.it/600x400/ff0000/ffffff'
-  ])
 
-  console.log(formData.amenities)
+  const [images, updateImages] = useState(formData.images)
+
+  useEffect(() => {
+    updateImages(formData.images)
+  }, [formData.images])
+
 
   let widget = window.cloudinary.createUploadWidget({
     cloudName: 'ikalff',
@@ -20,7 +18,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
     (error, result) => { checkUploadResult(result) })
 
   function checkUploadResult(resultEvent) {
-    console.log(resultEvent)
+    //console.log(resultEvent)
     if (resultEvent.event === 'success') {
       const newImages = [...images]
       newImages.push(resultEvent.info.secure_url)
@@ -34,12 +32,14 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
     widget.open()
   }
 
-  function deleteImage(index) {
-    console.log(index)
+  function deleteImage(event, index) {
+    event.preventDefault()
+    //console.log(index)
     const newImages = [...images]
     newImages.splice(index, 1)
-    console.log(newImages)
+    //console.log(newImages)
     updateImages(newImages)
+    handleImages(newImages)
   }
 
 
@@ -306,7 +306,10 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
             images.map((image, index) => {
               return <div key={index} className='column is-one-quarter'>
                 <img src={image} className='mb-2'></img>
-                <button className='button is-danger' onClick={() => deleteImage(index)}>Delete</button>
+                <button className='button is-danger' onClick={(event) => {
+                  deleteImage(event, index)
+                }}
+                >Delete</button>
               </div>
             })
 
