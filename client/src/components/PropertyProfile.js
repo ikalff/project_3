@@ -17,12 +17,10 @@ export default function Singleproperty({ match, history }) {
 
   useEffect(() => {
     async function fetchData() {
-      console.log(match.params.propertyId)
       if (match.params.propertyId) {
         try {
           const { data } = await axios.get(`/api/properties/${match.params.propertyId}`)
           updateProperties(data)
-          //console.log(data)
           if (!data) {
             updateError('Could not find a property with that ID')
           }
@@ -30,20 +28,14 @@ export default function Singleproperty({ match, history }) {
           console.log(err)
           updateError('Unable to fetch data')
         }
-      } else {
-        //history.push('/')
-      }
+      } 
     }
     fetchData()
   }, [])
 
-  async function handleDelete() {
-    await axios.delete(`/api/properties/${match.params.propertyId}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    history.push('/')
+  if (!property.name) {
+    return null
   }
-
 
   function handleComment() {
     axios.post(`/api/properties/${match.params.propertyId}/comment`, { text }, {
@@ -54,9 +46,6 @@ export default function Singleproperty({ match, history }) {
         updateProperties(resp.data)
       })
   }
-
-  console.log('text: ')
-  console.log(text)
 
   async function handleUpdateComment(commentId) {
     //console.log(text)
@@ -127,12 +116,20 @@ export default function Singleproperty({ match, history }) {
               </p>
             })
           }
+
+
+
           <h5 className='title is-5 mt-4 mb-2'>Gallery</h5>
-          {property.images.length > 1 &&
-            property.images.map((image, index) => {
-              return <img key={index} src={image} width='150' />
-            })
-          }
+          <div className='imagegallery columns mt-4 is-multiline'>
+            {
+              property.images.map((image, index) => {
+                return <div key={index} className='column is-quarter'><img src={image} /></div>
+              })
+            }
+          </div>
+
+
+
           {property.comments.length > 0 && <h5 className='title is-5 mt-4 mb-2'>Reviews</h5>}
           {property.comments.length > 0 &&
             property.comments.map((comment, index) => {
