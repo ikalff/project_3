@@ -3,7 +3,7 @@ import axios from 'axios'
 import PropertyForm from './PropertyForm'
 import { isCreator } from '../lib/auth.js'
 
-export default function UpdatePokemon({ history, match }) {
+export default function UpdateProperty({ history, match }) {
   const [error, updateError] = useState('')
   const [checkboxData, updateCheckboxData] = useState([
     {
@@ -129,8 +129,10 @@ export default function UpdatePokemon({ history, match }) {
 
   return <div className='container px-6 pt-6 pb-6'>
 
+    <h1>UPDATE PROPERTY</h1>
 
     {error && <div className='box has-background-danger has-text-white'>{error}</div>}
+
     {isCreator(ownerId) ?
       <PropertyForm
         handleChange={handleChange}
