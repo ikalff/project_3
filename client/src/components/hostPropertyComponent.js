@@ -11,6 +11,8 @@ export default function HostPropertyComponent(props) {
   const [hostProperties, updateHostProperties] = useState([])
   const [hostName, updateHostName] = useState('')
 
+  const [hostBio, updateHostBio] = useState('')
+
   const [propertiesLoading, updatePropertiesLoading] = useState(true)
   const [nameLoading, updateNameLoading] = useState(true)
 
@@ -47,6 +49,7 @@ export default function HostPropertyComponent(props) {
         .then(({ data }) => {
 
           updateHostName(data)
+          updateHostBio(data)
           updateNameLoading(false)
 
         })
@@ -70,6 +73,8 @@ export default function HostPropertyComponent(props) {
     <div className='block mb-4'>
 
       <div className='title is-2 mb-2 mt-2'>Meet {hostName}!</div>
+
+      <h4 className='title is-4 mb-2 mt-2'>{hostBio}</h4>
 
       <div className='title is-4 mb-2 mt-2'>{hostName} lists these other properties too - take a look. </div>
 

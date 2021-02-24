@@ -90,7 +90,7 @@ async function getHost(req, res, next) {
   const id = req.params.userId
   try {
     const user = await User.findById(id)
-    res.send(user.first_name)
+    res.send(user.first_name, user.bio)
   } catch (err) {
     next(err)
   }

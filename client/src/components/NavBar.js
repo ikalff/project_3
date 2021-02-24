@@ -20,7 +20,6 @@ function NavBar({ location, history }) {
             headers: { Authorization: `Bearer ${token}` }
           })
           if (data) {
-            console.log(data)
             updateUsername(data.first_name)
           }
         } catch (err) {
