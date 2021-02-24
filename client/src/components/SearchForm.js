@@ -57,6 +57,9 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
     })
   }
 
+  //console.log('Dates')
+  //console.log(startDate)
+  //console.log(endDate)
 
 
   return <form>
@@ -103,21 +106,24 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
  
 
       <button className='button is-primary' onClick={handleFieldsChange}>Update search</button>
-
-
       <button className='button' onClick={clearFilters}>Clear</button>
     </div>}
 
-    {formLocation === 'home' && <div className='buttons'>
+    {formLocation === 'home' && <div className='buttons mt-4'>
 
 
       <Link className='button is-primary' to={{
         pathname: '/properties',
         state: {
           locationData: { locationData },
-          checkboxData: { checkboxData }
+          checkboxData: { checkboxData },
+          startDate: { startDate },
+          endDate: { endDate }
         }
       }}>Search</Link>
+
+
+
       <button className='button' onClick={clearFilters}>Clear</button>
     </div>}
 

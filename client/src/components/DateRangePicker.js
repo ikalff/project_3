@@ -4,10 +4,10 @@ import MomentUtils from '@date-io/moment'
 
 export default function DateRangePicker({ startDate, setStartDate, endDate, setEndDate, unavailableDates }) {
   const handleStartDateChange = (date) => {
-    setStartDate(date)
+    setStartDate(date._d)
   }
   const handleEndDateChange = (date) => {
-    setEndDate(date)
+    setEndDate(date._d)
   }
 
   function disableUnavailable() {
