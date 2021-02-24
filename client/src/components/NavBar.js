@@ -4,7 +4,7 @@ import axios from 'axios'
 import { getLoggedInUserId } from '../lib/auth.js'
 
 
-function NavBar({ location, history }) {
+function NavBar({ location }) {
 
   const [username, updateUsername] = useState([])
   let LoggedInUserId = getLoggedInUserId()
@@ -34,7 +34,6 @@ function NavBar({ location, history }) {
   function logOut() {
     localStorage.clear()
     updateUsername('')
-    //history.push('/')
   }
 
   return <nav>

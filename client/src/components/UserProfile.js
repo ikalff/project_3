@@ -6,7 +6,6 @@ import HostProfileComponent from './HostProfileComponent.js'
 
 export default function UserProfile({ history, match }) {
   const userId = match.params.usersId
-
   const [userData, updateUserData] = useState({
     first_name: '',
     last_name: '',
@@ -27,7 +26,7 @@ export default function UserProfile({ history, match }) {
   const token = localStorage.getItem('token')
 
   function getUser() {
-
+  
     axios.get(`/api/users/${userId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
