@@ -209,7 +209,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     {
       name: 'St Andrews Golf Flat',
       location: 'St Andrews',
@@ -253,7 +252,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     {
       name: 'Brecon Beacons Holiday Home',
       location: 'Crickhowell',
@@ -296,7 +294,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     {
       name: 'Dreamy Scottish Castle',
       location: 'Lochgilphead',
@@ -867,7 +864,7 @@ export default function getPropertyData(users) {
       host: users[0],
       comments: [],
       bookings: []
-},
+    },
     {
       name: 'Modern beach house in Devon',
       location: 'Devon',
@@ -908,7 +905,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     }
-    
   ]
 
 }
