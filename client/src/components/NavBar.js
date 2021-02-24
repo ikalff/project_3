@@ -43,6 +43,9 @@ function NavBar({ location, history }) {
       <div className='navbar-item'>
         <div className='buttons has-text-white'>
           <Link className='button is-primary' to='/'>Home</Link>
+
+          <Link className='button is-primary' to='/properties'>All listings</Link>
+          
           {username && <>
             <Link className='button is-primary' to={ `/users/${LoggedInUserId}` }>User profile</Link>
 

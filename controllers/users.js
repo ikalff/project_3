@@ -51,6 +51,7 @@ async function getUsers(req, res, next) {
     next(err)
   }
 }
+
 async function getSingleUser(req, res, next) {
   const id = req.params.userId
   try {
@@ -59,6 +60,21 @@ async function getSingleUser(req, res, next) {
   } catch (err) {
     next(err)
   }
+}
+
+async function getHost(req, res, next) {
+
+  const id = req.params.userId
+  
+  try {
+    const user = await User.findById(id)
+
+    res.status(201).send([user.first_name, user.bio])
+  } catch (err) {
+    
+    next(err)
+  }
+
 }
 
 async function updateUser(req, res, next) {
@@ -85,17 +101,8 @@ async function updateUser(req, res, next) {
     next()
   }
 }
-async function getHost(req, res, next) {
 
-  const id = req.params.userId
-  try {
-    const user = await User.findById(id)
-    res.send(user.first_name, user.bio)
-  } catch (err) {
-    next(err)
-  }
 
-}
 async function deleteUser(req, res, next) {
   const id = req.params.userId
   const currentUser = req.currentUser

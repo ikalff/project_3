@@ -80,9 +80,6 @@ export default function HostProfileComponent(props) {
       })}
     </div>
 
-    <div>
-      <button className='button is-primary mt-5'>Add a property</button>
-    </div>
   </div>
 
 }

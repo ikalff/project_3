@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom'
 
 export default function HostPropertyComponent(props) {
 
-  //! need a way to get the id of the host in question from the link props
-  const userId = props.userId 
+  const hostId = props.location.state.hostId
 
   const [hostProperties, updateHostProperties] = useState([])
   const [hostName, updateHostName] = useState('')
@@ -28,7 +27,7 @@ export default function HostPropertyComponent(props) {
 
           const allPropertiesData = data
 
-          const filteredProperties = allPropertiesData.filter(item => item.host._id === userId)
+          const filteredProperties = allPropertiesData.filter(item => item.host._id === hostId)
 
           updateHostProperties(filteredProperties)
 
@@ -45,11 +44,11 @@ export default function HostPropertyComponent(props) {
 
     try {
 
-      axios.get(`/api/host/${userId}`)
+      axios.get(`/api/host/${hostId}`)
         .then(({ data }) => {
 
-          updateHostName(data)
-          updateHostBio(data)
+          updateHostName(data[0])
+          updateHostBio(data[1])
           updateNameLoading(false)
 
         })
@@ -74,11 +73,9 @@ export default function HostPropertyComponent(props) {
 
       <div className='title is-2 mb-2 mt-2'>Meet {hostName}!</div>
 
-      <h4 className='title is-4 mb-2 mt-2'>{hostBio}</h4>
+      <h4 className='title is-4 mb-2 mt-2 is-italic'>{hostBio}</h4>
 
       <div className='title is-4 mb-2 mt-2'>{hostName} lists these other properties too - take a look. </div>
-
-      {/* Add host bio to host users and place here */}
 
       <Paginate
         onChange={handlePageChange}
@@ -90,13 +87,13 @@ export default function HostPropertyComponent(props) {
 
     <div>
 
-      {hostProperties.map((item, index) => {
+      {hostProperties.slice((pageNum - 1) * resultsPerPage, ((pageNum - 1) * resultsPerPage) + resultsPerPage).map((item, index) => {
 
         return <div className='box columns mt-4' key={index}>
 
           <div className="column">
             <h4 className='title is-4 mb-2 mt-2'>{item.name}</h4>
-            <button className="button is-primary is-light mb-2">View this property</button>
+            <Link to={`/properties/${item._id}`} className="button is-primary is-light mb-2">View this property</Link>
           </div>
           <div className="column">
             <img width="200" src={item.images[0] ? item.images[0] : 'http://placehold.it/400x400?text=no%20image%20available'} />
@@ -106,6 +103,6 @@ export default function HostPropertyComponent(props) {
       })}
     </div>
 
-  </div>
+  </div >
 
 }
