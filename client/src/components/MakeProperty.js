@@ -52,6 +52,10 @@ export default function MakeProperty({ history }) {
     updateFormData({ ...formData, [event.target.name]: event.target.value })
   }
 
+  function handleImages(imageArray) {
+    updateFormData({ ...formData, images: imageArray })
+  }
+
   function handleCheckBox(event) {
     const amenityIndex = checkboxData.findIndex(amenity => amenity.amenityName === event.target.name)
     const newCheckboxData = [...checkboxData]
@@ -106,7 +110,6 @@ export default function MakeProperty({ history }) {
       handleTypeChange={(types) => updateFormData({ ...formData, types })}
       handleSubmit={handleSubmit}
       handleCheckBox={handleCheckBox}
-      checkboxData={checkboxData}
       formData={formData}
       location='makeProperty'
     />
