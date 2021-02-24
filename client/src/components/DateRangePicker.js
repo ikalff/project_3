@@ -11,9 +11,10 @@ export default function DateRangePicker({ startDate, setStartDate, endDate, setE
   }
 
   function disableUnavailable() {
-    unavailableDates.map(date => {
-      date === date
-    })
+    // unavailableDates.map(date => {
+    //   return false
+    // })
+    return false
   }
 
 
@@ -27,7 +28,8 @@ export default function DateRangePicker({ startDate, setStartDate, endDate, setE
       animateYearScrolling
       disablePast
       autoOk
-      // shouldDisableDate={disableUnavailable}
+      shouldDisableDate={disableUnavailable}
+      // shouldDisableDate={false}
 
     />
     <DatePicker 

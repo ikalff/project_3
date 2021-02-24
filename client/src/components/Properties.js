@@ -89,15 +89,16 @@ export default function App() {
       }
     })
     getDateRange(startDate, endDate).forEach(date => {
+      let newArray = []
       newProperties = newProperties.filter(property => {
-        if(property.bookings.length) {
-          return property.bookings.map(booking => {
+        if (property.bookings && property.bookings.length) {
+          property.bookings.map(booking => {
             let isAvailable = []
             for (let i = 0; i < booking.datesBooked.length; i++) {
               const bookedDates = String(moment(booking.datesBooked[i]).toDate()).substr(0, 15)
               const userDate = String(date).substr(0, 15)
-              console.log('bookedDates', bookedDates);
-              console.log('userDate', userDate);
+              // console.log('bookedDates', bookedDates);
+              // console.log('userDate', userDate);
               if(userDate === bookedDates) {
                 isAvailable.push('not')
                     // break
@@ -106,17 +107,25 @@ export default function App() {
                 }
               }
               console.log(isAvailable);
-              console.log(property);
-              if(!isAvailable.includes('not')) return property
+              if(!isAvailable.includes('not')){
+                console.log('property', property);
+                return newArray.push(property)
+                
+
+              } 
+              return
           })
+        } else {
+          newArray.push(property)
         }
-        console.log(newProperties);
+        console.log('1', newProperties);
       })
-      console.log(newProperties);
-      
+      console.log('2', newProperties);
+      console.log('martha', newArray);
+      updateProperties(newArray)
     })
-    console.log(newProperties);
-    updateProperties(newProperties)
+    console.log('3', newProperties);
+    // updateProperties(newProperties)
   }
 
   async function fetchandfilter(newLocationValue, newCheckboxValue) {
