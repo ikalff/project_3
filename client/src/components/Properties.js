@@ -3,6 +3,7 @@ import axios from 'axios'
 import Paginate from './Paginate'
 import { Link, useLocation } from 'react-router-dom'
 import SearchForm from './SearchForm.js'
+import moment from 'moment'
 
 export default function App() {
 
@@ -14,6 +15,7 @@ export default function App() {
   const [locationData, updateLocationData] = useState('')
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
+  const [unavailableDates, setUnavailableDates] = useState([])
   const amenities = ['Wifi', 'Pet friendly', 'Wheelchair Accessible', 'Washing machine', 'Near a beach']
   const [checkboxData, updateCheckboxData] = useState({
     'Wifi': false,
@@ -43,31 +45,77 @@ export default function App() {
     fetchProperties()
   }, [])
 
+  useEffect(() => {
+    if (properties) {
+      getUnavailableDates()
+    }
+  }, [properties])
 
+  function getUnavailableDates() {
+    let dates = []
+    properties.map(property => {
+      property.bookings.map(bookings => {
+        bookings.datesBooked.map((date, index) => {
+          dates.push(date)
+          // console.log(index, String(date));
+        })
+      })
+    })
+    setUnavailableDates(dates)
+  }
+
+  const getDateRange = (startDate, endDate) => {
+    let dates = []
+    const theDate = new Date(startDate)
+    while (theDate <= endDate) {
+      dates = [...dates, new Date(theDate)]
+      theDate.setDate(theDate.getDate() + 1)
+    }
+    return dates
+  }
 
   function filter(data, locationData, checkboxData) {
-    const getDateRange = (startDate, endDate) => {
-      let dates = []
-      const theDate = new Date(startDate)
-      while (theDate < endDate) {
-        dates = [...dates, new Date(theDate)]
-        theDate.setDate(theDate.getDate() + 1)
-      }
-      dates = [...dates, endDate]
-      return dates
-    }
+    
     let newProperties = []
     newProperties = data.filter(property => {
       return property.location.toLowerCase().includes(locationData.toLowerCase())
     })
     amenities.forEach(amenityName => {
       if (checkboxData[amenityName] === true) {
-        console.log(amenityName)
+        // console.log(amenityName)
         newProperties = newProperties.filter(property => {
           return property.amenities.find(amenity => amenity.amenityName === amenityName).amenityValue === true
         })
       }
     })
+    getDateRange(startDate, endDate).forEach(date => {
+      newProperties = newProperties.filter(property => {
+        if(property.bookings.length) {
+          return property.bookings.map(booking => {
+            let isAvailable = []
+            for (let i = 0; i < booking.datesBooked.length; i++) {
+              const bookedDates = String(moment(booking.datesBooked[i]).toDate()).substr(0, 15)
+              const userDate = String(date).substr(0, 15)
+              console.log('bookedDates', bookedDates);
+              console.log('userDate', userDate);
+              if(userDate === bookedDates) {
+                isAvailable.push('not')
+                    // break
+                } else {
+                  isAvailable.push('available')
+                }
+              }
+              console.log(isAvailable);
+              console.log(property);
+              if(!isAvailable.includes('not')) return property
+          })
+        }
+        console.log(newProperties);
+      })
+      console.log(newProperties);
+      
+    })
+    console.log(newProperties);
     updateProperties(newProperties)
   }
 
