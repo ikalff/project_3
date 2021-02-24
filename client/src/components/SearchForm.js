@@ -97,18 +97,12 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
 
     <DateRangePicker className='datePicker'/>
 
-    {formLocation === 'listings' && <div className='buttons'>
-
-
- 
-
+    {formLocation === 'listings' && <div className='buttons mt-4'>
       <button className='button is-primary' onClick={handleFieldsChange}>Update search</button>
-
-
       <button className='button' onClick={clearFilters}>Clear</button>
     </div>}
 
-    {formLocation === 'home' && <div className='buttons'>
+    {formLocation === 'home' && <div className='buttons mt-4'>
 
 
       <Link className='button is-primary' to={{
