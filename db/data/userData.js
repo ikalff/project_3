@@ -7,7 +7,8 @@ export default function getUserData() {
       password: 'passwords',
       passwordConfirmation: 'passwords',
       isHost: true,
-      isAdmin: false 
+      isAdmin: false,
+      bio: 'This is my host bio' 
     },
     {
       first_name: 'Bojana',
@@ -15,8 +16,9 @@ export default function getUserData() {
       email: 'bojana@bojana.com',
       password: 'passwords1',
       passwordConfirmation: 'passwords1',
-      isHost: false,
-      isAdmin: false 
+      isHost: true,
+      isAdmin: false,
+      bio: 'This is my host bio'  
     },
     {
       first_name: 'Admin',
@@ -25,7 +27,8 @@ export default function getUserData() {
       password: 'passwords2',
       passwordConfirmation: 'passwords2',
       isHost: false,
-      isAdmin: true
+      isAdmin: true,
+      bio: 'This is my host bio' 
     },
     {
       first_name: 'India',
@@ -34,7 +37,8 @@ export default function getUserData() {
       password: 'passwords3',
       passwordConfirmation: 'passwords3',
       isHost: true,
-      isAdmin: false
+      isAdmin: false,
+      bio: 'This is my host bio' 
     },
     {
       first_name: 'Emily',
@@ -42,8 +46,9 @@ export default function getUserData() {
       email: 'emily@emily.com',
       password: 'passwords4',
       passwordConfirmation: 'passwords4',
-      isHost: false,
-      isAdmin: false
-    },
+      isHost: true,
+      isAdmin: false,
+      bio: 'This is my host bio' 
+    }
   ]
 }

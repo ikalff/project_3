@@ -2,35 +2,48 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { getLoggedInUserId } from '../lib/auth.js'
+import DateRangePicker from './dateRangePicker'
 
-
-function BookingForm({ propertyId, maxNumberOfGuests }) {
+function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates }) {
 
   const LoggedInUserId = getLoggedInUserId()
 
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
+  const [numOfDays, setNumOfDays] = useState(1)
 
   const [error, updateError] = useState('')
   const [success, updateSuccess] = useState('')
   const [formData, updateFormData] = useState({
     checkInDate: '',
     checkOutDate: '',
-    numberOfGuests: ''
+    numberOfGuests: '',
+    datesBooked: []
   })
+  
 
   function handleChange(event) {
     const name = event.target.name
     const value = event.target.value
     const newFormData = {
-      checkInDate: formData.checkInDate,
-      checkOutDate: formData.checkOutDate,
-      numberOfGuests: formData.numberOfGuests
+      checkInDate: startDate,
+      checkOutDate: endDate,
+      numberOfGuests: formData.numberOfGuests,
+      datesBooked: getDateRange(startDate, endDate)
     }
     newFormData[name] = value
     updateFormData(newFormData)
-    //console.log(newFormData)
   }
 
-
+  const getDateRange = (startDate, endDate) => {
+    let dates = []
+    const theDate = new Date(startDate)
+    while (theDate < endDate + 1) {
+      dates = [...dates, new Date(theDate)]
+      theDate.setDate(theDate.getDate() + 1)
+    }
+    return dates
+  }
 
   async function handleSubmit(event) {
     const token = localStorage.getItem('token')
@@ -54,6 +67,7 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
     }
   }
 
+  
 
 
   const maxNumberOfGuestsArray = ['Please select']
@@ -64,6 +78,10 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
 
   if (!LoggedInUserId) {
     return null
+  }
+
+  function disableWeekends(date) {
+    return date.getDay() === 0 || date.getDay() === 6;
   }
 
   return <div className='box mt-6'>
@@ -78,23 +96,12 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
         <form onSubmit={handleSubmit}>
           <div className='columns'>
             <div className='column'>
-              <label className="label">Check in: </label>
-              <input
-                className="input"
-                type="text"
-                value={formData.checkInDate}
-                onChange={handleChange}
-                name={'checkInDate'}
-              />
-            </div>
-            <div className='column'>
-              <label className="label">Check out: </label>
-              <input
-                className="input"
-                type="text"
-                value={formData.checkOutDate}
-                onChange={handleChange}
-                name={'checkOutDate'}
+              <DateRangePicker
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                unavailableDates={unavailableDates}
               />
             </div>
             <div className='column'>
@@ -119,7 +126,7 @@ function BookingForm({ propertyId, maxNumberOfGuests }) {
 
             </div>
           </div>
-          <p>Total days:</p>
+          <p>{`Total days: ${numOfDays}`}</p>
           <p>Total price:</p>
           <button className='button is-primary mt-4'>Book now</button>
         </form>

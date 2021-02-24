@@ -8,7 +8,7 @@ export default function Home() {
       <div className='box column is-half pt-5 pb-5 px-5'>
         <p className='title'>Welcome to ArrivR</p>
         <p className='subtitle'>Search for a property:</p>
-        <SearchForm formLocation='home'></SearchForm>
+        <SearchForm formLocation='home' />
       </div>
     </div>
   </section>

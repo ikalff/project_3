@@ -3,12 +3,8 @@ import { Link } from 'react-router-dom'
 import DateRangePicker from './dateRangePicker'
 import amenities from '../data/amenities.js'
 
-export default function SearchForm({ onChange, formLocation, checkboxDataProp, locationDataProp }) {
-
-
+export default function SearchForm({ onChange, formLocation, checkboxDataProp, locationDataProp, startDate, setStartDate, endDate, setEndDate }) {
   //const amenities = ['Wifi', 'Pet friendly', 'Wheelchair Accessible', 'Washing machine', 'Near a beach']
-
-
   const [locationData, updateLocationData] = useState('')
 
   
@@ -45,7 +41,7 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
   function handleCheckBox(event) {
     const newcheckboxData = { ...checkboxData }
     newcheckboxData[event.target.name] = event.target.checked
-    console.log(newcheckboxData)
+    // console.log(newcheckboxData)
     updateCheckboxData(newcheckboxData)
   }
 
@@ -95,9 +91,17 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
       })
     }
 
-    <DateRangePicker className='datePicker'/>
+    <DateRangePicker
+      startDate={startDate}
+      setStartDate={setStartDate}
+      endDate={endDate}
+      setEndDate={setEndDate}
+    />
+    {formLocation === 'listings' && <div className='buttons'>
 
-    {formLocation === 'listings' && <div className='buttons mt-4'>
+
+ 
+
       <button className='button is-primary' onClick={handleFieldsChange}>Update search</button>
       <button className='button' onClick={clearFilters}>Clear</button>
     </div>}

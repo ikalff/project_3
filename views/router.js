@@ -18,8 +18,12 @@ router.route('/login')
   .post(users.login)
 
 router.route('/users/:userId')
-  .get(users.getSingleUser)
+  .get(secureRoute, users.getSingleUser)
   .put(secureRoute, users.updateUser)
+  .delete(secureRoute, users.deleteUser)
+
+router.route('/host/:userId')
+  .get(users.getHost)
 
 router.route('/users')
   .get(users.getUsers)
@@ -35,7 +39,6 @@ router.route('/properties/:propertyId')
   .get(properties.getSingleProperty)
   .put(secureRoute, properties.updateProperty)
   .delete(secureRoute, properties.removeProperty)
-
 
 //? Bookings
 
@@ -56,5 +59,9 @@ router.route('/properties/:propertyId/comment')
 router.route('/properties/:propertyId/comment/:commentId')
   .put(secureRoute, comments.updateComment)
   .delete(secureRoute, comments.removeComment)
+
+
+
+
 
 export default router

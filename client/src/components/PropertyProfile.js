@@ -1,22 +1,20 @@
-import React, { useEffect, useState, useSelector } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { isCreator } from '../lib/auth.js'
 import Properties from '../../../models/properties.js'
 import { getLoggedInUserId } from '../lib/auth.js'
 import BookingForm from './BookingForm.js'
-import { EditText, EditTextarea } from 'react-edit-text'
 import 'react-edit-text/dist/index.css'
-
 export default function Singleproperty({ match, history }) {
   const [property, updateProperties] = useState([])
   const [error, updateError] = useState('')
   const [text, setText] = useState('')
   const token = localStorage.getItem('token')
   const LoggedInUserId = getLoggedInUserId()
-  const commentId = match.params.commentId
-  const comment = match.params.comment
-
+  const [errorState, updateErrorState] = useState(false)
+  const [commentSuccess, updateCommentSuccess] = useState(false)
+  const [editCommentSuccess, updateEditCommentSuccess] = useState(false)
   useEffect(() => {
     async function fetchData() {
       if (match.params.propertyId) {
@@ -30,66 +28,74 @@ export default function Singleproperty({ match, history }) {
           console.log(err)
           updateError('Unable to fetch data')
         }
-      } 
+      }
     }
     fetchData()
   }, [])
-
   if (!property.name) {
     return null
   }
-
   function handleComment() {
-    axios.post(`/api/properties/${match.params.propertyId}/comment`, { text }, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(resp => {
-        setText('')
-        updateProperties(resp.data)
+    console.log('WORK PLEASE! from start')
+    try {
+      axios.post(`/api/properties/${match.params.propertyId}/comment`, { text }, {
+        headers: { Authorization: `Bearer ${token}` }
       })
+        .then(resp => {
+          setText('')
+          console.log('WORK PLEASE! 1')
+          updateProperties(resp.data)
+          console.log('WORK PLEASE!2')
+          updateCommentSuccess(true)
+          console.log('WORK PLEASE!3')
+          updateEditCommentSuccess(false)
+          console.log('hello post')
+        })
+    } catch (err) {
+      console.log('WORK PLEASE! error1')
+      updateErrorState(true)
+      updateCommentSuccess(false)
+      updateEditCommentSuccess(false)
+      console.log('WORK PLEASE!', err)
+    }
   }
-
   async function handleUpdateComment(commentId) {
-    await axios.put(`/api/properties/${match.params.propertyId}/comment/${commentId}`, { text }, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(resp => {
-        setText('')
-<<<<<<< HEAD
-        updateProperties(resp.comment.text)
-        console.log(comment)
-=======
-        updateProperties(resp.config.data)
->>>>>>> india
+    //console.log(text)
+    try {
+      await axios.put(`/api/properties/${match.params.propertyId}/comment/${commentId}`, { text }, {
+        headers: { Authorization: `Bearer ${token}` }
       })
+        .then(resp => {
+          setText('')
+          updateEditCommentSuccess(true)
+          updateProperties(resp.data)
+        })
+    } catch (err) {
+      updateEditCommentSuccess(false)
+      console.log('error', err)
+    }
   }
-
-  // function editComment(commentId) {
-  //   return <div>
-  //     <textarea
-  //       className="textarea"
-  //       onChange={event => setText(event.target.value)}
-  //       value={text}
-  //     >
-  //       {text}
-  //     </textarea>
-  //     <button onClick={() => handleUpdateComment(commentId)}>Save</button>
-  //   </div>
-  // }
-
+  console.log('test:', editCommentSuccess)
   function handleDeleteComment(commentId) {
-    axios.delete(`/api/properties/${match.params.propertyId}/comment/${commentId}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(resp => {
-        updateProperties(resp.data)
+    try {
+      axios.delete(`/api/properties/${match.params.propertyId}/comment/${commentId}`, {
+        headers: { Authorization: `Bearer ${token}` }
       })
+        .then(resp => {
+          updateProperties(resp.data)
+          updateEditCommentSuccess(false)
+        })
+    } catch (err) {
+      updateErrorState(true)
+      updateError(err.response.data.message)
+      updateCommentSuccess(false)
+      updateEditCommentSuccess(false)
+    }
   }
-
-  event.preventDefault()
-
+  if (!property.name) {
+    return null
+  }
   return <>
-
     <section className='hero has-background-grey-light is-primary is-fullheight-with-navbar'
       style={{
         backgroundImage: `url(${property.images[0] ? property.images[0] : 'http://placehold.it/400x400'})`
@@ -101,7 +107,6 @@ export default function Singleproperty({ match, history }) {
         </div>
       </div>
     </section>
-
     <div className='container px-6 pt-6 pb-6'>
       <div className='columns'>
         <div className='column'>
@@ -121,9 +126,6 @@ export default function Singleproperty({ match, history }) {
               </p>
             })
           }
-
-
-
           <h5 className='title is-5 mt-4 mb-2'>Gallery</h5>
           <div className='imagegallery columns mt-4 is-multiline'>
             {
@@ -132,9 +134,6 @@ export default function Singleproperty({ match, history }) {
               })
             }
           </div>
-
-
-
           {property.comments.length > 0 && <h5 className='title is-5 mt-4 mb-2'>Reviews</h5>}
           {property.comments.length > 0 &&
             property.comments.map((comment, index) => {
@@ -150,6 +149,7 @@ export default function Singleproperty({ match, history }) {
                       onChange={event => setText(event.target.value)}
                     />
                   </div>}
+                  {editCommentSuccess ? <div className="notification is-success is-light">Your review edit has been saved.</div> : <div className="notification is-hidden"></div>}
                   {!isCreator(comment.user._id) && <div className="content">
                     <h6>{comment.user.first_name} says:</h6>
                     <p>{comment.text}</p>
@@ -165,8 +165,7 @@ export default function Singleproperty({ match, history }) {
                   <button
                     className="edit"
                     onClick={() => handleUpdateComment(comment._id)}>Edit
-
-                  </button>
+                    </button>
                 </div>}
               </article>
             })
@@ -175,39 +174,40 @@ export default function Singleproperty({ match, history }) {
             <Link className='button is-primary' to={`/updateproperty/${property._id}`}>Edit</Link>
             :
             <BookingForm
-            propertyId={match.params.propertyId}
-            maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>}
+              propertyId={match.params.propertyId}
+              maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>}
+          <br />
+          <article className="media">
+            <div className="media-content">
+              <h3>Review:</h3>
+              <div className="field">
+                <p className="control">
+                  <textarea
+                    className="textarea"
+                    placeholder="Make a comment.."
+                    onChange={event => setText(event.target.value)}
+                    value={text}
+                  >
+                    {text}
+                  </textarea>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control">
+                  <button
+                    onClick={handleComment}
+                    className="button is-info"
+                  >
+                    Submit
+                    </button>
+                </p>
+              </div>
+            </div>
+          </article>
+          {errorState ? <div className="notification is-danger">We could not post your review. Please try again.</div> : <div className="notification is-hidden"></div>}
+          {commentSuccess ? <div className="notification is-success is-light">Your review has been saved.</div> : <div className="notification is-hidden"></div>}
         </div>
       </div>
-      <br />
-      <article className="media">
-        <div className="media-content">
-          <h3>Review:</h3>
-          <div className="field">
-            <p className="control">
-              <textarea
-                className="textarea"
-                placeholder="Make a comment.."
-                onChange={event => setText(event.target.value)}
-                value={text}
-              >
-                {text}
-              </textarea>
-            </p>
-          </div>
-          <div className="field">
-            <p className="control">
-              <button
-                onClick={handleComment}
-                className="button is-info"
-              >
-                Submit
-                  </button>
-            </p>
-          </div>
-        </div>
-      </article>
     </div>
   </>
 }
-

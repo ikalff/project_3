@@ -9,8 +9,9 @@ const commentSchema = new mongoose.Schema({
 
 const bookingSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
-  checkInDate: { type: String, required: true },
-  checkOutDate: { type: String, required: true },
+  checkInDate: { type: Date, required: true },
+  checkOutDate: { type: Date, required: true },
+  datesBooked: { type: Array, required: true },
   numberOfGuests: { type: Number, required: true }
 }, { timestamps: true }
 )
