@@ -50,17 +50,13 @@ export default function Singleproperty({ match, history }) {
   }
 
   async function handleUpdateComment(commentId) {
+    //console.log(text)
     await axios.put(`/api/properties/${match.params.propertyId}/comment/${commentId}`, { text }, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(resp => {
         setText('')
-<<<<<<< HEAD
         updateProperties(resp.comment.text)
-        console.log(comment)
-=======
-        updateProperties(resp.config.data)
->>>>>>> india
       })
   }
 
