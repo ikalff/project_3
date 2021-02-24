@@ -21,6 +21,7 @@
     "mongoose-unique-validator": "^2.0.3"
   },
   "devDependencies": {
+    "@types/react-edit-text": "^4.0.0",
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
     "supertest": "^6.0.1"
