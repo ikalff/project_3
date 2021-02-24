@@ -52,7 +52,7 @@ export default function HostProfileComponent(props) {
 
   return <div className="section">
     <div className='block mb-4'>
-      <h2 className='title is-4 mb-4'>Properties profile</h2>
+      <h2 className='title is-4 mb-4'>Your properties</h2>
 
       <Paginate
         onChange={handlePageChange}
@@ -61,11 +61,11 @@ export default function HostProfileComponent(props) {
         resultsPerPage={resultsPerPage}
       />
     </div>
-  
+
     <div>
 
-      {userProperties.map((item, index) => {
-        
+      {userProperties.slice((pageNum - 1) * resultsPerPage, ((pageNum - 1) * resultsPerPage) + resultsPerPage).map((item, index) => {
+
         return <div className='box columns mt-4' key={index}>
           <div className="column">
             <h4 className='title is-4 mb-2 mt-2'>{item.name}</h4>
@@ -89,4 +89,3 @@ export default function HostProfileComponent(props) {
 
 
 
- 

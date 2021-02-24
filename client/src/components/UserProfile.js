@@ -16,7 +16,8 @@ export default function UserProfile({ history, match }) {
     password: '',
     passwordConfirmation: '',
     isHost: '',
-    isAdmin: ''
+    isAdmin: '',
+    bio: ''
   })
 
   const [userDataLoading, updateUserDataLoading] = useState(true)
@@ -43,7 +44,7 @@ export default function UserProfile({ history, match }) {
   useEffect(() => {
     getUser()
   }, [])
-  
+
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -78,7 +79,7 @@ export default function UserProfile({ history, match }) {
         .then(resp => {
           history.push('/')
         })
-     
+
     } catch (err) {
       updateErrorState(true)
       updateError(err.response.data.message)
@@ -164,6 +165,20 @@ export default function UserProfile({ history, match }) {
                 name={'passwordConfirmation'}
               />
             </div>
+            {userData.isHost && 
+              <div className="field">
+                <label className="label mt-3">Bio</label>
+                <div className="control">
+                  <input
+                    className="input"
+                    type="text"
+                    value={userData.bio}
+                    onChange={handleChange}
+                    name={'bio'}
+                  />
+                </div>
+              </div>
+            }
 
             <button className="button is-primary mt-5">Update my details</button>
 
@@ -175,7 +190,7 @@ export default function UserProfile({ history, match }) {
       </div>
 
       {userData.isHost ? <div className="column">
-        <HostProfileComponent userId={userId} /> </div> : <button className="button is-primary">Become a host</button>
+        <HostProfileComponent userId={userId} userBio={userData.bio} /> </div> : <button className="button is-primary">Become a host</button>
       }
 
     </div>
