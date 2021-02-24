@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 
 
-export default function PropertyForm({ formData, checkboxData, handleSubmit, handleChange, handleCheckBox, location }) {
+export default function PropertyForm({ formData, handleSubmit, handleChange, handleImages, handleCheckBox, location }) {
 
   const [images, updateImages] = useState([
+    'http://placehold.it/600x400',
+    'http://placehold.it/600x400/ffcc00/ffffff',
     'http://placehold.it/600x400',
     'http://placehold.it/600x400/ffcc00/ffffff',
     'http://placehold.it/600x400/ff0000/ffffff'
@@ -23,6 +25,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
       const newImages = [...images]
       newImages.push(resultEvent.info.secure_url)
       updateImages(newImages)
+      handleImages(newImages)
     }
   }
 
@@ -44,17 +47,6 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
   return <div>
 
 
-    {
-      images.map((image, index) => {
-        return <div key={index}>
-          <img  width='100' src={image}></img>
-          <button onClick={() => deleteImage(index)}>Delete</button>
-        </div>
-})
-
-    }
-
-    <button onClick={showWidget}>Upload</button>
 
 
     <form onSubmit={handleSubmit}>
@@ -62,7 +54,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
 
 
       <label className="label">
-      Property Name <span className='has-text-danger'>*</span>:</label>
+        Property Name <span className='has-text-danger'>*</span>:</label>
       <div className="control">
         <input
           className="input"
@@ -74,7 +66,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
       </div>
 
       <label className="label">
-      Location <span className='has-text-danger'>*</span>:</label>
+        Location <span className='has-text-danger'>*</span>:</label>
       <div className="control">
         <input
           className="input"
@@ -86,7 +78,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
       </div>
 
       <label className="label">
-      Summary <span className='has-text-danger'>*</span>:</label>
+        Summary <span className='has-text-danger'>*</span>:</label>
       <div className="control">
         <textarea
           className="textarea"
@@ -98,7 +90,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
       </div>
 
       <label className="label">
-      House Rules <span className='has-text-danger'>*</span>:</label>
+        House Rules <span className='has-text-danger'>*</span>:</label>
       <div className="control">
         <textarea
           className="textarea"
@@ -110,7 +102,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
       </div>
 
       <label className="label">
-      Cancellation Policy <span className='has-text-danger'>*</span>:</label>
+        Cancellation Policy <span className='has-text-danger'>*</span>:</label>
       <div className="control">
         <textarea
           className="textarea"
@@ -147,7 +139,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
 
 
       <label className="label">
-      Price per night: <span className='has-text-danger'>*</span></label>
+        Price per night: <span className='has-text-danger'>*</span></label>
       <div className="control">
         <input
           className="input"
@@ -159,7 +151,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
       </div>
 
       <label className="label">
-      Number of bedrooms: <span className='has-text-danger'>*</span></label>
+        Number of bedrooms: <span className='has-text-danger'>*</span></label>
       <div className="select">
         <select
           onChange={handleChange}
@@ -181,7 +173,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
       </div>
 
       <label className="label">
-      Maximum number of guests: <span className='has-text-danger'>*</span></label>
+        Maximum number of guests: <span className='has-text-danger'>*</span></label>
       <div className="select">
         <select
           onChange={handleChange}
@@ -206,7 +198,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
 
 
       <label className="label">
-      Check in time from: <span className='has-text-danger'>*</span></label>
+        Check in time from: <span className='has-text-danger'>*</span></label>
       <div className="select">
         <select
           onChange={handleChange}
@@ -238,7 +230,7 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
 
 
       <label className="label">
-      Check out time before: <span className='has-text-danger'>*</span></label>
+        Check out time before: <span className='has-text-danger'>*</span></label>
       <div className="select">
         <select
           onChange={handleChange}
@@ -268,6 +260,8 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
         </select>
       </div>
 
+
+      <h5 className='title is-5 mt-4 mb-2'>Amenities:</h5>
       <div className='mt-4'>
         {
           formData.amenities.map((amenity, index) => {
@@ -302,9 +296,27 @@ export default function PropertyForm({ formData, checkboxData, handleSubmit, han
 
           })
         }
+
+
+        <h5 className='title is-5 mt-4 mb-2'>Upload images  <span className='has-text-danger'>*</span>:</h5>
+
+        <button onClick={showWidget} className='button mb-4'>Upload</button>
+        <div className='imagegallery columns is-multiline'>
+          {
+            images.map((image, index) => {
+              return <div key={index} className='column is-one-quarter'>
+                <img src={image} className='mb-2'></img>
+                <button className='button is-danger' onClick={() => deleteImage(index)}>Delete</button>
+              </div>
+            })
+
+          }
+        </div>
+
+
       </div>
 
-      <button className="button mt-5 is-success">Submit</button>
+      <button className="button mt-5 is-primary">Save property</button>
     </form>
   </div >
 }
