@@ -9,7 +9,8 @@ const schema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   isHost: { type: Boolean },
-  isAdmin: { type: Boolean }
+  isAdmin: { type: Boolean },
+  bio: { type: String }
 })
 
 schema.pre('save', function (next) {

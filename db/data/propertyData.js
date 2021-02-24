@@ -120,7 +120,7 @@ export default function getPropertyData(users) {
         },
         {
           amenityName: 'Near a beach',
-          amenityValue: true
+          amenityValue: false
         }
       ],
       host: users[3],
@@ -205,7 +205,7 @@ export default function getPropertyData(users) {
           amenityValue: true
         }
       ],
-      host: users[0],
+      host: users[4],
       comments: [],
       bookings: []
     },
@@ -332,7 +332,7 @@ export default function getPropertyData(users) {
           amenityValue: false
         }
       ],
-      host: users[1],
+      host: users[0],
       comments: [],
       bookings: []
     },
@@ -372,7 +372,7 @@ export default function getPropertyData(users) {
           amenityValue: false
         }
       ],
-      host: users[1],
+      host: users[3],
       comments: [],
       bookings: []
     },
@@ -414,10 +414,11 @@ export default function getPropertyData(users) {
           amenityValue: true
         }
       ],
-      host: users[4],
+      host: users[1],
       comments: [],
       bookings: []
     },
+
     {
       name: 'Highlands Retreat',
       location: 'Glen Coe',
@@ -460,6 +461,7 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
+
     {
       name: 'English Castle by the Seashore',
       location: 'Seahouses',
@@ -503,7 +505,6 @@ export default function getPropertyData(users) {
       bookings: []
     },
 
-
     {
       name: 'Kittiwake Cottage',
       location: 'Brighton',
@@ -544,7 +545,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     {
       name: 'Bright and cheerful terraced house',
       location: 'Cotswolds',
@@ -585,7 +585,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     {
       name: 'Remote house in Cornwall',
       location: 'Cornwall',
@@ -626,7 +625,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     {
       name: 'Stone terraced house in Lancashire',
       location: 'Lancashire',
@@ -667,7 +665,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     {
       name: 'Bright room in Manchester',
       location: 'Manchester',
@@ -708,7 +705,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     {
       name: 'Stylish room in Oxford',
       location: 'Oxford',
@@ -749,7 +745,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     {
       name: 'Oxford house with beautiful garden',
       location: 'Oxford',
@@ -790,7 +785,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     {
       name: 'Spare room in London family house',
       location: 'London',
@@ -831,7 +825,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     },
-
     { 
       name: 'Refurbished Devon lighthouse',
       location: 'Devon',
@@ -871,7 +864,7 @@ export default function getPropertyData(users) {
       host: users[0],
       comments: [],
       bookings: []
-},
+    },
     {
       name: 'Modern beach house in Devon',
       location: 'Devon',
@@ -912,7 +905,6 @@ export default function getPropertyData(users) {
       comments: [],
       bookings: []
     }
-
   ]
 
 }
