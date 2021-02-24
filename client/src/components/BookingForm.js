@@ -4,7 +4,7 @@ import axios from 'axios'
 import { getLoggedInUserId } from '../lib/auth.js'
 import DateRangePicker from './dateRangePicker'
 
-function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates }) {
+function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property }) {
 
   const LoggedInUserId = getLoggedInUserId()
 
@@ -66,9 +66,15 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates }) {
       }
     }
   }
-
   
+  function totalDays () {
+    return getDateRange(startDate, endDate).length + 1
+  }
 
+  function totalPrice() {
+    console.log(property.pricePerNight);
+    return totalDays() * property.pricePerNight
+  }
 
   const maxNumberOfGuestsArray = ['Please select']
   for (let i = 1; i < maxNumberOfGuests + 1; i++) {
@@ -80,9 +86,6 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates }) {
     return null
   }
 
-  function disableWeekends(date) {
-    return date.getDay() === 0 || date.getDay() === 6;
-  }
 
   return <div className='box mt-6'>
 
@@ -126,8 +129,8 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates }) {
 
             </div>
           </div>
-          <p>{`Total days: ${numOfDays}`}</p>
-          <p>Total price:</p>
+          <p>{`Total days: ${totalDays()}`}</p>
+          <p>{`Total price: £${totalPrice()}`}</p>
           <button className='button is-primary mt-4'>Book now</button>
         </form>
       </div>

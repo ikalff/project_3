@@ -175,7 +175,9 @@ export default function Singleproperty({ match, history }) {
             :
             <BookingForm
               propertyId={match.params.propertyId}
-              maxNumberOfGuests={property.maxNumberOfGuests}></BookingForm>}
+              maxNumberOfGuests={property.maxNumberOfGuests}
+              property={property}
+            />}
           <br />
           <article className="media">
             <div className="media-content">
