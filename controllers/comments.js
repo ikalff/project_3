@@ -39,7 +39,7 @@ async function updateComment(req, res, next) {
   const currentUser = req.currentUser
   commentData.user = currentUser
   const { commentId, propertyId } = req.params
-
+  console.log(req.params)
   try {
     const property = await Properties.findById(propertyId).populate('user').populate('comments.user')
 

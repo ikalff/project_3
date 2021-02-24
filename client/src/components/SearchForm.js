@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import DateRangePicker from './dateRangePicker'
+import amenities from '../data/amenities.js'
 
 export default function SearchForm({ onChange, formLocation, checkboxDataProp, locationDataProp }) {
 
 
+  //const amenities = ['Wifi', 'Pet friendly', 'Wheelchair Accessible', 'Washing machine', 'Near a beach']
 
 
   const [locationData, updateLocationData] = useState('')
-  const amenities = ['Wifi', 'Pet friendly', 'Wheelchair Accessible', 'Washing machine', 'Near a beach']
+
+  
   const [checkboxData, updateCheckboxData] = useState({
     'Wifi': false,
     'Pet friendly': false,
@@ -28,9 +32,6 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
 
   function handleFieldsChange(event) {
     event.preventDefault()
-    console.log('Inside handlefieldschage')
-    console.log(locationData)
-    console.log(checkboxData)
     onChange(locationData, checkboxData)
   }
 
@@ -44,7 +45,7 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
   function handleCheckBox(event) {
     const newcheckboxData = { ...checkboxData }
     newcheckboxData[event.target.name] = event.target.checked
-    //console.log(newcheckboxData)
+    console.log(newcheckboxData)
     updateCheckboxData(newcheckboxData)
   }
 
@@ -82,6 +83,7 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
           <label className="checkbox">
 
             <input
+              className='mr-1'
               type="checkbox"
               name={amenity}
               onChange={handleCheckBox}
@@ -93,14 +95,14 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
       })
     }
 
-
+    <DateRangePicker className='datePicker'/>
 
     {formLocation === 'listings' && <div className='buttons'>
 
 
  
 
-      <button className='button is-primary' onClick={handleFieldsChange}>Apply</button>
+      <button className='button is-primary' onClick={handleFieldsChange}>Update search</button>
 
 
       <button className='button' onClick={clearFilters}>Clear</button>

@@ -9,6 +9,8 @@ import Login from './components/Login.js'
 import UserProfile from './components/UserProfile.js'
 import Properties from './components/Properties.js'
 import PropertyProfile from './components/PropertyProfile.js'
+import MakeProperty from './components/MakeProperty.js'
+import UpdateProperty from './components/UpdateProperty.js'
 
 import 'bulma'
 import './styles/style.scss'
@@ -23,7 +25,8 @@ const App = () => (
       <Route exact path='/users/:userId' component={UserProfile}></Route>
       <Route exact path='/properties' component={Properties}></Route>
       <Route exact path='/properties/:propertyId' component={PropertyProfile}></Route>
-
+      <Route exact path='/makeproperty' component={MakeProperty}></Route>
+      <Route exact path='/updateproperty/:propertyId' component={UpdateProperty}></Route>
     </Switch>
     <Footer></Footer>
   </BrowserRouter>
