@@ -12,7 +12,6 @@ import PropertyProfile from './components/PropertyProfile.js'
 import MakeProperty from './components/MakeProperty.js'
 import UpdateProperty from './components/UpdateProperty.js'
 
-
 import 'bulma'
 import './styles/style.scss'
 

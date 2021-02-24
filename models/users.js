@@ -9,24 +9,25 @@ const schema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   isHost: { type: Boolean },
-  isAdmin: { type: Boolean }
+  isAdmin: { type: Boolean },
+  bio: { type: String }
 })
 
-schema.pre('save', function(next) {
+schema.pre('save', function (next) {
   if (this.isModified('password')) {
     this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync())
   }
   next()
 })
 
-schema.methods.validatePassword = function(password) {
+schema.methods.validatePassword = function (password) {
   return bcrypt.compareSync(password, this.password)
 }
 
 schema
   .virtual('passwordConfirmation')
   .set(function setPasswordConfirmation(passwordConfirmation) {
-    this._passwordConfirmation = passwordConfirmation   
+    this._passwordConfirmation = passwordConfirmation
   })
 
 schema
@@ -37,7 +38,7 @@ schema
     next()
   })
 
-  schema.plugin(uniqueValidator)
-  schema.plugin(mongooseHidden({ defaultHidden: { password: true, email: true, last_name: true }}))
+schema.plugin(uniqueValidator)
+schema.plugin(mongooseHidden({ defaultHidden: { password: true } }))
 
-  export default mongoose.model('User', schema)
+export default mongoose.model('User', schema)
