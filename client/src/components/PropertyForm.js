@@ -15,13 +15,16 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
     cloudName: 'ikalff',
     uploadPreset: 'imagepreset'
   },
-    (error, result) => { checkUploadResult(result) })
+    (error, result) => {
+      checkUploadResult(result)
+    })
 
   function checkUploadResult(resultEvent) {
-    //console.log(resultEvent)
-    if (resultEvent.event === 'success') {
+    if (resultEvent.event === 'queues-end') {
       const newImages = [...images]
-      newImages.push(resultEvent.info.secure_url)
+      resultEvent.info.files.forEach(file => {
+        newImages.push(file.uploadInfo.secure_url)
+      })
       updateImages(newImages)
       handleImages(newImages)
     }
@@ -34,20 +37,19 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
 
   function deleteImage(event, index) {
     event.preventDefault()
-    //console.log(index)
     const newImages = [...images]
     newImages.splice(index, 1)
-    //console.log(newImages)
     updateImages(newImages)
     handleImages(newImages)
   }
 
 
+  console.log(formData.images)
+
+
+
 
   return <div>
-
-
-
 
     <form onSubmit={handleSubmit}>
       <p className='mb-5'>Fields marked with  <span className='has-text-danger'>*</span> are required</p>
@@ -57,7 +59,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
         Property Name <span className='has-text-danger'>*</span>:</label>
       <div className="control">
         <input
-          className="input"
+          className={formData['name'] ? 'input' : 'input is-danger'}
           type="text"
           onChange={handleChange}
           value={formData['name']}
@@ -69,7 +71,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
         Location <span className='has-text-danger'>*</span>:</label>
       <div className="control">
         <input
-          className="input"
+          className={formData['location'] ? 'input' : 'input is-danger'}
           type="text"
           onChange={handleChange}
           value={formData['location']}
@@ -81,7 +83,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
         Summary <span className='has-text-danger'>*</span>:</label>
       <div className="control">
         <textarea
-          className="textarea"
+          className={formData['summary'] ? 'textarea' : 'textarea is-danger'}
           type="text"
           onChange={handleChange}
           value={formData['summary']}
@@ -93,7 +95,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
         House Rules <span className='has-text-danger'>*</span>:</label>
       <div className="control">
         <textarea
-          className="textarea"
+          className={formData['houserules'] ? 'textarea' : 'textarea is-danger'}
           type="text"
           onChange={handleChange}
           value={formData['houseRules']}
@@ -105,7 +107,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
         Cancellation Policy <span className='has-text-danger'>*</span>:</label>
       <div className="control">
         <textarea
-          className="textarea"
+          className={formData['cancellationPolicy'] ? 'textarea' : 'textarea is-danger'}
           type="text"
           onChange={handleChange}
           value={formData['cancellationPolicy']}
@@ -142,7 +144,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
         Price per night: <span className='has-text-danger'>*</span></label>
       <div className="control">
         <input
-          className="input"
+          className={formData['pricePerNight'] ? 'input' : 'input is-danger'}
           type="text"
           onChange={handleChange}
           value={formData['pricePerNight']}
@@ -152,7 +154,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
 
       <label className="label">
         Number of bedrooms: <span className='has-text-danger'>*</span></label>
-      <div className="select">
+      <div className={formData['numberOfBedrooms'] ? 'select' : 'select is-danger'}>
         <select
           onChange={handleChange}
           value={formData['numberOfBedrooms']}
@@ -174,7 +176,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
 
       <label className="label">
         Maximum number of guests: <span className='has-text-danger'>*</span></label>
-      <div className="select">
+      <div className={formData['numberOfGuests'] ? 'select' : 'select is-danger'}>
         <select
           onChange={handleChange}
           value={formData['maxNumberOfGuests']}
@@ -199,7 +201,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
 
       <label className="label">
         Check in time from: <span className='has-text-danger'>*</span></label>
-      <div className="select">
+      <div className={formData['checkInTime'] ? 'select' : 'select is-danger'}>
         <select
           onChange={handleChange}
           value={formData['checkInTime']}
@@ -231,7 +233,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
 
       <label className="label">
         Check out time before: <span className='has-text-danger'>*</span></label>
-      <div className="select">
+      <div className={formData['checkInTime'] ? 'select' : 'select is-danger'}>
         <select
           onChange={handleChange}
           value={formData['checkOutTime']}
@@ -298,9 +300,10 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
         }
 
 
-        <h5 className='title is-5 mt-4 mb-2'>Upload images  <span className='has-text-danger'>*</span>:</h5>
+        <h5 className='title is-5 mt-4 mb-2'>
+          Upload images  <span className='has-text-danger'>*</span>:</h5>
 
-        <button onClick={showWidget} className='button mb-4'>Upload</button>
+        <button onClick={showWidget} className={formData['images'].length > 0 ? 'button mb-4' : 'button is-danger  mb-4'}>Upload</button>
         <div className='imagegallery columns is-multiline'>
           {
             images.map((image, index) => {

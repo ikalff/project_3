@@ -67,6 +67,10 @@ export default function MakeProperty({ history }) {
     updateFormData({ ...formData, ['amenities']: newCheckboxData })
   }
 
+
+  
+
+
   async function handleSubmit(event) {
     event.preventDefault()
     const token = localStorage.getItem('token')
@@ -92,10 +96,9 @@ export default function MakeProperty({ history }) {
       const { data } = await axios.post('/api/properties', newFormData, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      //console.log(data._id)
       history.push(`/properties/${data._id}`)
     } catch (err) {
-      updateError('Unable to add property. Please enter a unique property name and a value for all required fields.')
+      updateError('Unable to add property')
       console.log(err)
     }
   }

@@ -46,7 +46,6 @@ export default function UpdatePokemon({ history, match }) {
     amenities: checkboxData
   })
 
-  //console.log(formData)
 
 
   useEffect(() => {
@@ -70,7 +69,6 @@ export default function UpdatePokemon({ history, match }) {
           amenities: data['amenities']
         }
         updateFormData(newFormData)
-        //console.log(newFormData)
       })
   }, [])
 
@@ -81,18 +79,16 @@ export default function UpdatePokemon({ history, match }) {
 
 
   function handleImages(imageArray) {
-    //console.log(imageArray)
     updateFormData({ ...formData, images: imageArray })
   }
 
   function handleCheckBox(event) {
-    const amenityIndex = checkboxData.findIndex(amenity => amenity.amenityName === event.target.name)
-    const newCheckboxData = [...checkboxData]
+    const amenityIndex = formData.amenities.findIndex(amenity => amenity.amenityName === event.target.name)
+    const newCheckboxData = [...formData.amenities]
     newCheckboxData[amenityIndex] = {
       'amenityName': event.target.name,
       'amenityValue': event.target.checked
     }
-    //console.log(formData.amenities)
     updateCheckboxData(newCheckboxData)
     updateFormData({ ...formData, ['amenities']: newCheckboxData })
   }
@@ -123,7 +119,6 @@ export default function UpdatePokemon({ history, match }) {
       const { data } = await axios.put(`/api/properties/${propertyId}`, newFormData, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      //console.log(data._id)
       history.push(`/properties/${data._id}`)
     } catch (err) {
       updateError('Unable to update property. Please enter a unique property name and a value for all required fields.')
