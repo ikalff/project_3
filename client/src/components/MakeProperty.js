@@ -5,8 +5,8 @@ import { getLoggedInUserId } from '../lib/auth.js'
 
 
 export default function MakeProperty({ history }) {
-  
   const LoggedInUserId = getLoggedInUserId()
+  const [error, updateError] = useState('')
   const [checkboxData, updateCheckboxData] = useState([
     {
       amenityName: 'Wifi',
@@ -52,6 +52,21 @@ export default function MakeProperty({ history }) {
     updateFormData({ ...formData, [event.target.name]: event.target.value })
   }
 
+  function handleImages(imageArray) {
+    updateFormData({ ...formData, images: imageArray })
+  }
+
+  function handleCheckBox(event) {
+    const amenityIndex = checkboxData.findIndex(amenity => amenity.amenityName === event.target.name)
+    const newCheckboxData = [...checkboxData]
+    newCheckboxData[amenityIndex] = {
+      'amenityName': event.target.name,
+      'amenityValue': event.target.checked
+    }
+    updateCheckboxData(newCheckboxData)
+    updateFormData({ ...formData, ['amenities']: newCheckboxData })
+  }
+
   async function handleSubmit(event) {
     event.preventDefault()
     const token = localStorage.getItem('token')
@@ -80,17 +95,26 @@ export default function MakeProperty({ history }) {
       //console.log(data._id)
       history.push(`/properties/${data._id}`)
     } catch (err) {
-      console.log(err.response.data)
+      updateError('Unable to add property. Please enter a unique property name and a value for all required fields.')
+      console.log(err)
     }
   }
 
   return <div className='container px-6 pt-6 pb-6'>
     <h5 className='title is-5 mt-4 mb-2'>List your property</h5>
+
+    {error && <div className='box has-background-danger has-text-white'>{error}</div>}
+
     <PropertyForm
       handleChange={handleChange}
       handleTypeChange={(types) => updateFormData({ ...formData, types })}
       handleSubmit={handleSubmit}
-      checkboxData={checkboxData}
+      handleCheckBox={handleCheckBox}
+      handleImages={handleImages}
       formData={formData}
-    /></div>
+      location='makeProperty'
+    />
+    {error && <div className='box mt-4 has-background-danger has-text-white'>{error}</div>}
+  </div>
+
 }

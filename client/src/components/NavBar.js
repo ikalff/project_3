@@ -9,14 +9,18 @@ function NavBar({ location, history }) {
   const [username, updateUsername] = useState([])
   let LoggedInUserId = getLoggedInUserId()
 
+  const token = localStorage.getItem('token')
+
   useEffect(() => {
     async function fetchData() {
       LoggedInUserId = getLoggedInUserId()
       if (LoggedInUserId) {
         try {
-          const { data } = await axios.get(`/api/users/${LoggedInUserId}`)
+          const { data } = await axios.get(`/api/users/${LoggedInUserId}`,  {
+            headers: { Authorization: `Bearer ${token}` }
+          })
           if (data) {
-            //console.log(data)
+            console.log(data)
             updateUsername(data.first_name)
           }
         } catch (err) {
@@ -43,10 +47,12 @@ function NavBar({ location, history }) {
           <Link className='button is-primary' to='/properties'>All listings</Link>
 
           {username && <>
+            <Link className='button is-primary' to={ `/users/${LoggedInUserId}` }>User profile</Link>
 
             <Link className='button is-primary' to='/makeproperty'>List a property</Link>
 
          Logged in as {username}  |&nbsp; 
+         
         <a onClick={logOut} className='has-text-white'>Log out</a>
           </>
           }
