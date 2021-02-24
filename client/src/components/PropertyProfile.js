@@ -37,10 +37,6 @@ export default function Singleproperty({ match, history }) {
     fetchData()
   }, [])
 
-  if (!property.name) {
-    return null
-  }
-
   async function handleDelete() {
     await axios.delete(`/api/properties/${match.params.propertyId}`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -95,8 +91,9 @@ export default function Singleproperty({ match, history }) {
       })
   }
 
-  event.preventDefault()
-
+  if (!property.name) {
+    return null
+  }
   return <>
 
     <section className='hero has-background-grey-light is-primary is-fullheight-with-navbar'
