@@ -18,10 +18,10 @@ export default function Paginate({ onChange, pageNum, totalResults, resultsPerPa
     // map over the pages array to output the page number buttons
     return <div className='columns'>
       <div className='column'> Total results: {totalResults} </div>
-      <div className='column has-text-right'>
+      <div className='column has-text-right buttons'>
 
         {pagesArray.map((num, index) => {
-          return <button index={index} onClick={() => handlePageChange(index + 1)} key={index} href='' className={pageNum === (index + 1) ? 'current' : ''}> {num} </button>
+          return <button index={index} onClick={() => handlePageChange(index + 1)} key={index} href='' className={pageNum === (index + 1) ? 'button is-primary is-small' : 'button is-small'}> {num} </button>
         })}
       </div>
     </div>
