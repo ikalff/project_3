@@ -22,15 +22,50 @@ const amenitySchema = new mongoose.Schema({
 })
 
 const propertiesSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  location: { type: String, required: true, unique: false },
+  name: { 
+    type: String, 
+    required: true, 
+    unique: true,
+    validate: (propName) => {
+      return propName.length > 3
+    } 
+  },
+  location: { 
+    type: String, 
+    required: true, 
+    unique: false,
+    validate: (location) => {
+      return location.length > 1
+    } 
+  },
   images: { type: Array, required: true, unique: false },
   isRoomOnly: { type: Boolean, required: true, unique: false },
   isEntirePlace: { type: Boolean, required: true, unique: false },
   pricePerNight: { type: Number, required: true, unique: false },
-  summary: { type: String, required: true, unique: false },
-  houseRules: { type: String, required: true, unique: false },
-  cancellationPolicy: { type: String, required: true, unique: false },
+  summary: { 
+    type: String, 
+    required: true, 
+    unique: false,
+    validate: (summary) => {
+      return summary.length > 3
+    } 
+  },
+  houseRules: { 
+    type: String, 
+    required: true, 
+    unique: false,
+    validate: (rules) => {
+      return rules.length > 3
+    } 
+  },
+  cancellationPolicy: { 
+    type: String, 
+    required: true, 
+    unique: false,
+    validate: (policy) => {
+      return policy.length > 3
+    } 
+  },
   numberOfBedrooms: { type: Number, required: true, unique: false },
   maxNumberOfGuests: { type: Number, required: true, unique: false },
   checkInTime: { type: String, required: true, unique: false },
