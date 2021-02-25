@@ -33,7 +33,7 @@ export default function RegisterPage({ history }) {
       const { data } = await axios.post('/api/register', formData)
       history.push('/')
     } catch (err) {
-      updateError(err.response.data.message)
+      updateError('Please make sure you have input a valid email address and your password has a minimum of 6 characters.')
     }
   }
 
