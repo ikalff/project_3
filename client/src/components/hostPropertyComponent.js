@@ -27,8 +27,11 @@ export default function HostPropertyComponent(props) {
 
           const allPropertiesData = data
 
-          const filteredProperties = allPropertiesData.filter(item => item.host._id === hostId)
-
+          const filteredProperties = allPropertiesData.filter(item => {
+            if (item.host && item.host._id === hostId) {
+              return item
+            }
+          })
           updateHostProperties(filteredProperties)
 
           updatePropertiesLoading(false)

@@ -232,7 +232,7 @@ export default function Singleproperty({ match, history }) {
           {isCreator(property.host._id) ?
             <Link className='button is-primary mb-4' to={`/updateproperty/${property._id}`}>Edit property</Link>
             :
-            <> <Link className='button is-primary is-light mb-4' to={{
+            <> <Link className='button is-primary mt-4 mb-4' to={{
               pathname: `/host/${property.host._id}`,
               state: {
                 hostId: property.host._id
