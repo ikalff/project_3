@@ -43,6 +43,7 @@ async function makeBooking(req, res, next) {
     bookingData.propertyId = propertyId
 
     property.bookings.push(bookingData)
+    console.log('bookings controller bookingData', bookingData)
 
     const savedProperty = await property.save()
 

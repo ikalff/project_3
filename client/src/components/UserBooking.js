@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Paginate from './Paginate'
+
 export default function UserBooking(props) {
   const userId = props.userId
   const [userBookings, updateUserBookings] = useState([])
@@ -9,8 +10,8 @@ export default function UserBooking(props) {
   const [pageNum, updatePageNum] = useState(1)
 
   const [error, updateError] = useState('')
-  const [deleteErrorState, updateDeleteErrorState] = (false)
-  const [deleteSuccessState, updateDeleteSuccessState] = (false)
+  const [deleteErrorState, updateDeleteErrorState] = useState(false)
+  const [deleteSuccessState, updateDeleteSuccessState] = useState(false)
 
   const token = localStorage.getItem('token')
 
@@ -48,26 +49,30 @@ export default function UserBooking(props) {
 
   }
 
-  // function handleDeleteBooking(event, item) {
-  //   event.preventDefault()
-  //   console.log(`/api/property/${item.propertyId}/bookings/${item._id}`)
+  function handleDeleteBooking(event, item) {
+    event.preventDefault()
+    console.log("hello I am inside your handle delete booking")
 
-  //   try {
-  //     axios.delete(`/api/property/${item.propertyId}/bookings/${item._id}`, {
-  //       headers: { Authorization: `Bearer ${token}` }
-  //     })
-  //       .then(resp => {
-  //         history.push('/users/${userId}')
-  //         updateDeleteSuccessState(true)
-  //         updateDeleteErrorState(false)
-  //       })
+    console.log('item in handle delete', item)
+    console.log(`/api/property/${item.propertyId}/bookings/${item._id}`)
 
-  //   } catch (err) {
-  //     updateDeleteErrorState(true)
-  //     updateError(err.response.data.message)
-  //     updateDeleteSuccessState(false)
-  //   }
-  // }
+    try {
+      axios.delete(`/api/bookings/${item.propertyId}/${item._id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(resp => {
+          //history.push(`/users/${userId}`)
+          updateDeleteSuccessState(true)
+          updateDeleteErrorState(false)
+        })
+
+    } catch (err) {
+      
+      updateError(err.response.data.message)
+      updateDeleteErrorState(true)
+      updateDeleteSuccessState(false)
+    }
+  }
 
 
 
@@ -94,7 +99,11 @@ export default function UserBooking(props) {
             <h4 className='title is-4 mb-2 mt-2'>{item.propertyName}</h4>
             <p className='title is-4 mb-2 mt-2'>Check In: {String(new Date(item.checkInDate)).substr(0,15)}</p>
             <p className='title is-4 mb-2 mt-2'>Check Out: {String(new Date(item.checkOutDate)).substr(0,15)}</p>
-            <button className="button is-danger">Delete Booking</button>
+            <button className="button is-danger" onClick={(event) => {
+              handleDeleteBooking(event, item)
+              console.log('item in button', item)
+            }}>Delete Booking</button>
+          
           </div>
 
         </div>
