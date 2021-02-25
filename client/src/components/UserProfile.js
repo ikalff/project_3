@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import HostProfileComponent from './HostProfileComponent.js'
 import UserBooking from './UserBooking.js'
 
-
 export default function UserProfile({ history, match }) {
   const userId = match.params.usersId
   const [userData, updateUserData] = useState({

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Paginate from './Paginate'
 
-export default function UserBooking (props) {
+export default function UserBooking(props) {
 
   const userId = props.userId
 
