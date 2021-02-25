@@ -7,6 +7,7 @@ import { getLoggedInUserId } from '../lib/auth.js'
 import BookingForm from './BookingForm.js'
 import 'react-edit-text/dist/index.css'
 import HostPropertyComponent from './HostPropertyComponent.js'
+import bookings from '../../../controllers/bookings.js'
 
 export default function Singleproperty({ match, history }) {
   const [property, updateProperties] = useState([])
@@ -121,7 +122,7 @@ export default function Singleproperty({ match, history }) {
               <span><i className='fas fa-bed fa-lg mr-2 has-text-primary'></i>Private room </span>
             }
 
-          for <span className='title brandfont has-text-primary is-size-4 ml-1'>£{property.pricePerNight}</span> Per night
+            for <span className='title brandfont has-text-primary is-size-4 ml-1'>£{property.pricePerNight}</span> Per night
 
 
 
@@ -226,6 +227,24 @@ export default function Singleproperty({ match, history }) {
               property={property}
             />}
           <br />
+          {isCreator(property.host._id) && <div className="content">
+            <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Bookings:</h5>
+            {property.bookings.length > 0 &&
+              property.bookings.map((booking, index) => {
+                return <div key={index} className="box columns mt-4">
+                  <div className="column">
+                    <h5>Name: {booking.user.first_name} {booking.user.last_name}</h5>
+                    <p>Email: {booking.user.email}</p>
+                    <p>Check In: {String(new Date(booking.checkInDate)).substr(0, 15)}</p>
+                    <p>Check Out: {String(new Date(booking.checkOutDate)).substr(0, 15)}</p>
+                    <p>Number of Guests: {booking.numberOfGuests}</p>
+
+                    <h6>Remember to contact {booking.user.first_name} for payment and more details on their stay!</h6>
+                  </div>
+                </div>
+              })
+            }
+          </div>}
           <article className="media">
             <div className="media-content box">
               <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Review:</h5>
