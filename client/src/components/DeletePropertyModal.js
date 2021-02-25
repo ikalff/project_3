@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+
+
 import axios from 'axios'
 
-export default function DeletePropertyModal({ deleteModal, setDeleteModal, property }) {
+export default function DeletePropertyModal({ deleteModal, setDeleteModal, property}) {
   async function deleteProperty() {
     const propertyData = property
     const token = localStorage.getItem('token')
@@ -9,7 +12,7 @@ export default function DeletePropertyModal({ deleteModal, setDeleteModal, prope
       await axios.delete(`/api/properties/${propertyData._id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      history.pushState(`/host/${propertyData.host._id}`)
+      setDeleteModal('modal')
     } catch (err) {
       
     }
@@ -29,7 +32,9 @@ export default function DeletePropertyModal({ deleteModal, setDeleteModal, prope
         }}></button>
       </header>
       <section className="modal-card-body has-text-centered">
-        <button className="button is-danger" onClick={deleteProperty}>Delete Property</button>
+        <Link to='/' >
+          <button className="button is-danger" onClick={deleteProperty}>Delete Property</button>
+        </Link>
       </section>
     </div>
   </div>
