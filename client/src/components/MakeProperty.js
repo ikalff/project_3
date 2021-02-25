@@ -104,7 +104,8 @@ export default function MakeProperty({ history }) {
   }
 
   return <div className='container px-6 pt-6 pb-6'>
-    <h5 className='title is-5 mt-4 mb-2'>List your property</h5>
+    
+    <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>List your property</h5>
 
     {error && <div className='box has-background-danger has-text-white'>{error}</div>}
 

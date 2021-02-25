@@ -42,6 +42,10 @@ export default function RegisterPage({ history }) {
 
   return <div className='container px-6 pt-6 pb-6'>
 
+
+    <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Register</h5>
+
+
     <div className={error ? 'box has-background-danger has-text-white' : 'is-hidden'}>{error}</div>
 
     <form onSubmit={handleSubmit}>

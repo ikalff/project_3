@@ -48,7 +48,7 @@ export default function getUserData() {
       passwordConfirmation: 'passwords4',
       isHost: true,
       isAdmin: false,
-      bio: 'This is my host bio' 
+      bio: 'I love Jersey and Scotland! Come stay at my properties, they are all pet friendly!' 
     }
   ]
 }
