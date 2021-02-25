@@ -129,7 +129,7 @@ export default function UpdateProperty({ history, match }) {
 
   return <div className='container px-6 pt-6 pb-6'>
 
-    <h1>UPDATE PROPERTY</h1>
+    <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Update property</h5>
 
     {error && <div className='box has-background-danger has-text-white'>{error}</div>}
 

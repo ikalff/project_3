@@ -75,7 +75,7 @@ export default function Singleproperty({ match, history }) {
       console.log('error', err)
     }
   }
-  console.log('test:', editCommentSuccess)
+  //console.log('test:', editCommentSuccess)
   function handleDeleteComment(commentId) {
     try {
       axios.delete(`/api/properties/${match.params.propertyId}/comment/${commentId}`, {
@@ -101,15 +101,45 @@ export default function Singleproperty({ match, history }) {
         backgroundImage: `url(${property.images[0] ? property.images[0] : 'http://placehold.it/400x400'})`
       }}>
       <div className='hero-body columns is-centered'>
-        <div className='box column is-half has-text-centered'>
-          <h4 className='title is-4 mb-2 has-text-black'>{property.name}</h4>
-          <p>Location: {property.location}</p>
+        <div className='box column is-half has-text-centered pt-5 pb-5 px-5'>
+
+
+          <h5 className='title brandfont has-text-primary is-size-4 mb-3'>
+            <i className='fas fa-map-marker-alt mr-2'></i>  {property.location}
+          </h5>
+
+          <h2 className='title brandfont has-text-info is-size-2 mb-2'>{property.name}</h2>
+
+
+
+
+          <p>
+
+            {property.isEntirePlace ?
+              <span><i className='fas fa-home fa-lg mr-2 has-text-primary'></i>Entire place </span>
+              :
+              <span><i className='fas fa-bed fa-lg mr-2 has-text-primary'></i>Private room </span>
+            }
+
+          for <span className='title brandfont has-text-primary is-size-4 ml-1'>£{property.pricePerNight}</span> Per night
+
+
+
+          </p>
+
+
+
         </div>
       </div>
-    </section>
+
+    </section >
     <div className='container px-6 pt-6 pb-6'>
       <div className='columns'>
         <div className='column'>
+          <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Summary:</h5>
+          <p>{property.summary}</p>
+
+          <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>House rules:</h5>
           <p>Summary: {property.summary}</p>
 
           <Link className='button is-primary is-light' to={{
@@ -124,18 +154,26 @@ export default function Singleproperty({ match, history }) {
           <p>Price per night: {property.pricePerNight}</p>
           <p>Check in: {property.checkInTime}</p>
           <p>Check out: {property.checkOutTime}</p>
-          <p>House rules: {property.houseRules}</p>
-          <p>Cancellation Policy: {property.cancellationPolicy}</p>
-          <h5 className='title is-5 mt-4 mb-2'>Amenities</h5>
+          <p>{property.houseRules}</p>
+
+          <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Amenities</h5>
           {property.amenities.length > 0 &&
             property.amenities.map((amenity, index) => {
               return <p key={index}>
-                {amenity.amenityValue ? '✅ ' : '❌ '}
+                {amenity.amenityValue ?
+                  <i className='fas fa-check-circle mr-2'></i>
+                  :
+                  <i className='fas fa-times-circle mr-2'></i>}
                 {amenity.amenityName}
               </p>
             })
           }
-          <h5 className='title is-5 mt-4 mb-2'>Gallery</h5>
+
+          <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Cancellation Policy:</h5>
+          <p>{property.cancellationPolicy}</p>
+
+
+          <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Gallery</h5>
           <div className='imagegallery columns mt-4 is-multiline'>
             {
               property.images.map((image, index) => {
@@ -143,7 +181,7 @@ export default function Singleproperty({ match, history }) {
               })
             }
           </div>
-          {property.comments.length > 0 && <h5 className='title is-5 mt-4 mb-2'>Reviews</h5>}
+          {property.comments.length > 0 && <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Reviews</h5>}
           {property.comments.length > 0 &&
             property.comments.map((comment, index) => {
               return <article key={index} className="media">
@@ -180,7 +218,7 @@ export default function Singleproperty({ match, history }) {
             })
           }
           {isCreator(property.host._id) ?
-            <Link className='button is-primary' to={`/updateproperty/${property._id}`}>Edit</Link>
+            <Link className='button is-primary mb-4' to={`/updateproperty/${property._id}`}>Edit property</Link>
             :
             <BookingForm
               propertyId={match.params.propertyId}
@@ -189,8 +227,8 @@ export default function Singleproperty({ match, history }) {
             />}
           <br />
           <article className="media">
-            <div className="media-content">
-              <h3>Review:</h3>
+            <div className="media-content box">
+              <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Review:</h5>
               <div className="field">
                 <p className="control">
                   <textarea
@@ -207,7 +245,7 @@ export default function Singleproperty({ match, history }) {
                 <p className="control">
                   <button
                     onClick={handleComment}
-                    className="button is-info"
+                    className="button is-primary"
                   >
                     Submit
                     </button>
