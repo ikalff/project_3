@@ -18,6 +18,8 @@ export default function Singleproperty({ match, history }) {
   const [errorState, updateErrorState] = useState(false)
   const [commentSuccess, updateCommentSuccess] = useState(false)
   const [editCommentSuccess, updateEditCommentSuccess] = useState(false)
+  const [deleteSuccessState, updateDeleteSuccessState] = useState(false)
+  const [deleteErrorState, updateDeleteErrorState] = useState(false)
 
 
   useEffect(() => {
@@ -93,21 +95,24 @@ export default function Singleproperty({ match, history }) {
       updateEditCommentSuccess(false)
     }
   }
-  function handleDeleteBooking(bookingId) {
+
+  function handleDeleteBooking(event, item, bookingId) {
+    event.preventDefault()
+    console.log(`/api/bookings/${match.params.propertyId}/${bookingId}`)
     try {
-      console.log(bookingId)
-      axios.delete(`/api/bookings/${match.params.propertyId}/${match.params.bookingId}`, {
+      axios.delete(`/api/bookings/${match.params.propertyId}/${bookingId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(resp => {
-          updateProperties(resp.data)
+          updateDeleteSuccessState(true)
+          updateDeleteErrorState(false)
         })
     } catch (err) {
-      updateErrorState(true)
-      updateError(err.response.data.message)
-      
+      updateDeleteErrorState(true)
+      updateDeleteSuccessState(false)
     }
   }
+
 
   if (!property.name) {
     return null
@@ -132,7 +137,7 @@ export default function Singleproperty({ match, history }) {
 
           <p>
 
-            {property.propertyType === 'Entire place' ?
+            {property.isEntirePlace ?
               <span><i className='fas fa-home fa-lg mr-2 has-text-primary'></i>Entire place </span>
               :
               <span><i className='fas fa-bed fa-lg mr-2 has-text-primary'></i>Private room </span>
@@ -153,13 +158,21 @@ export default function Singleproperty({ match, history }) {
     <div className='container px-6 pt-6 pb-6'>
       <div className='columns'>
         <div className='column'>
-
           <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Summary:</h5>
           <p>{property.summary}</p>
 
           <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>House rules:</h5>
           <p>Summary: {property.summary}</p>
-          <p>Place type: {property.propertyType} </p>
+
+          <Link className='button is-primary is-light' to={{
+            pathname: `/host/${property.host._id}`,
+            state: {
+              hostId: property.host._id
+            }
+
+          }}>Meet the host</Link>
+
+          <p>Place type: {property.isEntirePlace ? 'Entire place' : 'Room only'} </p>
           <p>Price per night: {property.pricePerNight}</p>
           <p>Check in: {property.checkInTime}</p>
           <p>Check out: {property.checkOutTime}</p>
@@ -229,27 +242,11 @@ export default function Singleproperty({ match, history }) {
           {isCreator(property.host._id) ?
             <Link className='button is-primary mb-4' to={`/updateproperty/${property._id}`}>Edit property</Link>
             :
-
-            <>
-              <Link className='button is-primary' to={{
-                pathname: `/host/${property.host._id}`,
-                state: {
-                  hostId: property.host._id
-                }
-
-              }}>Meet the host</Link>
-
-              <BookingForm
-                propertyId={match.params.propertyId}
-                maxNumberOfGuests={property.maxNumberOfGuests}
-                property={property}
-              />
-            </>
-          }
-
-
-
-
+            <BookingForm
+              propertyId={match.params.propertyId}
+              maxNumberOfGuests={property.maxNumberOfGuests}
+              property={property}
+            />}
           <br />
           {isCreator(property.host._id) && <div className="content">
             <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Bookings:</h5>
@@ -262,9 +259,12 @@ export default function Singleproperty({ match, history }) {
                     <p>Check In: {String(new Date(booking.checkInDate)).substr(0, 15)}</p>
                     <p>Check Out: {String(new Date(booking.checkOutDate)).substr(0, 15)}</p>
                     <p>Number of Guests: {booking.numberOfGuests}</p>
-
+                    <p>id: {booking._id}</p>
                     <h6>Remember to contact {booking.user.first_name} for payment and more details on their stay!</h6>
-                    <button className="button is-danger" onClick={handleDeleteBooking}>Delete Booking</button>
+                    <button className="button is-danger" onClick={(event, item) => {
+                      handleDeleteBooking(event, item, booking._id)
+                    }}>Delete Booking</button>
+                    {deleteSuccessState ? <div className="notification is-success mt-3">Booking Successfully Deleted.</div> : <div className="notification is-hidden"></div>}
                   </div>
                 </div>
               })

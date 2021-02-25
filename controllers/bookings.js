@@ -94,7 +94,7 @@ async function removeBooking(req, res, next) {
 
     const booking = property.bookings.id(bookingId)
 
-    if (!booking.user._id.equals(currentUser._id)) {
+    if (!booking.user._id.equals(currentUser._id) && !property.host._id.equals(currentUser._id)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
 
