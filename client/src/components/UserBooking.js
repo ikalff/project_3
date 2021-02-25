@@ -20,9 +20,8 @@ export default function UserBooking(props) {
     try {
       axios.get('/api/properties')
         .then(({ data }) => {
-          const allPropertiesData = data
-          console.log('all prop data[0]', allPropertiesData[0])
-          //console.log('user', allPropertiesData[0].bookings[0].user)
+          const allPropertiesData = dat
+  
           const filteredBookings = []
           allPropertiesData.forEach(property => {
             property.bookings.forEach(booking => {
@@ -31,7 +30,7 @@ export default function UserBooking(props) {
               }
             })
           })
-          console.log('filtered bookings', filteredBookings)
+
           updateUserBookings(filteredBookings)
           updateBookingsLoading(false)
         })
@@ -51,10 +50,6 @@ export default function UserBooking(props) {
 
   function handleDeleteBooking(event, item) {
     event.preventDefault()
-    console.log("hello I am inside your handle delete booking")
-
-    console.log('item in handle delete', item)
-    console.log(`/api/property/${item.propertyId}/bookings/${item._id}`)
 
     try {
       axios.delete(`/api/bookings/${item.propertyId}/${item._id}`, {
@@ -101,7 +96,6 @@ export default function UserBooking(props) {
             <p className='title is-4 mb-2 mt-2'>Check Out: {String(new Date(item.checkOutDate)).substr(0,15)}</p>
             <button className="button is-danger" onClick={(event) => {
               handleDeleteBooking(event, item)
-              console.log('item in button', item)
             }}>Delete Booking</button>
           
           </div>
