@@ -15,24 +15,24 @@ export default function UserBooking(props) {
   const [pageNum, updatePageNum] = useState(1)
 
   useEffect(() => {
-
     try {
-
       axios.get('/api/properties')
         .then(({ data }) => {
-
           const allPropertiesData = data
-
-          const filteredBookings = allPropertiesData.filter(item => item.bookings.userId === userId)
-          console.log(filteredBookings)
+          console.log('all prop data[0]', allPropertiesData[0])
+          //console.log('user', allPropertiesData[0].bookings[0].user)
+          const filteredBookings = []
+          allPropertiesData.forEach(property => { 
+            property.bookings.forEach(booking => {
+              if (booking.user._id === userId) {
+                filteredBookings.push(booking)
+              }
+            })
+          })
+          console.log('filtered bookings', filteredBookings)
           updateUserBookings(filteredBookings)
-
           updateBookingsLoading(false)
-
         })
-
-
-
     } catch (err) {
       console.log('Error:', err)
     }
@@ -66,12 +66,10 @@ export default function UserBooking(props) {
 
         return <div className='box columns mt-4' key={index}>
           <div className="column">
-            <h4 className='title is-4 mb-2 mt-2'>{item.name}</h4>
-            <h5 className='title is-4 mb-2 mt-2'>{item.bookings.checkInDate}</h5>
-            <h5 className='title is-4 mb-2 mt-2'>{item.bookings.checkOutDate}</h5>
-          </div>
-          <div className="column">
-            <img width="200" src={item.images[0] ? item.images[0] : 'http://placehold.it/400x400?text=no%20image%20available'} />
+            <h4 className='title is-4 mb-2 mt-2'>{item.propertyName}</h4>
+            <h5 className='title is-4 mb-2 mt-2'>Check In: {String(new Date(item.checkInDate)).substr(0,15)}</h5>
+            <h5 className='title is-4 mb-2 mt-2'>Check Out: {String(new Date(item.checkOutDate)).substr(0,15)}</h5>
+            <button className="button is-danger">Delete Booking</button>
           </div>
 
         </div>
