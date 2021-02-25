@@ -101,24 +101,24 @@ export default function App() {
 
     newProperties = newProperties.filter(property => {
       let isAvailable = true
-      //console.log(property.name)
+      console.log(property.name)
       if (property.bookings) {
         property.bookings.forEach((booking) => {
           booking.datesBooked.forEach((bookedDate) => {
             const bookedDateString = String(moment(bookedDate).toDate()).substr(0, 15)
-            //console.log('Booked on: ' + bookedDateString)
+            console.log('Booked on: ' + bookedDateString)
             getDateRange(startDate, endDate).forEach(searchedDate => {
               const searchedDateString = String(searchedDate).substr(0, 15)
               if (bookedDateString === searchedDateString) {
                 isAvailable = false
                 //console.log('property.name')
-                //console.log(bookedDateString)
+                console.log(bookedDateString)
               }
             })
           })
         })
       }
-      //console.log(isAvailable)
+      console.log(isAvailable)
       if (isAvailable) {
         return property
       }

@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 @import "../../node_modules/bulma/sass/utilities/initial-variables";
 @import "../../node_modules/bulma/sass/utilities/functions";
 
@@ -8,19 +7,15 @@ $blue-invert: #fff;
 $primary: $blue;
 $primary-invert: $blue-invert;
 
-
 $darkblue: #0b3747;
 $darkblue-invert: #fff;
 $info: $darkblue;
 $info-invert: $darkblue-invert;
 
- 
- 
 @import "../../node_modules/bulma/";
 
-
-.brandfont{
-  font-family: 'Bebas Neue', 'arial', sans-serif;
+.brandfont {
+  font-family: "Bebas Neue", "arial", sans-serif;
 }
 
 .hero,
@@ -47,10 +42,9 @@ footer {
   max-height: 100px;
 }
 
-.nodanger .is-danger{
-  border:none!important
+.nodanger .is-danger {
+  border: none !important;
 }
-
 
 .fa-check-circle {
   color: #3bc067;
@@ -60,15 +54,37 @@ footer {
   color: #af4242;
 }
 
-.loading{
+.loading {
   width: 100%;
-  margin: 0 auto; 
+  margin: 0 auto;
   text-align: center;
-  padding:40px;
+  padding: 40px;
 }
 
-.loading img{
+.loading img {
   margin: 0 auto;
-  width:200px;
+  width: 200px;
+}
 
+.danger-border {
+  border: 1px solid #f14668;
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.override .is-danger,
+.override .danger-border,
+.override .select.is-danger select {
+  border-color: #dbdbdb;
+}
+
+.is-divider {
+  border-top: 1px solid #e6e6e6;
+  margin: 10px 0 20px 0;
+}
+
+
+.is-divider-vertical {
+  border-left: 1px solid #e6e6e6;
+  margin: 10px 20px 10px 20px;
 }

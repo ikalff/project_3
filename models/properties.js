@@ -24,11 +24,14 @@ const amenitySchema = new mongoose.Schema({
 })
 
 const propertiesSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
+  name: { type: String, required: true, unique: true,
+    validate: (name) => {
+      return name.length > 1 
+    }
+  },
   location: { type: String, required: true, unique: false },
   images: { type: Array, required: true, unique: false },
-  isRoomOnly: { type: Boolean, required: true, unique: false },
-  isEntirePlace: { type: Boolean, required: true, unique: false },
+  propertyType: { type: String, required: true, unique: false },
   pricePerNight: { type: Number, required: true, unique: false },
   summary: { type: String, required: true, unique: false },
   houseRules: { type: String, required: true, unique: false },

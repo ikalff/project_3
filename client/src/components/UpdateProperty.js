@@ -33,8 +33,7 @@ export default function UpdateProperty({ history, match }) {
     images: [],
     name: '',
     location: '',
-    isRoomOnly: false,
-    isEntirePlace: false,
+    propertyType: '',
     pricePerNight: '',
     summary: '',
     numberOfBedrooms: '',
@@ -56,8 +55,7 @@ export default function UpdateProperty({ history, match }) {
           images: data['images'],
           name: data['name'],
           location: data['location'],
-          isRoomOnly: data['isRoomOnly'],
-          isEntirePlace: data['isEntirePlace:'],
+          propertyType: data['propertyType'],
           pricePerNight: data['pricePerNight'],
           summary: data['summary'],
           numberOfBedrooms: data['numberOfBedrooms'],
@@ -71,6 +69,7 @@ export default function UpdateProperty({ history, match }) {
         updateFormData(newFormData)
       })
   }, [])
+
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -96,36 +95,52 @@ export default function UpdateProperty({ history, match }) {
 
   async function handleSubmit(event) {
     event.preventDefault()
-    const token = localStorage.getItem('token')
 
-    const newFormData = {
-      images: formData['images'],
-      name: formData['name'],
-      location: formData['location'],
-      isRoomOnly: true,
-      isEntirePlace: true,
-      pricePerNight: formData['pricePerNight'],
-      summary: formData['summary'],
-      numberOfBedrooms: formData['numberOfBedrooms'],
-      maxNumberOfGuests: formData['maxNumberOfGuests'],
-      checkInTime: formData['checkInTime'],
-      checkOutTime: formData['checkOutTime'],
-      houseRules: formData['houseRules'],
-      cancellationPolicy: formData['cancellationPolicy'],
-      amenities: formData['amenities']
-    }
+    if (
+      formData['images'].length < 1 ||
+      formData['name'] === '' ||
+      formData['location'] === '' ||
+      formData['propertyType'] === '' ||
+      formData['pricePerNight'] === '' ||
+      formData['summary'] === '' ||
+      formData['numberOfBedrooms'] === '' ||
+      formData['maxNumberOfGuests'] === '' ||
+      formData['checkInTime'] === '' ||
+      formData['checkOutTime'] === '' ||
+      formData['houseRules'] === '' ||
+      formData['cancellationPolicy'] === ''
+    ) {
+      updateError('Unable to update property. Please enter a value for all required fields.')
+    } else {
 
-    try {
-      const { data } = await axios.put(`/api/properties/${propertyId}`, newFormData, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      history.push(`/properties/${data._id}`)
-    } catch (err) {
-      updateError('Unable to update property. Please enter a unique property name and a value for all required fields.')
-      console.log(err)
+      const token = localStorage.getItem('token')
+      const newFormData = {
+        images: formData['images'],
+        name: formData['name'],
+        location: formData['location'],
+        propertyType: formData['propertyType'],
+        pricePerNight: formData['pricePerNight'],
+        summary: formData['summary'],
+        numberOfBedrooms: formData['numberOfBedrooms'],
+        maxNumberOfGuests: formData['maxNumberOfGuests'],
+        checkInTime: formData['checkInTime'],
+        checkOutTime: formData['checkOutTime'],
+        houseRules: formData['houseRules'],
+        cancellationPolicy: formData['cancellationPolicy'],
+        amenities: formData['amenities']
+      }
+      try {
+        const { data } = await axios.put(`/api/properties/${propertyId}`, newFormData, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        history.push(`/properties/${data._id}`)
+      } catch (err) {
+        console.log('its all gone wrong')
+        updateError('Unable to update property. Please enter a value for all required fields.')
+        console.log(err)
+      }
     }
   }
-
 
   return <div className='container px-6 pt-6 pb-6'>
 

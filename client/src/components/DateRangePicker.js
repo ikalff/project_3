@@ -2,12 +2,22 @@ import React, { useState } from 'react'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment'
 
-export default function DateRangePicker({ startDate, setStartDate, endDate, setEndDate, unavailableDates }) {
+export default function DateRangePicker({ location, startDate, setStartDate, endDate, setEndDate, unavailableDates }) {
+
+
   const handleStartDateChange = (date) => {
-    setStartDate(date._d)
+    if (location === 'bookingform') {
+      setStartDate(date)
+    } else {
+      setStartDate(date._d)
+    }
   }
   const handleEndDateChange = (date) => {
-    setEndDate(date._d)
+    if (location === 'bookingform') {
+      setEndDate(date)
+    } else {
+      setEndDate(date._d)
+    }
   }
 
   function disableUnavailable() {
@@ -18,30 +28,30 @@ export default function DateRangePicker({ startDate, setStartDate, endDate, setE
   }
 
 
-  return <MuiPickersUtilsProvider utils ={MomentUtils}>
+  return <MuiPickersUtilsProvider utils={MomentUtils}>
     <DatePicker
       label='Check in'
-      value={startDate} 
-      onChange={handleStartDateChange} 
+      value={startDate}
+      onChange={handleStartDateChange}
       variant='inline'
       disableToolbar
       animateYearScrolling
       disablePast
       autoOk
       shouldDisableDate={disableUnavailable}
-      // shouldDisableDate={false}
+    // shouldDisableDate={false}
 
     />
-    <DatePicker 
+    <DatePicker
       label='Check out'
-      value={endDate} 
-      onChange={handleEndDateChange} 
+      value={endDate}
+      onChange={handleEndDateChange}
       variant='inline'
       disableToolbar
       animateYearScrolling
       disablePast
       autoOk
-      // shouldDisableDate={disableUnavailable}
+    // shouldDisableDate={disableUnavailable}
     />
   </MuiPickersUtilsProvider>
 }

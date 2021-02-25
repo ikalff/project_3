@@ -20,7 +20,7 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property
     numberOfGuests: '',
     datesBooked: []
   })
-  
+
 
   function handleChange(event) {
     const name = event.target.name
@@ -36,6 +36,9 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property
   }
 
   const getDateRange = (startDate, endDate) => {
+    console.log('get date range')
+    console.log(startDate)
+    console.log(endDate)
     let dates = []
     const theDate = new Date(startDate)
     while (theDate < endDate + 1) {
@@ -66,8 +69,12 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property
       }
     }
   }
-  
-  function totalDays () {
+
+  function totalDays() {
+    console.log('dates')
+    console.log(startDate)
+    console.log(endDate)
+    console.log(getDateRange(startDate, endDate).length + 1)
     return getDateRange(startDate, endDate).length + 1
   }
 
@@ -87,6 +94,7 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property
   }
 
 
+
   return <div className='box mt-6'>
 
     {error && <div className='box has-background-danger has-text-white'>{error}</div>}
@@ -96,18 +104,23 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property
       <div>
         <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Book Now</h5>
         <p className='mb-4'>This property can accommodate a maximum of <strong>{maxNumberOfGuests}</strong> guests.</p>
+
+        <div className='is-divider' data-content='OR'></div>
+
         <form onSubmit={handleSubmit}>
           <div className='columns'>
+
+
             <div className='column'>
               <DateRangePicker
+                location='bookingform'
                 startDate={startDate}
                 setStartDate={setStartDate}
                 endDate={endDate}
                 setEndDate={setEndDate}
                 unavailableDates={unavailableDates}
               />
-            </div>
-            <div className='column'>
+
               <label className="label">Guests: </label>
 
 
@@ -128,10 +141,18 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property
               </div>
 
             </div>
+            <div className='is-divider-vertical' data-content='OR'></div>
+
+            <div className='column'>
+              <p>Total days booked: <strong>{totalDays()}</strong></p>
+              <h5 className='title brandfont has-text-primary is-size-3 mb-1 mt-4'>
+                Total price: £{totalPrice()}</h5>
+              <button className='button is-primary is-fullwidth mt-4'>Book now</button>
+            </div>
           </div>
-          <p>{`Total days: ${totalDays()}`}</p>
-          <p>{`Total price: £${totalPrice()}`}</p>
-          <button className='button is-primary mt-4'>Book now</button>
+
+
+
         </form>
       </div>
     }
