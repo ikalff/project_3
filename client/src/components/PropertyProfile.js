@@ -36,31 +36,27 @@ export default function Singleproperty({ match, history }) {
     }
     fetchData()
   }, [])
+
   if (!property.name) {
     return null
   }
-  function handleComment() {
-    console.log('WORK PLEASE! from start')
+
+  async function handleComment() {
     try {
-      axios.post(`/api/properties/${match.params.propertyId}/comment`, { text }, {
+      await axios.post(`/api/properties/${match.params.propertyId}/comment`, { text }, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(resp => {
           setText('')
-          console.log('WORK PLEASE! 1')
           updateProperties(resp.data)
-          console.log('WORK PLEASE!2')
           updateCommentSuccess(true)
-          console.log('WORK PLEASE!3')
           updateEditCommentSuccess(false)
-          console.log('hello post')
         })
     } catch (err) {
-      console.log('WORK PLEASE! error1')
-      updateErrorState(true)
+      console.log(err)
+      updateError('Sorry, only hosts and those who have booked a stay can leave a review!')
       updateCommentSuccess(false)
       updateEditCommentSuccess(false)
-      console.log('WORK PLEASE!', err)
     }
   }
   async function handleUpdateComment(commentId) {
@@ -219,6 +215,7 @@ export default function Singleproperty({ match, history }) {
               </div>
             </div>
           </article>
+          {error && <div className='box mt-4 has-background-danger has-text-white'>{error}</div>}
           {errorState ? <div className="notification is-danger">We could not post your review. Please try again.</div> : <div className="notification is-hidden"></div>}
           {commentSuccess ? <div className="notification is-success is-light">Your review has been saved.</div> : <div className="notification is-hidden"></div>}
         </div>
