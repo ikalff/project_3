@@ -262,7 +262,7 @@ export default function Singleproperty({ match, history }) {
                     <p>Check In: {String(new Date(booking.checkInDate)).substr(0, 15)}</p>
                     <p>Check Out: {String(new Date(booking.checkOutDate)).substr(0, 15)}</p>
                     <p>Number of Guests: {booking.numberOfGuests}</p>
-              <p>id: {booking._id}</p>
+
                     <h6>Remember to contact {booking.user.first_name} for payment and more details on their stay!</h6>
                     <button className="button is-danger" onClick={handleDeleteBooking}>Delete Booking</button>
                   </div>
