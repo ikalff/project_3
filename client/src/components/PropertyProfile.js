@@ -162,15 +162,6 @@ export default function Singleproperty({ match, history }) {
           <p>{property.summary}</p>
 
           <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>House rules:</h5>
-          <p>Summary: {property.summary}</p>
-
-          <Link className='button is-primary is-light' to={{
-            pathname: `/host/${property.host._id}`,
-            state: {
-              hostId: property.host._id
-            }
-
-          }}>Meet the host</Link>
 
           <p>Place type: {property.isEntirePlace ? 'Entire place' : 'Room only'} </p>
           <p>Price per night: {property.pricePerNight}</p>
@@ -239,14 +230,22 @@ export default function Singleproperty({ match, history }) {
               </article>
             })
           }
+
           {isCreator(property.host._id) ?
             <Link className='button is-primary mb-4' to={`/updateproperty/${property._id}`}>Edit property</Link>
             :
-            <BookingForm
-              propertyId={match.params.propertyId}
-              maxNumberOfGuests={property.maxNumberOfGuests}
-              property={property}
-            />}
+            <> <Link className='button is-primary is-light mb-4' to={{
+              pathname: `/host/${property.host._id}`,
+              state: {
+                hostId: property.host._id
+              }
+
+            }}>Meet the host</Link>
+              <BookingForm
+                propertyId={match.params.propertyId}
+                maxNumberOfGuests={property.maxNumberOfGuests}
+                property={property}
+              /> </>}
           <br />
           {isCreator(property.host._id) && <div className="content">
             <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Bookings:</h5>
