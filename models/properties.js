@@ -23,10 +23,7 @@ const amenitySchema = new mongoose.Schema({
 })
 
 const propertiesSchema = new mongoose.Schema({
-  name: {
-    type: String, required: true, unique: true, validate: (firs_name) => {
-      return first_name.length > 4
-    }  },
+  name: { type: String, required: true, unique: true },
   location: { type: String, required: true, unique: false },
   images: { type: Array, required: true, unique: false },
   isRoomOnly: { type: Boolean, required: true, unique: false },
