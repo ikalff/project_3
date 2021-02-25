@@ -54,9 +54,9 @@ function NavBar({ location }) {
       <div className='navbar-item'>
         {username && <div className='buttons has-text-white'>
           <i className='fas fa-user-circle fa-lg mr-2'></i>
-          Logged in as {username}
-          <a onClick={logOut} className='button ml-4'>Log out</a>
-          <Link className='button is-primary' to={`/users/${LoggedInUserId}`}>User profile</Link>
+          <div>Logged in as <Link to={`/users/${LoggedInUserId}`}>{username}</Link></div>
+          <button onClick={logOut} className='button ml-4'>Log out</button>
+          {/* <Link className='button is-primary' to={`/users/${LoggedInUserId}`}>User profile</Link> */}
           <Link className='button is-primary' to='/makeproperty'>List a property</Link>
         </div>
         }
