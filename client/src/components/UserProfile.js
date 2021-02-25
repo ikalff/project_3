@@ -186,9 +186,9 @@ export default function UserProfile({ history, match }) {
 
       </div>
 
-      {userData.isHost ? <div className="column">
-        <HostProfileComponent userId={userId} userBio={userData.bio} /> </div> : <button className="button is-primary">Become a host</button>
-      }
+      <div className="column">
+        <HostProfileComponent userId={userId} userBio={userData.bio} /> </div> 
+      
       <UserBooking userId={userId} />
     </div>
   </div>
