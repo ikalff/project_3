@@ -76,7 +76,7 @@ export default function HostPropertyComponent(props) {
       <h4 className='title is-4 mb-2 mt-2 is-italic'>{hostBio}</h4>
 
       <div className='title is-4 mb-2 mt-2'>{hostName} lists these other properties too - take a look. </div>
-
+     
       <Paginate
         onChange={handlePageChange}
         pageNum={pageNum}
