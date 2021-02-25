@@ -15,10 +15,6 @@ async function makeProperty(req, res, next) {
   body.user = req.currentUser
   try {
     const newProperty = await Properties.create(body)
-
-    //!Users.findById(body.user._id)
-    //!user.properties.push(newProperty)
-
     res.status(201).send(newProperty)
 
   } catch (err) {

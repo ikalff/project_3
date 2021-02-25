@@ -185,7 +185,7 @@ export default function getPropertyData(users) {
         },
         {
           amenityName: 'Pet friendly',
-          amenityValue: false
+          amenityValue: true
         },
         {
           amenityName: 'Wheelchair Accessible',
@@ -227,7 +227,7 @@ export default function getPropertyData(users) {
         },
         {
           amenityName: 'Pet friendly',
-          amenityValue: false
+          amenityValue: true
         },
         {
           amenityName: 'Wheelchair Accessible',
