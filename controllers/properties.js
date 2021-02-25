@@ -72,7 +72,7 @@ async function updateProperty(req, res, next) {
     res.send(propertyToUpdate)
 
   } catch (err) {
-    next()
+    next(err)
   }
 }
 
