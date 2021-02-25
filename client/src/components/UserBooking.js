@@ -67,8 +67,8 @@ export default function UserBooking(props) {
         return <div className='box columns mt-4' key={index}>
           <div className="column">
             <h4 className='title is-4 mb-2 mt-2'>{item.propertyName}</h4>
-            <h5 className='title is-4 mb-2 mt-2'>Check In: {String(new Date(item.checkInDate)).substr(0,15)}</h5>
-            <h5 className='title is-4 mb-2 mt-2'>Check Out: {String(new Date(item.checkOutDate)).substr(0,15)}</h5>
+            <p className='title is-4 mb-2 mt-2'>Check In: {String(new Date(item.checkInDate)).substr(0,15)}</p>
+            <p className='title is-4 mb-2 mt-2'>Check Out: {String(new Date(item.checkOutDate)).substr(0,15)}</p>
             <button className="button is-danger">Delete Booking</button>
           </div>
 
