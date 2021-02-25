@@ -33,8 +33,7 @@ export default function UpdateProperty({ history, match }) {
     images: [],
     name: '',
     location: '',
-    isRoomOnly: false,
-    isEntirePlace: false,
+    propertyType: '',
     pricePerNight: '',
     summary: '',
     numberOfBedrooms: '',
@@ -56,8 +55,7 @@ export default function UpdateProperty({ history, match }) {
           images: data['images'],
           name: data['name'],
           location: data['location'],
-          isRoomOnly: data['isRoomOnly'],
-          isEntirePlace: data['isEntirePlace:'],
+          propertyType: data['propertyType'],
           pricePerNight: data['pricePerNight'],
           summary: data['summary'],
           numberOfBedrooms: data['numberOfBedrooms'],
@@ -71,6 +69,7 @@ export default function UpdateProperty({ history, match }) {
         updateFormData(newFormData)
       })
   }, [])
+
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -97,13 +96,11 @@ export default function UpdateProperty({ history, match }) {
   async function handleSubmit(event) {
     event.preventDefault()
     const token = localStorage.getItem('token')
-
     const newFormData = {
       images: formData['images'],
       name: formData['name'],
       location: formData['location'],
-      isRoomOnly: true,
-      isEntirePlace: true,
+      propertyType: formData['propertyType'],
       pricePerNight: formData['pricePerNight'],
       summary: formData['summary'],
       numberOfBedrooms: formData['numberOfBedrooms'],
@@ -114,14 +111,13 @@ export default function UpdateProperty({ history, match }) {
       cancellationPolicy: formData['cancellationPolicy'],
       amenities: formData['amenities']
     }
-
     try {
       const { data } = await axios.put(`/api/properties/${propertyId}`, newFormData, {
         headers: { Authorization: `Bearer ${token}` }
       })
       history.push(`/properties/${data._id}`)
     } catch (err) {
-      updateError('Unable to update property. Please enter a unique property name and a value for all required fields.')
+      updateError('Unable to update property. Please enter a value for all required fields.')
       console.log(err)
     }
   }

@@ -132,7 +132,7 @@ export default function Singleproperty({ match, history }) {
 
           <p>
 
-            {property.isEntirePlace ?
+            {property.propertyType === 'Entire place' ?
               <span><i className='fas fa-home fa-lg mr-2 has-text-primary'></i>Entire place </span>
               :
               <span><i className='fas fa-bed fa-lg mr-2 has-text-primary'></i>Private room </span>
@@ -153,21 +153,13 @@ export default function Singleproperty({ match, history }) {
     <div className='container px-6 pt-6 pb-6'>
       <div className='columns'>
         <div className='column'>
+
           <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Summary:</h5>
           <p>{property.summary}</p>
 
           <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>House rules:</h5>
           <p>Summary: {property.summary}</p>
-
-          <Link className='button is-primary is-light' to={{
-            pathname: `/host/${property.host._id}`,
-            state: {
-              hostId: property.host._id
-            }
-
-          }}>Meet the host</Link>
-
-          <p>Place type: {property.isEntirePlace ? 'Entire place' : 'Room only'} </p>
+          <p>Place type: {property.propertyType} </p>
           <p>Price per night: {property.pricePerNight}</p>
           <p>Check in: {property.checkInTime}</p>
           <p>Check out: {property.checkOutTime}</p>
@@ -237,11 +229,27 @@ export default function Singleproperty({ match, history }) {
           {isCreator(property.host._id) ?
             <Link className='button is-primary mb-4' to={`/updateproperty/${property._id}`}>Edit property</Link>
             :
-            <BookingForm
-              propertyId={match.params.propertyId}
-              maxNumberOfGuests={property.maxNumberOfGuests}
-              property={property}
-            />}
+
+            <>
+              <Link className='button is-primary' to={{
+                pathname: `/host/${property.host._id}`,
+                state: {
+                  hostId: property.host._id
+                }
+
+              }}>Meet the host</Link>
+
+              <BookingForm
+                propertyId={match.params.propertyId}
+                maxNumberOfGuests={property.maxNumberOfGuests}
+                property={property}
+              />
+            </>
+          }
+
+
+
+
           <br />
           {isCreator(property.host._id) && <div className="content">
             <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Bookings:</h5>
