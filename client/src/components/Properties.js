@@ -9,7 +9,7 @@ import moment from 'moment'
 export default function App() {
 
   const searchState = useLocation()
-  const resultsPerPage = 3
+  const resultsPerPage = 5
   const [properties, updateProperties] = useState([])
   const [pageNum, updatePageNum] = useState(1)
   const [loading, updateLoading] = useState(true)
@@ -39,12 +39,12 @@ export default function App() {
         updateProperties(data)
         updateLoading(false)
         if (searchState.state) {
-          filter(data, 
-            searchState.state.locationData.locationData, 
+          filter(data,
+            searchState.state.locationData.locationData,
             searchState.state.checkboxData.checkboxData,
             searchState.state.startDate.startDate,
             searchState.state.endDate.endDate
-            )
+          )
         }
       } catch (err) {
         console.log(err)
@@ -101,7 +101,7 @@ export default function App() {
 
     newProperties = newProperties.filter(property => {
       let isAvailable = true
-      console.log(property.name)
+      //console.log(property.name)
       if (property.bookings) {
         property.bookings.forEach((booking) => {
           booking.datesBooked.forEach((bookedDate) => {
@@ -112,16 +112,16 @@ export default function App() {
               if (bookedDateString === searchedDateString) {
                 isAvailable = false
                 //console.log('property.name')
-                console.log(bookedDateString)
+                //console.log(bookedDateString)
               }
             })
           })
         })
       }
-      console.log(isAvailable)
+      //console.log(isAvailable)
       if (isAvailable) {
         return property
-      } 
+      }
     })
 
 
@@ -132,42 +132,42 @@ export default function App() {
 
 
 
-    //  getDateRange(startDate, endDate).forEach(date => {
-    //    let newArray = []
-    //    newProperties = newProperties.filter(property => {
-    //      if (property.bookings && property.bookings.length) {
-    //        property.bookings.map(booking => {
-    //          let isAvailable = []
-    //          for (let i = 0; i < booking.datesBooked.length; i++) {
-    //            const bookedDates = String(moment(booking.datesBooked[i]).toDate()).substr(0, 15)
-    //            const userDate = String(date).substr(0, 15)
-    //            // console.log('bookedDates', bookedDates);
-    //            // console.log('userDate', userDate);
-    //            if (userDate === bookedDates) {
-    //              isAvailable.push('not')
-    //              // break
-    //            } else {
-    //              isAvailable.push('available')
-    //            }
-    //          }
-    //          console.log(isAvailable)
-    //          if (!isAvailable.includes('not')) {
-    //            console.log('property', property)
-    //            return newArray.push(property)
-    //
-    //
-    //          }
-    //          return
-    //        })
-    //      } else {
-    //        newArray.push(property)
-    //      }
-    //    })
-    //    updateProperties(newArray)
-    //  })
+  //  getDateRange(startDate, endDate).forEach(date => {
+  //    let newArray = []
+  //    newProperties = newProperties.filter(property => {
+  //      if (property.bookings && property.bookings.length) {
+  //        property.bookings.map(booking => {
+  //          let isAvailable = []
+  //          for (let i = 0; i < booking.datesBooked.length; i++) {
+  //            const bookedDates = String(moment(booking.datesBooked[i]).toDate()).substr(0, 15)
+  //            const userDate = String(date).substr(0, 15)
+  //            // console.log('bookedDates', bookedDates);
+  //            // console.log('userDate', userDate);
+  //            if (userDate === bookedDates) {
+  //              isAvailable.push('not')
+  //              // break
+  //            } else {
+  //              isAvailable.push('available')
+  //            }
+  //          }
+  //          console.log(isAvailable)
+  //          if (!isAvailable.includes('not')) {
+  //            console.log('property', property)
+  //            return newArray.push(property)
+  //
+  //
+  //          }
+  //          return
+  //        })
+  //      } else {
+  //        newArray.push(property)
+  //      }
+  //    })
+  //    updateProperties(newArray)
+  //  })
 
 
-  
+
 
   async function fetchandfilter(newLocationValue, newCheckboxValue) {
     try {
@@ -203,8 +203,10 @@ export default function App() {
 
   return <div className='container px-6 pt-6 pb-6'>
     <div className='columns'>
-      <div className='column is-narrow'>
+      <div className='column is-one-quarter mr-4'>
 
+      <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>
+          Refine search</h5>
         <SearchForm
           formLocation='listings'
           onChange={handleFieldsChange}
@@ -218,7 +220,10 @@ export default function App() {
 
       </div>
       <div className='column'>
-        <h2 className='title is-2 mb-2'>Properties</h2>
+
+      <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>
+          Properties</h5>
+
         <Paginate
           onChange={handlePageChange}
           pageNum={pageNum}
@@ -228,7 +233,7 @@ export default function App() {
         <div className='properties'>
           {properties.slice((pageNum - 1) * resultsPerPage, ((pageNum - 1) * resultsPerPage) + resultsPerPage).map((property, index) => {
 
-            return <div key={index} className='box columns'>
+            return <div key={index} className='box columns mb-6'>
               <div className='column'>
                 <Link to={'/properties/' + property._id}><img src={property.images[0] ? property.images[0] : 'http://placehold.it/400x400?text=no%20image%20available'} /></Link>
               </div>
@@ -240,7 +245,10 @@ export default function App() {
                 {property.amenities.length > 0 &&
                   property.amenities.map((amenity, index) => {
                     return <p key={index}>
-                      {amenity.amenityValue ? '✅ ' : '❌ '}
+                      {amenity.amenityValue ?
+                        <i className='fas fa-check-circle mr-2'></i>
+                        :
+                        <i className='fas fa-times-circle mr-2'></i>}
                       {amenity.amenityName}
                     </p>
                   })

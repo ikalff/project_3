@@ -27,6 +27,9 @@ export default function Login({ history }) {
   }
 
   return <div className='container px-6 pt-6 pb-6'>
+
+<h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Log in</h5>
+
     <form onSubmit={handleSubmit}>
       <div className="field">
         <label className="label">Email</label>

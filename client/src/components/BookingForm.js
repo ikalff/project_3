@@ -72,7 +72,7 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property
   }
 
   function totalPrice() {
-    console.log(property.pricePerNight);
+    //console.log(property.pricePerNight);
     return totalDays() * property.pricePerNight
   }
 
@@ -94,7 +94,7 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property
 
     {!success &&
       <div>
-        <h5 className='title is-5 mt-4 mb-2'>Book Now</h5>
+        <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Book Now</h5>
         <p className='mb-4'>This property can accommodate a maximum of <strong>{maxNumberOfGuests}</strong> guests.</p>
         <form onSubmit={handleSubmit}>
           <div className='columns'>
