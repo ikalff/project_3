@@ -1,11 +1,9 @@
-//!redirect here after log in? or login takes you to the page you were on when you logged in?
-
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Paginate from './Paginate'
 
-export default function HostProfileComponent(props) {
+export default function UserBooking (props) {
 
   const userId = props.userId
 
@@ -25,8 +23,8 @@ export default function HostProfileComponent(props) {
 
           const allPropertiesData = data
 
-          const filteredBookings = allPropertiesData.filter(item => item.bookings.user._id === userId)
-
+          const filteredBookings = allPropertiesData.filter(item => item.bookings.userId === userId)
+          console.log(filteredBookings)
           updateUserBookings(filteredBookings)
 
           updateBookingsLoading(false)
@@ -69,7 +67,8 @@ export default function HostProfileComponent(props) {
         return <div className='box columns mt-4' key={index}>
           <div className="column">
             <h4 className='title is-4 mb-2 mt-2'>{item.name}</h4>
-            <button className="button is-danger is-light mb-2">Delete Booking</button>
+            <h5 className='title is-4 mb-2 mt-2'>{item.bookings.checkInDate}</h5>
+            <h5 className='title is-4 mb-2 mt-2'>{item.bookings.checkOutDate}</h5>
           </div>
           <div className="column">
             <img width="200" src={item.images[0] ? item.images[0] : 'http://placehold.it/400x400?text=no%20image%20available'} />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import HostProfileComponent from './HostProfileComponent.js'
+import UserBooking from './UserBooking.js'
 
 
 export default function UserProfile({ history, match }) {
@@ -189,7 +190,7 @@ export default function UserProfile({ history, match }) {
       {userData.isHost ? <div className="column">
         <HostProfileComponent userId={userId} userBio={userData.bio} /> </div> : <button className="button is-primary">Become a host</button>
       }
-
+      <UserBooking userId={userId} />
     </div>
   </div>
 
