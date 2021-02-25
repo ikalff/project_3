@@ -48,6 +48,8 @@ export default function UserBooking(props) {
     updatePageNum(newValue)
   }
 
+
+  
   return <div className="section">
     <div className='block mb-4'>
       <h2 className='title is-4 mb-4'>Your Bookings</h2>
@@ -69,7 +71,6 @@ export default function UserBooking(props) {
             <h4 className='title is-4 mb-2 mt-2'>{item.propertyName}</h4>
             <p className='title is-4 mb-2 mt-2'>Check In: {String(new Date(item.checkInDate)).substr(0,15)}</p>
             <p className='title is-4 mb-2 mt-2'>Check Out: {String(new Date(item.checkOutDate)).substr(0,15)}</p>
-            <button className="button is-danger">Delete Booking</button>
           </div>
 
         </div>
@@ -79,6 +80,3 @@ export default function UserBooking(props) {
   </div>
 
 }
-
-
-

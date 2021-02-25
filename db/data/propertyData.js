@@ -88,7 +88,7 @@ export default function getPropertyData(users) {
     {
       name: 'Charming London Flat',
       location: 'Notting Hill',
-      images: ['https://www.londonperfect.com/blog/wp-content/uploads/2019/03/Notting-Hills-Most-Colorful-Streets-by-London-Perfect.jpg'],
+      images: ['https://i.imgur.com/YOEdIzM.jpg'],
       propertyType: 'Entire place',
       pricePerNight: 160,
       summary: 'Charming Victorian flat on a quiet mews street only steps away from Notting Hill High Street',
@@ -208,7 +208,7 @@ export default function getPropertyData(users) {
       name: 'St Andrews Golf Flat',
       location: 'St Andrews',
       images: [
-        'https://i.imgur.com/sPivRA0.jpeg',
+        'https://i.imgur.com/9beVSXq.jpeg',
         'https://i.imgur.com/mpdAtx6.jpeg'
       ],
       propertyType: 'Entire place',
