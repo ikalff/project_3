@@ -34,8 +34,7 @@ export default function MakeProperty({ history }) {
     images: [],
     name: '',
     location: '',
-    isRoomOnly: false,
-    isEntirePlace: false,
+    propertyType: '',
     pricePerNight: '',
     summary: '',
     numberOfBedrooms: '',
@@ -49,7 +48,8 @@ export default function MakeProperty({ history }) {
 
 
   function handleChange(event) {
-    updateFormData({ ...formData, [event.target.name]: event.target.value })
+    const { name, value } = event.target
+    updateFormData({ ...formData, [name]: value })
   }
 
   function handleImages(imageArray) {
@@ -67,10 +67,6 @@ export default function MakeProperty({ history }) {
     updateFormData({ ...formData, ['amenities']: newCheckboxData })
   }
 
-
-  
-
-
   async function handleSubmit(event) {
     event.preventDefault()
     const token = localStorage.getItem('token')
@@ -78,8 +74,7 @@ export default function MakeProperty({ history }) {
       images: formData['images'],
       name: formData['name'],
       location: formData['location'],
-      isRoomOnly: true,
-      isEntirePlace: true,
+      propertyType: formData['propertyType'],
       pricePerNight: formData['pricePerNight'],
       summary: formData['summary'],
       numberOfBedrooms: formData['numberOfBedrooms'],
@@ -91,14 +86,13 @@ export default function MakeProperty({ history }) {
       amenities: formData['amenities'],
       host: LoggedInUserId
     }
-
     try {
       const { data } = await axios.post('/api/properties', newFormData, {
         headers: { Authorization: `Bearer ${token}` }
       })
       history.push(`/properties/${data._id}`)
     } catch (err) {
-      updateError('Unable to add property')
+      updateError('Unable to add property. Please enter a value for all required fields.')
       console.log(err)
     }
   }

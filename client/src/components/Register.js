@@ -31,9 +31,9 @@ export default function RegisterPage({ history }) {
     event.preventDefault()
     try {
       const { data } = await axios.post('/api/register', formData)
-      history.push('/')
+      history.push('/login/success')
     } catch (err) {
-      updateError(err.response.data.message)
+      updateError('Could not register user. Please complete all fields, including a unique email address.')
     }
   }
 
@@ -46,7 +46,7 @@ export default function RegisterPage({ history }) {
     <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Register</h5>
 
 
-    <div className={error ? 'box has-background-danger has-text-white' : 'is-hidden'}>{error}</div>
+    {error && <div className='box has-background-danger has-text-white'>{error}</div>}
 
     <form onSubmit={handleSubmit}>
       <div className="field">
