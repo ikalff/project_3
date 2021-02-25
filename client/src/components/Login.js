@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-export default function Login({ history }) {
+export default function Login({ history, match }) {
 
+  const [error, updateError] = useState('')
   const [formData, updateFormData] = useState({
     email: '',
     password: ''
@@ -22,13 +23,17 @@ export default function Login({ history }) {
       }
       history.push('/')
     } catch (err) {
-      console.log(err.response.data)
+      updateError('Could not log in. Invalid email or password.')
     }
   }
 
   return <div className='container px-6 pt-6 pb-6'>
 
-<h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Log in</h5>
+    <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Log in</h5>
+    {match.params.message === 'success' && <div className='box has-background-success has-text-white'>Registration sucessful. Log in to continue.</div>}
+
+
+    {error && <div className='box has-background-danger has-text-white'>{error}</div>}
 
     <form onSubmit={handleSubmit}>
       <div className="field">
