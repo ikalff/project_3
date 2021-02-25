@@ -6,6 +6,8 @@ import Properties from '../../../models/properties.js'
 import { getLoggedInUserId } from '../lib/auth.js'
 import BookingForm from './BookingForm.js'
 import 'react-edit-text/dist/index.css'
+import HostPropertyComponent from './HostPropertyComponent.js'
+
 export default function Singleproperty({ match, history }) {
   const [property, updateProperties] = useState([])
   const [error, updateError] = useState('')
@@ -15,6 +17,8 @@ export default function Singleproperty({ match, history }) {
   const [errorState, updateErrorState] = useState(false)
   const [commentSuccess, updateCommentSuccess] = useState(false)
   const [editCommentSuccess, updateEditCommentSuccess] = useState(false)
+
+
   useEffect(() => {
     async function fetchData() {
       if (match.params.propertyId) {
@@ -140,6 +144,18 @@ export default function Singleproperty({ match, history }) {
           <p>{property.summary}</p>
 
           <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>House rules:</h5>
+          <p>Summary: {property.summary}</p>
+
+          <Link className='button is-primary is-light' to={{
+            pathname: `/host/${property.host._id}`,
+            state: {
+              hostId: property.host._id
+            }
+
+          }}>Meet the host</Link>
+
+          <p>Place type: {property.isEntirePlace ? 'Entire place' : 'Room only'} </p>
+          <p>Price per night: {property.pricePerNight}</p>
           <p>Check in: {property.checkInTime}</p>
           <p>Check out: {property.checkOutTime}</p>
           <p>{property.houseRules}</p>

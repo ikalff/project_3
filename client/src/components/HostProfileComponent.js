@@ -69,7 +69,7 @@ export default function HostProfileComponent(props) {
         return <div className='box columns mt-4' key={index}>
           <div className="column">
             <h4 className='title is-4 mb-2 mt-2'>{item.name}</h4>
-            <button className="button is-primary is-light mb-2">Edit property</button>
+            <Link className="button is-primary is-light mb-2" to='/updateproperty' >Update property</Link>
             <button className="button is-danger is-light mb-2">Delete property</button>
           </div>
           <div className="column">
@@ -80,9 +80,6 @@ export default function HostProfileComponent(props) {
       })}
     </div>
 
-    <div>
-      <button className='button is-primary mt-5'>Add a property</button>
-    </div>
   </div>
 
 }

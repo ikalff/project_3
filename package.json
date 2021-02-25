@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@date-io/moment": "^2.10.8",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
@@ -18,7 +19,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.15",
     "mongoose-hidden": "^1.9.1",
-    "mongoose-unique-validator": "^2.0.3"
+    "mongoose-unique-validator": "^2.0.3",
+    "react-edit-text": "^4.0.0"
   },
   "devDependencies": {
     "@types/react-edit-text": "^4.0.0",

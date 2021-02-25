@@ -11,6 +11,7 @@ import Properties from './components/Properties.js'
 import PropertyProfile from './components/PropertyProfile.js'
 import MakeProperty from './components/MakeProperty.js'
 import UpdateProperty from './components/UpdateProperty.js'
+import HostPropertyComponent from  './components/HostPropertyComponent.js'
 
 import 'bulma'
 import './styles/style.scss'
@@ -27,6 +28,7 @@ const App = () => {
       <Route exact path='/properties' component={Properties} />
       <Route exact path='/properties/:propertyId' component={PropertyProfile} />
       <Route exact path='/makeproperty' component={MakeProperty} />
+      <Route exact path='/host/:userId' component={HostPropertyComponent} />
       <Route exact path='/updateproperty/:propertyId' component={UpdateProperty} />
     </Switch>
     <Footer />
