@@ -23,13 +23,13 @@ export default function HostProfileComponent(props) {
 
       axios.get('/api/properties')
         .then(({ data }) => {
-
           const allPropertiesData = data
-
-          const filteredProperties = allPropertiesData.filter(item => item.host._id === userId)
-
+          const filteredProperties = allPropertiesData.filter(item => {
+            if (item.host && item.host._id === userId) {
+              return item
+            }
+          })
           updateUserProperties(filteredProperties)
-
           updatePropertiesLoading(false)
 
         })
