@@ -36,9 +36,6 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property
   }
 
   const getDateRange = (startDate, endDate) => {
-    console.log('get date range')
-    console.log(startDate)
-    console.log(endDate)
     let dates = []
     const theDate = new Date(startDate)
     while (theDate < endDate + 1) {
@@ -71,15 +68,10 @@ function BookingForm({ propertyId, maxNumberOfGuests, unavailableDates, property
   }
 
   function totalDays() {
-    console.log('dates')
-    console.log(startDate)
-    console.log(endDate)
-    console.log(getDateRange(startDate, endDate).length + 1)
     return getDateRange(startDate, endDate).length + 1
   }
 
   function totalPrice() {
-    //console.log(property.pricePerNight);
     return totalDays() * property.pricePerNight
   }
 

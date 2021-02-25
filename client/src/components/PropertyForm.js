@@ -44,7 +44,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
 
   function deletePropertyModal(event) {
     event.preventDefault()
-    setDeleteModal()
+    setDeleteModal('modal is-active')
   }
 
 

@@ -60,7 +60,6 @@ export default function Singleproperty({ match, history }) {
     }
   }
   async function handleUpdateComment(commentId) {
-    //console.log(text)
     try {
       await axios.put(`/api/properties/${match.params.propertyId}/comment/${commentId}`, { text }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -75,7 +74,6 @@ export default function Singleproperty({ match, history }) {
       console.log('error', err)
     }
   }
-  //console.log('test:', editCommentSuccess)
   function handleDeleteComment(commentId) {
     try {
       axios.delete(`/api/properties/${match.params.propertyId}/comment/${commentId}`, {

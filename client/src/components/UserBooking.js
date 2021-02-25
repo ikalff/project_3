@@ -19,8 +19,6 @@ export default function UserBooking(props) {
       axios.get('/api/properties')
         .then(({ data }) => {
           const allPropertiesData = data
-          console.log('all prop data[0]', allPropertiesData[0])
-          //console.log('user', allPropertiesData[0].bookings[0].user)
           const filteredBookings = []
           allPropertiesData.forEach(property => { 
             property.bookings.forEach(booking => {
@@ -29,7 +27,6 @@ export default function UserBooking(props) {
               }
             })
           })
-          console.log('filtered bookings', filteredBookings)
           updateUserBookings(filteredBookings)
           updateBookingsLoading(false)
         })
