@@ -8,6 +8,7 @@ import Paginate from './Paginate'
 export default function HostProfileComponent(props) {
 
   const userId = props.userId
+  const token = localStorage.getItem('token')
 
   const [userProperties, updateUserProperties] = useState([])
 
@@ -33,8 +34,6 @@ export default function HostProfileComponent(props) {
 
         })
 
-
-
     } catch (err) {
       console.log('Error:', err)
     }
@@ -51,6 +50,7 @@ export default function HostProfileComponent(props) {
   }
 
   return <div className="section">
+
     <div className='block mb-4'>
       <h2 className='title is-4 mb-4'>Your properties</h2>
 
@@ -68,9 +68,13 @@ export default function HostProfileComponent(props) {
 
         return <div className='box columns mt-4' key={index}>
           <div className="column">
+
             <h4 className='title is-4 mb-2 mt-2'>{item.name}</h4>
-            <Link className="button is-primary is-light mb-2" to='/updateproperty' >Update property</Link>
-            <button className="button is-danger is-light mb-2">Delete property</button>
+
+            <Link to={`/properties/${item._id}`} className="button is-primary is-light mb-2">View this property</Link>
+
+            <Link to={`/updateproperty/${item._id}`} className="button is-primary is-light mb-2">Update or delete property</Link>
+
           </div>
           <div className="column">
             <img width="200" src={item.images[0] ? item.images[0] : 'http://placehold.it/400x400?text=no%20image%20available'} />
@@ -80,7 +84,7 @@ export default function HostProfileComponent(props) {
       })}
     </div>
 
-  </div>
+  </div >
 
 }
 
