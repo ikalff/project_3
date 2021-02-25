@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Paginate from './Paginate'
 
-export default function HostProfileComponent(props) {
+export default function UserBooking(props) {
 
   const userId = props.userId
 
@@ -25,7 +25,7 @@ export default function HostProfileComponent(props) {
 
           const allPropertiesData = data
 
-          const filteredBookings = allPropertiesData.filter(item => item.bookings.user._id === userId)
+          const filteredBookings = allPropertiesData.filter(item => item.bookings.userId === userId)
 
           updateUserBookings(filteredBookings)
 
