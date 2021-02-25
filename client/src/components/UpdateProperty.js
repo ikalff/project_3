@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import PropertyForm from './PropertyForm'
 import { isCreator } from '../lib/auth.js'
+import DeletePropertyModal from './DeletePropertyModal'
+
 
 export default function UpdateProperty({ history, match }) {
   const [error, updateError] = useState('')
+  const [deleteModal, setDeleteModal] = useState('modal')
   const [checkboxData, updateCheckboxData] = useState([
     {
       amenityName: 'Wifi',
@@ -44,6 +47,7 @@ export default function UpdateProperty({ history, match }) {
     cancellationPolicy: '',
     amenities: checkboxData
   })
+  const [property, setProperty] = useState({})
 
 
 
@@ -67,7 +71,9 @@ export default function UpdateProperty({ history, match }) {
           amenities: data['amenities']
         }
         updateFormData(newFormData)
+        setProperty(data)
       })
+      
   }, [])
 
 
@@ -142,7 +148,9 @@ export default function UpdateProperty({ history, match }) {
     }
   }
 
-  return <div className='container px-6 pt-6 pb-6'>
+
+  return <section className="lovelyModal">
+    <div className='container m-0 px-6 pt-6 pb-6'>
 
     <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>Update property</h5>
 
@@ -156,7 +164,9 @@ export default function UpdateProperty({ history, match }) {
         handleImages={handleImages}
         formData={formData}
         location='updateProperty'
-
+        property={property}
+        deleteModal={deleteModal}
+        setDeleteModal={setDeleteModal}
       />
       :
 
@@ -164,6 +174,7 @@ export default function UpdateProperty({ history, match }) {
     }
 
     {error && <div className='box mt-4 has-background-danger has-text-white'>{error}</div>}
-
+    <DeletePropertyModal deleteModal={deleteModal} setDeleteModal={setDeleteModal} property={property} />
   </div>
+  </section>
 }

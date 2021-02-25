@@ -35,13 +35,11 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
 
   function handleLocationDataBox(event) {
     updateLocationData(event.target.value)
-    //console.log(locationData)
   }
 
   function handleCheckBox(event) {
     const newcheckboxData = { ...checkboxData }
     newcheckboxData[event.target.name] = event.target.checked
-    // console.log(newcheckboxData)
     updateCheckboxData(newcheckboxData)
   }
 
@@ -57,9 +55,6 @@ export default function SearchForm({ onChange, formLocation, checkboxDataProp, l
     })
   }
 
-  //console.log('Dates')
-  //console.log(startDate)
-  //console.log(endDate)
 
 
   return <form>

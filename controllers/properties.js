@@ -4,7 +4,6 @@ async function getProperties(_req, res, next) {
   try {
     const propertyList = await Properties.find().populate('host').populate('comments.user').populate('bookings.user')
     res.send(propertyList)
-    console.log('test get all', propertyList)
   } catch (err) {
     next(err)
   }

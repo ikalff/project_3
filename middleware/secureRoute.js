@@ -34,7 +34,6 @@ export default async function secureRoute(req, res, next) {
       }
 
       req.currentUser = user
-      console.log('hi');
       next()
     })
 

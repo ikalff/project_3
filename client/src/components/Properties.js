@@ -65,7 +65,6 @@ export default function App() {
       property.bookings.map(bookings => {
         bookings.datesBooked.map((date, index) => {
           dates.push(date)
-          // console.log(index, String(date));
         })
       })
     })
@@ -90,7 +89,6 @@ export default function App() {
     })
     amenities.forEach(amenityName => {
       if (checkboxData[amenityName] === true) {
-        // console.log(amenityName)
         newProperties = newProperties.filter(property => {
           return property.amenities.find(amenity => amenity.amenityName === amenityName).amenityValue === true
         })
@@ -101,24 +99,19 @@ export default function App() {
 
     newProperties = newProperties.filter(property => {
       let isAvailable = true
-      console.log(property.name)
       if (property.bookings) {
         property.bookings.forEach((booking) => {
           booking.datesBooked.forEach((bookedDate) => {
             const bookedDateString = String(moment(bookedDate).toDate()).substr(0, 15)
-            console.log('Booked on: ' + bookedDateString)
             getDateRange(startDate, endDate).forEach(searchedDate => {
               const searchedDateString = String(searchedDate).substr(0, 15)
               if (bookedDateString === searchedDateString) {
                 isAvailable = false
-                //console.log('property.name')
-                console.log(bookedDateString)
               }
             })
           })
         })
       }
-      console.log(isAvailable)
       if (isAvailable) {
         return property
       }
@@ -129,45 +122,6 @@ export default function App() {
     updateProperties(newProperties)
 
   }
-
-
-
-  //  getDateRange(startDate, endDate).forEach(date => {
-  //    let newArray = []
-  //    newProperties = newProperties.filter(property => {
-  //      if (property.bookings && property.bookings.length) {
-  //        property.bookings.map(booking => {
-  //          let isAvailable = []
-  //          for (let i = 0; i < booking.datesBooked.length; i++) {
-  //            const bookedDates = String(moment(booking.datesBooked[i]).toDate()).substr(0, 15)
-  //            const userDate = String(date).substr(0, 15)
-  //            // console.log('bookedDates', bookedDates);
-  //            // console.log('userDate', userDate);
-  //            if (userDate === bookedDates) {
-  //              isAvailable.push('not')
-  //              // break
-  //            } else {
-  //              isAvailable.push('available')
-  //            }
-  //          }
-  //          console.log(isAvailable)
-  //          if (!isAvailable.includes('not')) {
-  //            console.log('property', property)
-  //            return newArray.push(property)
-  //
-  //
-  //          }
-  //          return
-  //        })
-  //      } else {
-  //        newArray.push(property)
-  //      }
-  //    })
-  //    updateProperties(newArray)
-  //  })
-
-
-
 
   async function fetchandfilter(newLocationValue, newCheckboxValue) {
     try {

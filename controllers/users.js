@@ -21,21 +21,16 @@ async function login(req, res, next) {
 
     const user = await User.findOne({ email: req.body.email })
 
-    console.log('logged in user')
-    console.log(user)
 
     if (!user || !user.validatePassword(password)) {
       return res.status(401).send({ message: 'Unauthorized' })
     }
-    console.log('user has validated')
-    console.log(secret)
 
     const token = jwt.sign(
       { userId: user._id },
       secret,
       { expiresIn: '12h' }
     )
-    console.log(token)
 
     res.status(202).send({ token, message: 'Login successful!' })
 

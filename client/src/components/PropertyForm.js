@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-
-export default function PropertyForm({ formData, handleSubmit, handleChange, handleImages, handleCheckBox, location }) {
+export default function PropertyForm({ formData, handleSubmit, handleChange, handleImages, handleCheckBox, location, property, deleteModal, setDeleteModal }) {
 
 
   const [images, updateImages] = useState(formData.images)
@@ -43,8 +42,15 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
     handleImages(newImages)
   }
 
-  console.log(formData)
- console.log(formData['propertyType'])
+  function deletePropertyModal(event) {
+    event.preventDefault()
+    setDeleteModal('modal is-active')
+  }
+
+
+
+
+ 
 
   return <div className='override'>
 
@@ -318,6 +324,7 @@ export default function PropertyForm({ formData, handleSubmit, handleChange, han
       </div>
 
       <button className="button mt-5 is-primary">Save property</button>
+      <button className="button mt-5 is-danger" onClick={(event) => deletePropertyModal(event)}>Delete property</button>
     </form>
   </div >
 }
