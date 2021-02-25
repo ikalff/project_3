@@ -36,6 +36,12 @@ async function makeBooking(req, res, next) {
     }
 
 
+    const propertyname = property.name
+
+    bookingData.propertyName = propertyname
+
+    bookingData.propertyId = propertyId
+
     property.bookings.push(bookingData)
 
     const savedProperty = await property.save()

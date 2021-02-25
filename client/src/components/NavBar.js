@@ -34,6 +34,7 @@ function NavBar({ location }) {
   function logOut() {
     localStorage.clear()
     updateUsername('')
+    history.push('/')
   }
  
 

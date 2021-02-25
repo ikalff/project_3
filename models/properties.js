@@ -8,6 +8,8 @@ const commentSchema = new mongoose.Schema({
 )
 
 const bookingSchema = new mongoose.Schema({
+  propertyName: { type: String },
+  propertyId: { type: Number },
   user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
   checkInDate: { type: Date, required: true },
   checkOutDate: { type: Date, required: true },
@@ -22,50 +24,15 @@ const amenitySchema = new mongoose.Schema({
 })
 
 const propertiesSchema = new mongoose.Schema({
-  name: { 
-    type: String, 
-    required: true, 
-    unique: true,
-    validate: (propName) => {
-      return propName.length > 3
-    } 
-  },
-  location: { 
-    type: String, 
-    required: true, 
-    unique: false,
-    validate: (location) => {
-      return location.length > 1
-    } 
-  },
+  name: { type: String, required: true, unique: true },
+  location: { type: String, required: true, unique: false },
   images: { type: Array, required: true, unique: false },
   isRoomOnly: { type: Boolean, required: true, unique: false },
   isEntirePlace: { type: Boolean, required: true, unique: false },
   pricePerNight: { type: Number, required: true, unique: false },
-  summary: { 
-    type: String, 
-    required: true, 
-    unique: false,
-    validate: (summary) => {
-      return summary.length > 3
-    } 
-  },
-  houseRules: { 
-    type: String, 
-    required: true, 
-    unique: false,
-    validate: (rules) => {
-      return rules.length > 3
-    } 
-  },
-  cancellationPolicy: { 
-    type: String, 
-    required: true, 
-    unique: false,
-    validate: (policy) => {
-      return policy.length > 3
-    } 
-  },
+  summary: { type: String, required: true, unique: false },
+  houseRules: { type: String, required: true, unique: false },
+  cancellationPolicy: { type: String, required: true, unique: false },
   numberOfBedrooms: { type: Number, required: true, unique: false },
   maxNumberOfGuests: { type: Number, required: true, unique: false },
   checkInTime: { type: String, required: true, unique: false },
