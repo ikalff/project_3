@@ -17,8 +17,46 @@ $info-invert: $darkblue-invert;
 .brandfont {
   font-family: "Bebas Neue", "arial", sans-serif;
 }
-a {
-  cursor:  pointer !important;
+
+.is-clickable {
+  cursor: pointer;
+}
+
+.is-faded {
+  background-color: rgba(255, 255, 255, 0.8);;
+}
+
+.is-link {
+  color: #1D8EBA;
+}
+
+// .is-link:hover {
+//   border-bottom: 1px solid #52b3da;
+//   color: #52b3da;
+// }
+
+
+.is-link:after {    
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  color: #67c2e6;
+  background: #52b3da;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.is-link:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+@media screen and (max-height: 300px) {
+	ul {
+		margin-top: 40px;
+	}
 }
 
 .hero,

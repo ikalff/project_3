@@ -45,6 +45,7 @@ export default function Singleproperty({ match, history }) {
   }
 
   async function handleComment() {
+    updateError('')
     try {
       await axios.post(`/api/properties/${match.params.propertyId}/comment`, { text }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -74,6 +75,7 @@ export default function Singleproperty({ match, history }) {
         })
     } catch (err) {
       updateEditCommentSuccess(false)
+      
       console.log('error', err)
     }
   }
@@ -121,7 +123,7 @@ export default function Singleproperty({ match, history }) {
         backgroundImage: `url(${property.images[0] ? property.images[0] : 'http://placehold.it/400x400'})`
       }}>
       <div className='hero-body columns is-centered'>
-        <div className='box column is-half has-text-centered pt-5 pb-5 px-5'>
+        <div className='box column is-half has-text-centered is-faded pt-5 pb-5 px-5'>
 
 
           <h5 className='title brandfont has-text-primary is-size-4 mb-3'>
@@ -162,7 +164,7 @@ export default function Singleproperty({ match, history }) {
           <h5 className='title brandfont has-text-info is-size-3 mb-1 mt-4'>House rules:</h5>
 
           <p>Place type: {property.isEntirePlace ? 'Entire place' : 'Room only'} </p>
-          <p>Price per night: {property.pricePerNight}</p>
+          
           <p>Check in: {property.checkInTime}</p>
           <p>Check out: {property.checkOutTime}</p>
           <p>{property.houseRules}</p>
@@ -256,7 +258,6 @@ export default function Singleproperty({ match, history }) {
                     <p>Check In: {String(new Date(booking.checkInDate)).substr(0, 15)}</p>
                     <p>Check Out: {String(new Date(booking.checkOutDate)).substr(0, 15)}</p>
                     <p>Number of Guests: {booking.numberOfGuests}</p>
-                    <p>id: {booking._id}</p>
                     <h6>Remember to contact {booking.user.first_name} for payment and more details on their stay!</h6>
                     <button className="button is-danger" onClick={(event, item) => {
                       handleDeleteBooking(event, item, booking._id)

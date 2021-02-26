@@ -59,10 +59,10 @@ function NavBar({ location }) {
           </div>
           <div className='navbar-item has-text-white'>
             <i className='fas fa-user-circle fa-lg mr-2'></i>
-            <div>Logged in as <Link className='link-hover-grey-light' to={`/users/${LoggedInUserId}`}>{username}</Link></div>
+            <div>Logged in as <Link className='link-hover-grey-light is-link' to={`/users/${LoggedInUserId}`}>{username}</Link></div>
           </div>
           <div className='navbar-item has-text-white'>
-            <div onClick={logOut} className='link'>Log out</div>
+            <a onClick={logOut} className='link-hover-grey-light is-clickable is-link'>Log out</a>
           </div>
         </div>
         }
