@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-const environment = process.env.NODE_ENV || 'development'
+const environment = process.env.NODE_ENV || 'production'
 export const port = process.env.PORT || 8000
 export const secret = process.env.SECRET || 'dasklflajkdfjkasdfjklajklfjklasdfjkldfklasdfjklsdfjio5thuj8i4rf5thj8i'
 
