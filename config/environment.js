@@ -2,6 +2,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const environment = process.env.NODE_ENV || 'development'
+export const port = process.env.PORT || 8000
+export const secret = process.env.SECRET || 'dasklflajkdfjkasdfjklajklfjklasdfjkldfklasdfjklsdfjio5thuj8i4rf5thj8i'
 
 // ! if running in development, dbURI will be
 // ? mongodb://localhost/arrivrdb-development
@@ -12,6 +14,3 @@ export const dbURI = environment === 'production'
 
 ? process.env.MONGODB_URI
 : `mongo://localhost/arrivrdb-${environment}`
-
-export const port = 8000
-export const secret  = process.env.SECRET
